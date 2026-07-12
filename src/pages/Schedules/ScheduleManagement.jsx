@@ -36,10 +36,10 @@ function ScheduleManagement() {
   const isAdmin = user?.role === "admin";
 
   return (
-    <section className="card p-8 bg-zinc-600 h-screen">
-      <div>
+    <section className="card p-8 bg-zinc-400 h-screen">
+      <div className="mb-4">
         {/* eyebrow */}
-        <p className="uppercase text-2xl font-semibold ">{isAdmin ? "Schedule management" : "Train schedules"}</p>
+        <p className="uppercase text-2xl font-bold ">{isAdmin ? "Schedule management" : "Train schedules"}</p>
         <h2 className="">Upcoming train schedules</h2>
 
       </div>

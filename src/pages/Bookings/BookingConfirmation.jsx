@@ -1,6 +1,6 @@
 function BookingConfirmation() {
   return (
-    <section className="card">
+    <section className="card p-8">
       <p className="eyebrow">Confirmation</p>
       <h2>Booking complete</h2>
       <p>Your ticket request was received successfully.</p>

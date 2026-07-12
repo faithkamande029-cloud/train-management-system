@@ -27,8 +27,8 @@ function StationManagement() {
           <tbody>
             {stations.map((station) => (
               <tr key={station.code} className="">
-                <td className='p-3'>{station.name} </td>
-                <td className='p-3'>{station.code}</td>
+                <td className='p-4'>{station.name} </td>
+                <td className='p-4'>{station.code}</td>
                 <td>
                   <span 
                     className={`p-3 ${station.active ? 'text-green-500' : 'text-red-500'}`}
