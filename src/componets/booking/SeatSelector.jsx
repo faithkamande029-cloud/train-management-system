@@ -184,7 +184,7 @@ const SeatSelector = ({
     }
 
   return (
-    <div className='w-full min-h-screen bg-gray-50 p-4'>
+    <div className='w-full min-h-screen bg-gray-600 p-4'>
         {/* title */}
         <div className='max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-3'>
             <h1 className='text-2xl font-bold lg:text-3xl text-center mb-2 text-gray-800'>{title}</h1>

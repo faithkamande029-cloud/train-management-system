@@ -1,7 +1,7 @@
 function TrainDetails() {
   return (
     <section className="card">
-      <p className="eyebrow">Train detail</p>
+      <p className="eyebrow">Available Trains</p>
       <h2>Express 101</h2>
       <p>Route: Colombo → Kandy</p>
       <p>Departure: 06:30</p>
