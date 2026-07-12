@@ -11,8 +11,9 @@ function TrainList() {
   const { user} = useAuth ();
 
   return (
-    <section className="card p-2 bg-zinc-800 h-screen">
-      <div className="section-heading">
+    <section className="card p-5 bg-zinc-800 h-screen">
+      {/* section-heading */}
+      <div className="flex justify-between items-center">
         {/* heading */}
         <div className='mb-4'>
           <h2 className=" text-white text-2xl font-bold">Train Management</h2>
@@ -23,7 +24,7 @@ function TrainList() {
       </div>
       {/* list-card */}
       <div className="mt-5">
-        <table>
+        <table className='w-full table-auto border-collapse'>
           <thead>
             <tr className='bg-zinc-900'>
               <th scope='col' className='text-left p-4 w-50 font-medium text-white'>Train</th>
@@ -32,9 +33,9 @@ function TrainList() {
               <th scope='col' className='text-left p-4 w-50 font-medium text-white'>Actions</th>
             </tr>          
           </thead>
-          <tbody>
+          <tbody className='divide-y divide-gray-500'>
             {trains.map((train) => (
-              <tr key={train.id} className="list-row">
+              <tr key={train.id} className="">
                 <td className='p-4 w-50 text-white'>{train.name}</td>
                 <td className='p-4 w-50 text-white'>{train.route}</td>
                 

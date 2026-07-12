@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState({
     name: "Faith",
-    role: "user",
+    role: "admin",
   });
 
   const login = (userData) => {

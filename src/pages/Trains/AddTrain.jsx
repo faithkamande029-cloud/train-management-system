@@ -1,6 +1,6 @@
 function AddTrain() {
   return (
-    <section className="card">
+    <section className="bg-zinc-200 h-screen p-5">
       <div>
         <p className="eyebrow text-red-500 uppercase tracking-widest font-semibold">Train Management</p>
         <h2 className="text-3xl font-bold text-gray-800 mt-2">Add New train</h2>
@@ -16,7 +16,7 @@ function AddTrain() {
       <input
         type="text"
         placeholder="North Star Express"
-        className="w-full border border-gray-300 rounded-lg px-4 py-3"
+        className="w-full border border-gray-800 rounded-lg px-4 py-3"
       />
     </div>
 
@@ -28,7 +28,7 @@ function AddTrain() {
       <input
         type="text"
         placeholder="City A → City B"
-        className="w-full border border-gray-300 rounded-lg px-4 py-3"
+        className="w-full border border-gray-800 rounded-lg px-4 py-3"
       />
     </div>
 
@@ -39,13 +39,13 @@ function AddTrain() {
 
       <input
         type="time"
-        className="w-full border border-gray-300 rounded-lg px-4 py-3 "
+        className="w-full border border-gray-800 rounded-lg px-4 py-3 "
       />
     </div>
 
     <button
       type="submit"
-      className="w-full bg-black-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg"
+      className="w-full bg-black hover:bg-red-600 text-white font-semibold py-3 rounded-lg"
     >
       Save Train
     </button>

@@ -36,19 +36,27 @@ function ScheduleManagement() {
   const isAdmin = user?.role === "admin";
 
   return (
-    <section className="card p-8 bg-zinc-400 h-screen">
-      <div className="mb-4">
-        {/* eyebrow */}
-        <p className="uppercase text-2xl font-bold ">{isAdmin ? "Schedule management" : "Train schedules"}</p>
-        <h2 className="">Upcoming train schedules</h2>
+    <section className="card p-5 bg-zinc-400 h-screen">
+      <div className="flex justify-between items-center">
+        <div className="mb-4">
+          {/* eyebrow */}
+          <p className="uppercase text-2xl font-bold ">{isAdmin ? "Schedule management" : "Train schedules"}</p>
+          <h2 className="">Upcoming train schedules</h2>
+
+        </div>
+      
+        {isAdmin ? (
+          <button 
+            type="button" 
+            className="px-5 py-3 rounded-lg bg-black text-white hover:bg-red-500 font-semibold" 
+            style={{ marginBottom: "1rem" }}
+          >
+            Add Schedule
+          </button>
+        ) : null}
 
       </div>
       
-      {isAdmin ? (
-        <button type="button" className="px-5 py-3 rounded-lg bg-black text-white hover:bg-red-500 font-semibold" style={{ marginBottom: "1rem" }}>
-          Add schedule
-        </button>
-      ) : null}
 
       {/* list-card */}
       <div className="space-y-4">
@@ -58,9 +66,9 @@ function ScheduleManagement() {
             key={schedule.train} 
             className="flex items-center gap-10 bg-zinc-900 shadow-md"
           >
-            <div className="flex items-center gap-5 text-zinc-300 ">
-              <img src={schedule.image} alt={schedule.name} className="w-24 h-24 object-cover" />
-              <h3>{schedule.train}</h3>
+            <div className="flex items-center gap-10 text-zinc-300 ">
+              <img src={schedule.image} alt={schedule.name} className="w-35 h-35 object-cover" />
+              <h3 className="font-bold text-xl">{schedule.train}</h3>
               <p>{schedule.departure} → {schedule.arrival}</p>
             </div>
             <span className="badge text-zinc-300">Platform {schedule.platform}</span>
