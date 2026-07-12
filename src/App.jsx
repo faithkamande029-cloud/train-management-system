@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
 import AppRoutes from './routes/AppRoutes';
 
 const navItems = [
@@ -11,7 +11,7 @@ const navItems = [
 ];
 
 function App() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="app-shell">
@@ -37,9 +37,15 @@ function App() {
             </>
           ) : null}
         </nav>
-        <Link to="/login" className="pill-button">
-          {user ? 'Signed In' : 'User Login'}
-        </Link>
+        {user ? (
+          <div className="row-actions">
+            <span className="badge">Signed in as {user.role === 'admin' ? 'Admin' : 'User'}</span>
+            <Link to="/login" className="pill-button">Switch account</Link>
+            <button type="button" className="pill-button" onClick={logout}>Sign out</button>
+          </div>
+        ) : (
+          <Link to="/login" className="pill-button">Login</Link>
+        )}
       </header>
 
       <main className="page-content">

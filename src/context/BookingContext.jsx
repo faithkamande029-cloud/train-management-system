@@ -1,6 +1,6 @@
 // src/context/BookingContext.jsx
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
 const BookingContext = createContext();
 
@@ -32,6 +32,4 @@ export function BookingProvider({ children }) {
   );
 }
 
-export function useBooking() {
-  return useContext(BookingContext);
-}
+export { BookingContext };

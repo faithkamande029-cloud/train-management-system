@@ -1,4 +1,4 @@
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 const schedules = [
   { train: 'Express 101', departure: '06:30', arrival: '09:15', platform: '3' },
