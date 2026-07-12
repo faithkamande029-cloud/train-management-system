@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const trains = [
   { id: 1, name: 'Express 101', route: 'Colombo → Kandy', status: 'On time' },
@@ -7,6 +8,8 @@ const trains = [
 ];
 
 function TrainList() {
+  const { user } = useAuth();
+
   return (
     <section className="card">
       <div className="section-heading">
@@ -14,7 +17,7 @@ function TrainList() {
           <p className="eyebrow">Train administration</p>
           <h2>Train catalogue</h2>
         </div>
-        <Link to="/trains/add" className="pill-button primary">Add train</Link>
+        {user?.role === 'admin' ? <Link to="/trains/add" className="pill-button primary">Add train</Link> : null}
       </div>
       <div className="list-card">
         {trains.map((train) => (
