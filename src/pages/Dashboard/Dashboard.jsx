@@ -47,11 +47,10 @@ const pieData = {
 
 function Dashboard() {
   return (
-    <section className="bg-zinc-300 h-screen p-8">
-      <Pie data={pieData}/>
+    <section className="bg-zinc-300 h-screen p-8">      
 
       <div className="mb-8">
-        <p className="text-red-500 uppercase font-semibold tracking-widest">
+        <p className="text-red-500 uppercase font-bold text-2xl">
           Operations Overview
         </p>
 
@@ -62,11 +61,20 @@ function Dashboard() {
         <p className="text-gray-500 mt-2">
           Monitor today's railway activities and performance.
         </p>
-      </div>
+      </div>     
+        
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-zinc-100 p-6 rounded-xl">
+        {/* pie Chart */}
+        <div className="flex items-center justify-center ">
+          <div className="w-64 h-64">
+            <Pie data={pieData} />
+          </div>          
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-        {metrics.map((item) => (
+        {/* metrics */}
+        <div className="grid grid-cols-2 gap-6 mt-5">
+          {metrics.map((item) => (
           <article
             key={item.label}
             className="bg-zinc-700 border rounded-xl p-6"
@@ -75,12 +83,15 @@ function Dashboard() {
               {item.value}
             </h3>
 
-            <p className="text-red-400 font-medium mt-2">
+            <p className="text-red-400 font-semibold mt-2">
               {item.label}
             </p>
           </article>
         ))}
 
+
+        </div>
+        
       </div>
 
 </section>

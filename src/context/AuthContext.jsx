@@ -5,10 +5,7 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState({
-    name: "Faith",
-    role: "user",
-  });
+  const [user, setUser] = useState();
 
   const login = (userData) => {
     setUser(userData);
