@@ -1,13 +1,54 @@
+import { Chart as ChartJS,ArcElement,Tooltip,Legend, } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import { data } from "react-router-dom";
+
+ChartJS.register(ArcElement, Tooltip, Legend)
+
 const metrics = [
-  { label: 'Active trains', value: '24' },
-  { label: 'Passengers today', value: '1,482' },
-  { label: 'Open bookings', value: '318' },
-  { label: 'Delayed services', value: '5' },
+  {
+    label: "Upcoming Trips",
+    value: "3",
+  },
+  {
+    label: "Completed Trips",
+    value: "15",
+  },
+  {
+    label: "Confirmed Tickets",
+    value: "6",
+  },
+  {
+    label: "Pending Bookings",
+    value: "2",
+  },
 ];
+
+const pieData = {
+  labels: ["Upcoming","Completed","Confirmed", "Pending"],
+  datasets: [
+    {
+      data: [3, 15, 6, 2],
+      backgroundColor: [
+        "#ef4444",
+        "#333333",        
+        "#f08080",        
+        "#52525b"
+      ],
+      borderColor: [        
+        "#52525b",
+        "#dc2626",
+        "#52525b",
+        "#ffcccb"
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
 
 function Dashboard() {
   return (
     <section className="bg-zinc-300 h-screen p-8">
+      <Pie data={pieData}/>
 
       <div className="mb-8">
         <p className="text-red-500 uppercase font-semibold tracking-widest">

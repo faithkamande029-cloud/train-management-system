@@ -46,19 +46,24 @@ function Home() {
         </div>    
         
         {/*Booking section */}      
-        <div className='absolute bottom-16 left-8 w-2/5 max-w-7xl mx-auto mt-12 '>
+        <div className='absolute bottom-20 left-8 w-2/5 max-w-7xl mx-auto mt-12 '>
           <p className="text-xl font-bold text-white">
-            Book ticket 
+            Book your ticket today.
           </p>
-          <div className="flex text-center gap-10 mt-2 ">
-            <Link to="/dashboard" className="bg-black text-zinc-50 border border-zinc-700 p-2.5 rounded-2xl shadow-lg hover:bg-red-500 w-40 font-semibold">Dashboard</Link>
-            <Link to="/trains" className="bg-black text-zinc-50 border border-zinc-700 p-2.5 rounded-2xl shadow-lg hover:bg-red-500 w-40 font-semibold">Trains</Link>
+          <div className="flex text-center mt-2 ">            
+            <Link 
+              to="/trains" 
+              className="bg-black text-zinc-50 border border-zinc-700 p-2.5 rounded-2xl shadow-lg hover:bg-red-500 w-40 font-semibold"
+            >
+              Book Train
+            </Link>  
           </div>
 
         </div> 
         
       </div>    
 
+      {/* About section */}
       <div className="info-grid grid grid-cols-4 items-center bg-black text-xl text-zinc-100 px-8 pt-3 h-60">
         {highlights.map((item) => {
           const Icon = item.icon

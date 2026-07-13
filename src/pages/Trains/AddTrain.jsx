@@ -15,7 +15,7 @@ function AddTrain() {
 
       <input
         type="text"
-        placeholder="North Star Express"
+        placeholder="Nairobi Commuter Express"
         className="w-full border border-gray-800 rounded-lg px-4 py-3"
       />
     </div>

@@ -31,13 +31,13 @@ function Login() {
     bg-[url(src/assets/red-door.jpg)] bg-cover bg-center 
     flex items-center justify-center px-6 "
     >
-      <div className="absolute inset-0 bg-black/35"></div>
-      <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
-      shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800"
+      <div className="absolute inset-0 bg-zinc-900/80"></div>
+      <div className="relative z-10 bg-linear-to-b from-red-700/80 via-zinc-900 to-black/40 
+      shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 "
       >
         <div className="flex flex-col overflow-hidden items-center mt-6">
-          <TrainFront className="text-red-500 w-12 h-12 mb-3"/>
-          <p className="text-white font-bold uppercase tracking-wider">
+          <TrainFront className="text-black w-15 h-15 mb-3"/>
+          <p className="text-white font-bold uppercase tracking-wider text-xl">
           Railway Management System  
           </p>        
 
@@ -45,7 +45,7 @@ function Login() {
         
 
         <h2 className="text-3xl font-bold text-gray-100 mt-6">
-          Staff Login
+          User Login
         </h2>
 
         <p className="text-gray-400 mt-3 mb-6">
@@ -64,7 +64,8 @@ function Login() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="admin@railway.com"
+            placeholder="user@gmail.com"
+            required
             className="w-full border border-gray-300 rounded-lg px-4 py-3 placeholder:text-gray-50"
           />
         </div>
@@ -79,13 +80,14 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
+            required
             className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-zinc-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 transition"
+          className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
         >
           Sign In
       </button>
