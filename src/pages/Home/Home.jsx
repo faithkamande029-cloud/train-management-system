@@ -34,19 +34,18 @@ function Home() {
         className='relative z-10 max-w-8xl mx-auto flex items-center justify-between h-[90vh] px-8 bg-cover bg-position-[center_47%] '
         style={{backgroundImage: `url(${frontView})`}}
       >
-        <div className="absolute inset-0 bg-zinc/40 w-3/5 h-4/5 blur-2xl"></div>
+        <div className="absolute inset-0 bg-zinc-600/20 w-2/5 h-4/5 blur-2xl"></div>
         {/* text to the left */}           
-        <div className='w-80 p-4 rounded-2xl '>
-          
-          <h1 className="text-5xl font-bold text-shadow-zinc-100 leading-tight">Your Journey, 
+        <div className='w-80 p-2 rounded-2xl '>          
+          <h1 className="text-5xl font-bold text-shadow-black leading-tight">Your Journey, 
             <br />
-            <span className='text-red-600'>Our Priority</span>
+          <span className='text-red-600'>Our Priority</span>
           </h1>
           <h1 className='font-bold text-zinc-300 text-xl mt-2'>Book tickets, check schedules and experience a seamless journey.</h1>
         </div>    
         
         {/*Booking section */}      
-        <div className='absolute bottom-20 left-8 w-2/5 max-w-7xl mx-auto mt-12 '>
+        <div className='absolute bottom-20 left-8 w-2/5 max-w-7xl mx-auto mt-12 p-4 '>
           <p className="text-xl font-bold text-white">
             Book your ticket today.
           </p>

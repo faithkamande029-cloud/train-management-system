@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
 import AppRoutes from './routes/AppRoutes';
 import { TrainFront } from 'lucide-react';
 
@@ -12,7 +12,7 @@ const navItems = [
 ];
 
 function App() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="app-shell">
@@ -43,15 +43,13 @@ function App() {
             </>
           ) : null}
         </nav>
-        
-        {/* pill-button */}
-        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400  cursor-pointer '>
-          <Link 
-            to="/login" 
-            className="text-white font-semibold">
-            {user ? 'Signed In' : 'User Login'}
+        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400  cursor-pointer'>
+          <Link to="/login" className="pill-button ">
+          {user ? 'Signed In' : 'User Login'}
           </Link>
-        </div>        
+
+        </div>
+        
       </header>
 
       <main className="page-content">

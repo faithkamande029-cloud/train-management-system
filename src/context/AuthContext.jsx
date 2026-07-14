@@ -1,11 +1,15 @@
 // src/context/AuthContext.jsx
 
-import { createContext, useContext, useState } from "react";
+import { createContext, use, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
+export const useAuth = () => useContext(AuthContext);
+
+const STORAGE_KEY = "train-management-user";
+
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   const login = (userData) => {
     setUser(userData);
@@ -22,6 +26,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export { AuthContext };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { validateLogin } from "../../utils/authRole";
 import { TrainFront } from 'lucide-react';
 
@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -27,74 +27,74 @@ function Login() {
   };
 
   return (
-    <section className="relative h-screen w-full 
+    <section className="card relative h-screen w-full 
     bg-[url(src/assets/red-door.jpg)] bg-cover bg-center 
-    flex items-center justify-center px-6 "
-    >
-      <div className="absolute inset-0 bg-zinc-900/80"></div>
-      <div className="relative z-10 bg-linear-to-b from-red-700/80 via-zinc-900 to-black/40 
-      shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 "
-      >
-        <div className="flex flex-col overflow-hidden items-center mt-6">
-          <TrainFront className="text-black w-15 h-15 mb-3"/>
-          <p className="text-white font-bold uppercase tracking-wider text-xl">
-          Railway Management System  
-          </p>        
+    flex items-center justify-center px-6">
+      <div className="absolute inset-0 bg-black/35"></div>
+      <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
+      shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
 
+        <div className="absolute inset-0 bg-zinc-900/80 text-center p-4">
+          <p className="eyebrow text-2xl font-bold text-red-500">Access</p>
+          <h2 className="">User login</h2>
         </div>
         
 
-        <h2 className="text-3xl font-bold text-gray-100 mt-6">
-          User Login
-        </h2>
-
-        <p className="text-gray-400 mt-3 mb-6">
-          Sign in to access the railway management dashboard.
-        </p>
-
-      {/* sign in form */}
-      <form className="space-y-5" onSubmit={handleSubmit}>
-
-        <div>
-          <label className="block text-gray-100 font-medium mb-3">
-            Email Address
+        {/* sign in form */}
+        <form className="space-y-5" onSubmit={handleSubmit}>
+          <div className="flex flex-col justify-center items-center gap-3 mt-20">
+            <div className=" text-xl">
+            <label className="block text-gray-100 font-medium mb-3 text-center">
+            Sign in as
+            <select 
+              value={role} 
+              onChange={(event) => setRole(event.target.value)}
+              className="block mx-auto mt-2"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </label>
-
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="user@gmail.com"
-            required
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 placeholder:text-gray-50"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-100 font-medium mb-3">
-            Password
+          </div>
+          
+          <label className="block text-gray-100 mb-3">
+            <span className="font-medium">Email</span>
+            
+            <input 
+              type="email" value={email} 
+              onChange={(event) => setEmail(event.target.value)} 
+              placeholder="user@railway.com" 
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+            />
           </label>
+          <label className="block text-gray-100 mb-3">
+            <span className="font-medium"> Password</span>
+            <input 
+              type="password" 
+              value={password} 
+              onChange={(event) => setPassword(event.target.value)} 
+              placeholder="••••••••" 
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+            />
+          </label>
+          {error ? <p className="error-text">{error}</p> : null}
+          <button 
+            type="submit" 
+            className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
+          >
+            Sign in
+          </button>
+            
+          </div>
+          
+        </form>
+        
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-            required
-            className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
-        >
-          Sign In
-      </button>
-
-      </form>
-  </div>
-</section>
+      </div>
+      
+    </section>
   );
 }
 

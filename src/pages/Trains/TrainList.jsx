@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from "../../context/AuthContext";
 
 const trains = [
   { id: 1, name: 'Express 101', route: 'Mombasa → Voi', status: 'On time' },
@@ -8,7 +8,8 @@ const trains = [
 ];
 
 function TrainList() {
-  const { user} = useAuth ();
+
+  const { user } = useAuth();
 
   return (
     <section className="card p-5 bg-zinc-800 h-screen">
@@ -19,7 +20,6 @@ function TrainList() {
           <h2 className=" text-white text-2xl font-bold">Train Management</h2>
           <p className='text-white'>Manage all trains in the System</p>
         </div>
-        {/* add train link */}
         <Link to="/trains/add" className="text-white bg-red-500 p-2 rounded-lg">Add train</Link>
       </div>
       {/* list-card */}
