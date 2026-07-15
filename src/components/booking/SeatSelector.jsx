@@ -184,14 +184,14 @@ const SeatSelector = ({
     }
 
   return (
-    <div className='w-full min-h-screen bg-gray-50 p-4'>
+    <div className='w-full min-h-screen  p-4'>
         {/* title */}
-        <div className='max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-3'>
+        <div className='max-w-6xl mx-auto  rounded-lg shadow-lg p-3 bg-zinc-300'>
             <h1 className='text-2xl font-bold lg:text-3xl text-center mb-2 text-gray-800'>{title}</h1>
             <p className='text-gray-600 mb-3 text-center'>{subtitle}</p>
             {/* screen */}
             <div className='mb-4'>
-                <div className='w-full h-4 bg-linear-to-r from-red-400 via-amber-300 t0-amber-100 mb-2 shadow-inner rounded-lg'/>
+                <div className='w-full h-4 bg-linear-to-r from-red-500 via-zinc-600 t0-gray-200 mb-2 shadow-inner rounded-lg'/>
                 <p className='text-center text-sm text-gray-500 font-medium mb-6'>SCREEN</p>
             </div>
          
@@ -214,7 +214,7 @@ const SeatSelector = ({
                 </div>
             </div>
             {/* legend */}
-            <div className='flex flex-wrap justify-center gap-6 mb-6 p-4 bg-gray-50 rounded-lg'>
+            <div className='flex flex-wrap justify-center gap-6 mb-3 p-5 bg-zinc-400 rounded-lg font-semibold'>
                 {uniqueSeatTypes.map(seatType => {
                     return (
                         <div key={seatType.type} className='flex items-center'>
@@ -238,24 +238,24 @@ const SeatSelector = ({
                 </div>
             </div>
             {/* booking summary */}
-            <div className='bg-gray-50 rounded-lg p-4 mb-4'>
-                <h3 className='font-bold text-lg mb-2'>Booking</h3>
+            <div className='rounded-lg p-3 mb-3 bg-zinc-400 flex flex-col items-center'>
+                <h2 className='font-bold text-xl mb-2'>Booking</h2>
                 {selectedSeats.length > 0 ? (
                     <div>
                         <div className='mb-2'>
-                            <p className='mb-2'>
+                            <p className=''>
                                 Selected Seats: {" "}
-                            <span>
+                            <span className='font-bold'>
                                 {selectedSeats.map((s) => s.id).join(",")}
                             </span>
                             </p>    
                             <p>
                                 Number of seats:{" "}
-                                <span>{selectedSeats.length}</span>
+                                <span className='font-bold'>{selectedSeats.length}</span>
                             </p>
                         </div>
                         
-                        <p className='text-xl font-bold text-amber-600'>
+                        <p className='text-xl font-bold'>
                             Total: {currency}
                             {getTotalPrice()}
                         </p>
@@ -268,9 +268,9 @@ const SeatSelector = ({
             <button 
                 onClick={handleBooking}
                 disabled={selectedSeats.length == 0}
-                className={`w-full py-3 px-6 rounded-lg font-bold text-lg transition-all duration-200 ${
+                className={`w-full py-3 px-6 rounded-lg font-bold text-xl transition-all duration-200 ${
                     selectedSeats.length > 0 
-                    ? "bg-linear-to-r from-red-600 via-amber-500 to-yellow-300 hover:from-red-700 text-white transform hover:scale-105"
+                    ? "bg-linear-to-r from-red-600 via-zinc-500  hover:from-red-700 text-white cursor-pointer"
                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
             >

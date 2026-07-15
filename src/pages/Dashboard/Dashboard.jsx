@@ -1,24 +1,100 @@
+import { Chart as ChartJS,ArcElement,Tooltip,Legend, } from "chart.js";
+import { Pie } from "react-chartjs-2";
+import { data } from "react-router-dom";
+
+ChartJS.register(ArcElement, Tooltip, Legend)
+
 const metrics = [
-  { label: 'Active trains', value: '24' },
-  { label: 'Passengers today', value: '1,482' },
-  { label: 'Open bookings', value: '318' },
-  { label: 'Delayed services', value: '5' },
+  {
+    label: "Upcoming Trips",
+    value: "3",
+  },
+  {
+    label: "Completed Trips",
+    value: "15",
+  },
+  {
+    label: "Confirmed Tickets",
+    value: "6",
+  },
+  {
+    label: "Pending Bookings",
+    value: "2",
+  },
 ];
+
+const pieData = {
+  labels: ["Upcoming","Completed","Confirmed", "Pending"],
+  datasets: [
+    {
+      data: [3, 15, 6, 2],
+      backgroundColor: [
+        "#ef4444",
+        "#333333",        
+        "#f08080",        
+        "#52525b"
+      ],
+      borderColor: [        
+        "#52525b",
+        "#dc2626",
+        "#52525b",
+        "#ffcccb"
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
 
 function Dashboard() {
   return (
-    <section className="card">
-      <p className="eyebrow">Operations overview</p>
-      <h2>Today at a glance</h2>
-      <div className="metric-grid">
-        {metrics.map((item) => (
-          <article key={item.label} className="info-card">
-            <h3>{item.value}</h3>
-            <p>{item.label}</p>
+    <section className="bg-zinc-300 h-screen p-8">      
+
+      <div className="mb-8">
+        <p className="text-red-500 uppercase font-bold text-2xl">
+          Operations Overview
+        </p>
+
+        <h2 className="text-3xl font-bold text-gray-800 mt-2">
+          Today at a Glance
+        </h2>
+
+        <p className="text-gray-500 mt-2">
+          Monitor today's railway activities and performance.
+        </p>
+      </div>     
+        
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-zinc-100 p-6 rounded-xl">
+        {/* pie Chart */}
+        <div className="flex items-center justify-center ">
+          <div className="w-64 h-64">
+            <Pie data={pieData} />
+          </div>          
+        </div>
+
+        {/* metrics */}
+        <div className="grid grid-cols-2 gap-6 mt-5">
+          {metrics.map((item) => (
+          <article
+            key={item.label}
+            className="bg-zinc-700 border rounded-xl p-6"
+          >
+            <h3 className=" text-white text-4xl font-bold">
+              {item.value}
+            </h3>
+
+            <p className="text-red-400 font-semibold mt-2">
+              {item.label}
+            </p>
           </article>
         ))}
+
+
+        </div>
+        
       </div>
-    </section>
+
+</section>
   );
 }
 

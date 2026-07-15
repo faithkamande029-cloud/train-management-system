@@ -1,6 +1,6 @@
 function BookTicket() {
   return (
-    <section className="card">
+    <section className="card p-8">
       <p className="eyebrow">Passenger booking</p>
       <h2>Book a ticket</h2>
       <form className="stacked-form">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { validateLogin } from "../../utils/authRole";
+import { TrainFront } from 'lucide-react';
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -26,69 +27,73 @@ function Login() {
   };
 
   return (
-    <section className="card">
-      <p className="eyebrow">Access</p>
-      <h2>{role === "admin" ? "Admin login" : "User login"}</h2>
-      <form className="stacked-form" onSubmit={handleSubmit}>
-        <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem" }}>
-          <button
-            type="button"
-            onClick={() => {
-              setRole("user");
-              setError("");
-            }}
-            aria-pressed={role === "user"}
-            style={{
-              flex: 1,
-              border: role === "user" ? "1px solid #4f46e5" : "1px solid #cbd5e1",
-              background: role === "user" ? "#4f46e5" : "#fff",
-              color: role === "user" ? "#fff" : "#0f172a",
-              padding: "0.65rem 0.9rem",
-              borderRadius: "999px",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
-          >
-            User
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRole("admin");
-              setError("");
-            }}
-            aria-pressed={role === "admin"}
-            style={{
-              flex: 1,
-              border: role === "admin" ? "1px solid #4f46e5" : "1px solid #cbd5e1",
-              background: role === "admin" ? "#4f46e5" : "#fff",
-              color: role === "admin" ? "#fff" : "#0f172a",
-              padding: "0.65rem 0.9rem",
-              borderRadius: "999px",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
-          >
-            Admin
-          </button>
+    <section className="card relative h-screen w-full 
+    bg-[url(src/assets/red-door.jpg)] bg-cover bg-center 
+    flex items-center justify-center px-6">
+      <div className="absolute inset-0 bg-black/35"></div>
+      <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
+      shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
+
+        <div className="absolute inset-0 bg-zinc-900/80 text-center p-4">
+          <p className="eyebrow text-2xl font-bold text-red-500">Access</p>
+          <h2 className="">User login</h2>
         </div>
-        <label>
-          Email
-          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="user@railway.com" />
-        </label>
-        <label>
-          Password
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="••••••••" />
-        </label>
-        {error ? <p className="error-text">{error}</p> : null}
-        <button type="submit" className="pill-button primary">Sign in</button>
-      </form>
-      {user ? (
-        <p className="helper-text">
-          You are currently signed in as {user.role === "admin" ? "Admin" : "User"}. Select a role above and sign in to switch accounts.
-        </p>
-      ) : null}
-      <p className="helper-text">Demo credentials: User - user@railway.com / user123, Admin - admin@railway.com / admin123</p>
+        
+
+        {/* sign in form */}
+        <form className="space-y-5" onSubmit={handleSubmit}>
+          <div className="flex flex-col justify-center items-center gap-3 mt-20">
+            <div className=" text-xl">
+            <label className="block text-gray-100 font-medium mb-3 text-center">
+            Sign in as
+            <select 
+              value={role} 
+              onChange={(event) => setRole(event.target.value)}
+              className="block mx-auto mt-2"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </label>
+          </div>
+          
+          <label className="block text-gray-100 mb-3">
+            <span className="font-medium">Email</span>
+            
+            <input 
+              type="email" value={email} 
+              onChange={(event) => setEmail(event.target.value)} 
+              placeholder="user@railway.com" 
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+            />
+          </label>
+          <label className="block text-gray-100 mb-3">
+            <span className="font-medium"> Password</span>
+            <input 
+              type="password" 
+              value={password} 
+              onChange={(event) => setPassword(event.target.value)} 
+              placeholder="••••••••" 
+              required
+              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+            />
+          </label>
+          {error ? <p className="error-text">{error}</p> : null}
+          <button 
+            type="submit" 
+            className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
+          >
+            Sign in
+          </button>
+            
+          </div>
+          
+        </form>
+        
+
+      </div>
+      
     </section>
   );
 }

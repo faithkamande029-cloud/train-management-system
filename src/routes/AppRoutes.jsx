@@ -17,6 +17,7 @@ import Reports from "../pages/Admin/Reports";
 import NotFound from "../pages/NotFound/NotFound";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import SeatSelector from "../components/booking/SeatSelector";
 
 function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ function AppRoutes() {
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/trains" element={<TrainListPage />} />
+        <Route path="/trains/:id/seats" element={<SeatSelector />} />
         <Route path="/trains/:id" element={<TrainDetailsPage />} />
         <Route path="/schedules" element={<ScheduleManagement />} />
         <Route path="/bookings" element={<MyBookings />} />
@@ -39,7 +41,7 @@ function AppRoutes() {
         <Route path="/admin/users" element={<UserManagement />} />
         <Route path="/admin/reports" element={<Reports />} />
       </Route>
-
+ 
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
