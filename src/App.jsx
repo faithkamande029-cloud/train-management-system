@@ -43,11 +43,14 @@ function App() {
             </>
           ) : null}
         </nav>
-        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400  cursor-pointer'>
-          <Link to="/login" className="pill-button ">
-          {user ? 'Signed In' : 'User Login'}
-          </Link>
-
+        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400 cursor-pointer'>
+          {user ? (
+            <button type="button" onClick={logout} className="pill-button">
+              Log out
+            </button>
+          ) : (
+            <Link to="/login" className="pill-button">User Login</Link>
+          )}
         </div>
         
       </header>

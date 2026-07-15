@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { validateLogin } from "../../utils/authRole";
+import redDoor from "../../assets/red-door.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -26,9 +27,10 @@ function Login() {
   };
 
   return (
-    <section className="card relative h-screen w-full 
-    bg-[url(src/assets/red-door.jpg)] bg-cover bg-center 
-    flex items-center justify-center px-6">
+    <section
+      className="card relative h-screen w-full bg-cover bg-center flex items-center justify-center px-6"
+      style={{ backgroundImage: `url(${redDoor})` }}
+    >
       <div className="absolute inset-0 bg-black/35"></div>
       <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
       shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
