@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { validateLogin } from "../../utils/authRole";
-import { TrainFront } from 'lucide-react';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [error, setError] = useState("");
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -34,7 +33,7 @@ function Login() {
       <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
       shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
 
-        <div className="absolute inset-0 bg-zinc-900/80 text-center p-4">
+        <div className="text-center p-4">
           <p className="eyebrow text-2xl font-bold text-red-500">Access</p>
           <h2 className="">User login</h2>
         </div>
