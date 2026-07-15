@@ -45,7 +45,7 @@ function App() {
         </nav>
         <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400 cursor-pointer'>
           {user ? (
-            <button type="button" onClick={logout} className="pill-button">
+            <button type="button" onClick={logout} className="pill-button bg-red-500 text-white">
               Log out
             </button>
           ) : (

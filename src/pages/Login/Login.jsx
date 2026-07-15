@@ -31,30 +31,31 @@ function Login() {
       className="card relative h-screen w-full bg-cover bg-center flex items-center justify-center px-6"
       style={{ backgroundImage: `url(${redDoor})` }}
     >
-      <div className="absolute inset-0 bg-black/35"></div>
+      <div className="absolute inset-0 bg-black/45"></div>
       <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
       shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
 
         <div className="text-center p-4">
-          <p className="eyebrow text-2xl font-bold text-red-500">Access</p>
-          <h2 className="">User login</h2>
+          <p className="eyebrow text-3xl font-bold text-red-500">Access</p>
+          <h2 className="text-zinc-300">User login</h2>
         </div>
         
 
         {/* sign in form */}
         <form className="space-y-5" onSubmit={handleSubmit}>
-          <div className="flex flex-col justify-center items-center gap-3 mt-20">
+          <div className="flex flex-col justify-center items-center gap-3 mt-10">
             <div className=" text-xl">
-            <label className="block text-gray-100 font-medium mb-3 text-center">
+            <label className="block text-gray-100 font-medium mb-3 text-center ">
             Sign in as
             <select 
               value={role} 
               onChange={(event) => setRole(event.target.value)}
-              className="block mx-auto mt-2"
+              className="block mx-auto mt-2 bg-red-500 text-black rounded-lg p-1"
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
+            
           </label>
           </div>
           
