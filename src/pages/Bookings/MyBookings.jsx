@@ -62,11 +62,11 @@ function MyBookings() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <p className="text-red-400 uppercase tracking-widest font-semibold">Passenger Portal</p>
-          <h2 className="text-3xl font-bold text-white mt-2">My Bookings</h2>
+    <div className="space-y-6 p-2 mb-3">
+      <div className="flex justify-between items-center p-3">
+        <div className="px-2">
+          <p className="uppercase tracking-widest font-bold text-xl">Passenger Portal</p>
+          <h2 className="text-xl font-bold text-zinc-600 mt-2">My Bookings</h2>
         </div>
         <Button onClick={() => navigate("/bookings/new")}>Book New Ticket</Button>
       </div>

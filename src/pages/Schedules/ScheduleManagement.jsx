@@ -1,4 +1,7 @@
 import { useAuth } from "../../context/AuthContext";
+import ScheduleTable from "../../components/schedule/ScheduleTable";
+import PlatformAssignment from "../../components/schedule/PlatformAssignment";
+import ScheduleForm from "../../components/schedule/ScheduleForm";
 import expressTrain from "../../assets/express-101.jpg";
 import nightRail from "../../assets/night-rail.jpg";
 import hillLine from "../../assets/hill-line.jpg"
@@ -34,9 +37,19 @@ function ScheduleManagement() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
 
+
+  const handleAddSchedule = () => {
+    // Logic to add a new schedule
+    console.log("Add Schedule button clicked", newSchedule);
+  }
+  const handleDeleteSchedule = (id) => {
+    // Logic to delete a schedule
+    console.log("Delete Schedule button clicked", id);
+  };
+
   return (
-    <section className="card p-5 bg-zinc-400 h-screen">
-      <div className="flex justify-between items-center">
+    <section className="flex flex-col p-5 bg-zinc-400 min-h-screen">
+      <div className="justify-between items-center">
         <div className="mb-4">
           {/* eyebrow */}
           <p className="uppercase text-2xl font-bold ">{isAdmin ? "Schedule management" : "Train schedules"}</p>
@@ -44,36 +57,31 @@ function ScheduleManagement() {
 
         </div>
       
-        {isAdmin ? (
-          <button 
-            type="button" 
-            className="px-5 py-3 rounded-lg bg-black text-white hover:bg-red-500 font-semibold" 
-            style={{ marginBottom: "1rem" }}
-          >
-            Add Schedule
-          </button>
-        ) : null}
+        {isAdmin && (
+          <>           
+            <div className="grid grid-cols-2 gap-6"  >
+              <div className="mb-8">
+                <ScheduleForm
+                  onAdd={handleAddSchedule}
+                  isSubmitting={false}
+                />
+              </div>
 
+              <div className="mb-8">
+                <PlatformAssignment />
+              </div>
+            </div>
+            <ScheduleTable
+            schedules={schedules}
+            loading={false}
+            onDelete={handleDeleteSchedule}
+            />
+          </>
+          )}
       </div>
       
-
-      {/* list-card */}
-      <div className="space-y-4">
-        {schedules.map((schedule) => (
-          // list-row
-          <div 
-            key={schedule.train} 
-            className="flex items-center gap-10 bg-zinc-900 shadow-md"
-          >
-            <div className="flex items-center gap-10 text-zinc-300 ">
-              <img src={schedule.image} alt={schedule.name} className="w-35 h-35 object-cover" />
-              <h3 className="font-bold text-xl">{schedule.train}</h3>
-              <p>{schedule.departure} → {schedule.arrival}</p>
-            </div>
-            <span className="badge text-zinc-300">Platform {schedule.platform}</span>
-          </div>
-        ))}
-      </div>
+      
+      
     </section>
   );
 }

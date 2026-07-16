@@ -7,7 +7,6 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import TrainListPage from "../pages/Trains/TrainList";
 import TrainDetailsPage from "../pages/Trains/TrainDetails";
 import AddTrain from "../pages/Trains/AddTrain";
-import StationManagement from "../pages/Stations/StationManagement";
 import ScheduleManagement from "../pages/Schedules/ScheduleManagement";
 import BookTicket from "../pages/Bookings/BookTicket";
 import MyBookings from "../pages/Bookings/MyBookings";
@@ -19,6 +18,13 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import SeatSelector from "../components/booking/SeatSelector";
 
+// stations
+import AdminStationManagement from "../pages/Stations/AdminStationManagement";
+import AdminLayout from "../layouts/AdminLayout";
+
+// admin layout
+// import AdminLayout from "../layouts/AdminLayout";
+
 function AppRoutes() {
   return (
     <Routes>
@@ -29,6 +35,7 @@ function AppRoutes() {
         <Route path="/trains" element={<TrainListPage />} />
         <Route path="/trains/:id/seats" element={<SeatSelector />} />
         <Route path="/trains/:id" element={<TrainDetailsPage />} />
+        {/* Route for schedule management */}
         <Route path="/schedules" element={<ScheduleManagement />} />
         <Route path="/bookings" element={<MyBookings />} />
         <Route path="/bookings/new" element={<BookTicket />} />
@@ -37,8 +44,9 @@ function AppRoutes() {
 
       <Route element={<AdminRoute />}>
         <Route path="/trains/add" element={<AddTrain />} />
-        <Route path="/stations" element={<StationManagement />} />
-        <Route path="/admin/users" element={<UserManagement />} />
+        {/* station route */}
+        <Route path="/stations" element={<AdminStationManagement />} />
+        <Route path="/admin/users" element={<AdminLayout />} />
         <Route path="/admin/reports" element={<Reports />} />
       </Route>
  

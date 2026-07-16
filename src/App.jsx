@@ -16,7 +16,7 @@ function App() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="app-shell">
+    <div className="min-h-screen flex flex-col ">
       <header className="max-w-8xl mx-auto grid grid-cols-3 items-center px-7 py-3 bg-zinc-950">
         {/* logo */}
         <div className="justify-self-start">
@@ -35,9 +35,9 @@ function App() {
           ))}
           {user?.role === 'admin' ? (
             <>
-              <NavLink to="/stations" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+              {/* <NavLink to="/stations" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
                 Stations
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/admin/users" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
                 Admin
               </NavLink>
@@ -55,11 +55,14 @@ function App() {
         </div>
         
       </header>
+      
+      <main className="page-content  flex flex-col min-h-screen">
+        <div className="flex-1">
+          <AppRoutes />          
+        </div>  
 
-      <main className="page-content">
-        <AppRoutes />
-        <Footer/>
-      </main>
+        <Footer />       
+      </main>      
     </div>
   );
 }

@@ -12,11 +12,11 @@ const OccupancyChart = memo(({ bookings, trains }) => {
   }, [bookings, trains]);
 
   if (!trains || trains.length === 0) {
-    return <div className="bg-gray-900 p-6 rounded-2xl border border-gray-800 h-[400px] flex items-center justify-center"><p className="text-gray-400 text-sm">No train data available.</p></div>;
+    return <div className="bg-gray-900 p-6 rounded-2xl border border-gray-800 h-100 flex items-center justify-center"><p className="text-gray-400 text-sm">No train data available.</p></div>;
   }
 
   return (
-    <div className="bg-gray-900 p-6 rounded-2xl border border-gray-800 h-[400px] mt-6">
+    <div className="bg-gray-900 p-6 rounded-2xl border border-gray-800 h-100 mt-6">
       <h2 className="text-xl font-semibold mb-6 text-white">Train Occupancy</h2>
       <ResponsiveContainer width="100%" height="90%">
         <BarChart data={data} barSize={24}>
