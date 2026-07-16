@@ -26,7 +26,7 @@ const OccupancyChart = memo(({ bookings, trains }) => {
           <Tooltip contentStyle={{ backgroundColor: "#0F172A", border: "1px solid #333" }} labelStyle={{ color: "#94A3B8" }} itemStyle={{ color: "#E2E8F0" }} />
           <Legend wrapperStyle={{ color: "#94A3B8", fontSize: 12 }} />
           <Bar dataKey="Occupied" fill="#EF4444" radius={[6, 6, 0, 0]} />
-          <Bar dataKey="Available" fill="#06B6D4" radius={[6, 6, 0, 0]} />
+          <Bar dataKey="Available" fill="#00c853" radius={[6, 6, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

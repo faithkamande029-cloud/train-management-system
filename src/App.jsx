@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 import AppRoutes from './routes/AppRoutes';
 import { TrainFront } from 'lucide-react';
+import Footer from './components/common/Footer/Footer';
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -21,7 +22,7 @@ function App() {
         <div className="justify-self-start">
           <Link to="/" className="flex items-center gap-2">
             <TrainFront className='w-10 h-10 text-red-500'/> 
-            <span className=' font-bold uppercase text-white'>GariLM</span>
+            <span className=' font-bold uppercase text-white'>GARILM</span>
           </Link>
         </div>       
   
@@ -43,9 +44,9 @@ function App() {
             </>
           ) : null}
         </nav>
-        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400 cursor-pointer'>
+        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400 cursor-pointer text-white'>
           {user ? (
-            <button type="button" onClick={logout} className="pill-button bg-red-500 text-white">
+            <button type="button" onClick={logout} className="pill-button bg-red-500 text-white cursor-pointer">
               Log out
             </button>
           ) : (
@@ -57,6 +58,7 @@ function App() {
 
       <main className="page-content">
         <AppRoutes />
+        <Footer/>
       </main>
     </div>
   );

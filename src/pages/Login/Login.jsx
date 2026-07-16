@@ -14,6 +14,7 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const result = validateLogin(email, password, role);
 
     if (!result.ok) {
@@ -21,10 +22,16 @@ function Login() {
       return;
     }
 
-    login({ email, role: result.role, name: result.role === "admin" ? "Admin User" : "Regular User" });
+    login({
+      email,
+      role: result.role,
+      name: result.role === "admin" ? "Admin User" : "Regular User",
+    });
+
     setError("");
     navigate(result.role === "admin" ? "/admin/users" : "/dashboard");
-  };
+
+  }
 
   return (
     <section

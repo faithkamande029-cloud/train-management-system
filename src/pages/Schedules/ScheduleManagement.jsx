@@ -1,6 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
 import expressTrain from "../../assets/express-101.jpg";
-import nightRail from "../../assets/hill-line.jpg";
+import nightRail from "../../assets/night-rail.jpg";
 import hillLine from "../../assets/hill-line.jpg"
 
 const schedules = [

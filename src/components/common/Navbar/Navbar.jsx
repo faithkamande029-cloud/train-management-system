@@ -10,7 +10,7 @@ function Navbar() {
       <div className="flex items-center gap-3">
         <FaTrain className="text-cyan-400 text-2xl" />
         <span className="text-white font-bold text-lg tracking-wide">
-          RailMS
+          GariLM
         </span>
       </div>
 
@@ -31,7 +31,7 @@ function Navbar() {
           <span className="absolute -top-1 -right-1 bg-red-500 rounded-full w-2 h-2" />
         </div>
         <div className="flex items-center gap-3 cursor-pointer">
-          <div className="w-9 h-9 rounded-full bg-cyan-700 flex items-center justify-center text-white font-bold text-sm">
+          <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-sm">
             A
           </div>
           <div className="text-sm">

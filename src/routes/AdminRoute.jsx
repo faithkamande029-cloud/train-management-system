@@ -1,8 +1,13 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import Loader from "../components/common/Loader/Loader";
 
-function AdminRoute() {
-  const { user } = useAuth();
+function AdminRoute({ children }) {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <Loader fullScreen text="Authenticating..." />;
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -12,7 +17,7 @@ function AdminRoute() {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return <Outlet />;
+  return children;
 }
 
 export default AdminRoute;

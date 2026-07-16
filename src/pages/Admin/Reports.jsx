@@ -27,7 +27,7 @@ function Reports() {
   return (
     <section className="space-y-8">
       <div>
-        <p className="text-amber-400 uppercase tracking-widest font-semibold">Performance Reports</p>
+        <p className="text-red-400 uppercase tracking-widest font-semibold">Performance Reports</p>
         <h2 className="text-3xl font-bold text-white mt-2">Daily Operations Summary</h2>
         <p className="text-gray-400 mt-2">View today's operational performance across the railway network.</p>
       </div>
