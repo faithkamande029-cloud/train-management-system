@@ -29,7 +29,7 @@ function Login() {
     });
 
     setError("");
-    navigate(result.role === "admin" ? "/admin/users" : "/dashboard");
+    navigate(result.role === "admin" ? "/admin/dashboard" : "/dashboard");
 
   }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import expressTrain from "../../assets/express-101.jpg";
 import nightRail from "../../assets/night-rail.jpg";
 import hillLine from "../../assets/hill-line.jpg"
+import { tr } from 'zod/v4/locales';
 
 const platforms = [
   { id: 1, name: "1" },
@@ -36,12 +37,23 @@ export default function PlatformAssignment() {
   return (
     <div className='bg-gray-200 flex flex-col p-4 rounded-xl text-gray-900'>
       <h2 className='font-bold text-gray-700 text-lg mb-2'>Platform Assigment</h2>
-        {trains.map((train) => (
-          <div key={train.id} style={{ marginBottom: "20px" }}>
-          <p><strong>{train.train}</strong></p>
-          <p>Arrival: {train.arrival}</p>
-          <p>Departure: {train.departure}</p>
-
+      <table>
+        <thead >
+          <tr className="bg-zinc-700">
+            <th scope='col' className='text-left p-4 w-50 font-medium'>Train name</th>
+            <th scope='col' className='text-left p-4 w-50 font-medium'>Arrival</th>
+            <th scope='col' className='text-left p-4 w-50 font-medium'>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          {trains.map((train) => (
+          <tr>
+          <td key={train.id} style={{ marginBottom: "20px" }}>
+          <td><strong>{train.train}</strong></td>
+          <td>Arrival: {train.arrival}</td>
+          <td>Departure: {train.departure}</td>
+          
+          <td>
           <select
             value={train.platform}
             
@@ -56,12 +68,19 @@ export default function PlatformAssignment() {
                 </option>
             ))}
           </select>
+          </td>
 
           {train.platform && (
             <p>Assigned to Platform {train.platform}</p>
           )}
-        </div>  
-        ))}
+          </td>
+          </tr>  
+          ))}          
+
+        </tbody>
+      </table>
+      
+        
     </div>
   );
 }

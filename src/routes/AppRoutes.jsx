@@ -1,6 +1,6 @@
 // src/routes/AppRoutes.jsx
 
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -22,9 +22,6 @@ import SeatSelector from "../components/booking/SeatSelector";
 import AdminStationManagement from "../pages/Stations/AdminStationManagement";
 import AdminLayout from "../layouts/AdminLayout";
 
-// admin layout
-// import AdminLayout from "../layouts/AdminLayout";
-
 function AppRoutes() {
   return (
     <Routes>
@@ -43,11 +40,15 @@ function AppRoutes() {
       </Route>
 
       <Route element={<AdminRoute />}>
+        <Route element={<AdminLayout />}>
+          <Route path="/admin/dashboard" element={<Navigate to="/admin/users" replace />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/reports" element={<Reports />} />
+          <Route path="/admin" element={<Navigate to="/admin/users" replace />} />
+        </Route>
         <Route path="/trains/add" element={<AddTrain />} />
         {/* station route */}
         <Route path="/stations" element={<AdminStationManagement />} />
-        <Route path="/admin/users" element={<AdminLayout />} />
-        <Route path="/admin/reports" element={<Reports />} />
       </Route>
  
       <Route path="*" element={<NotFound />} />

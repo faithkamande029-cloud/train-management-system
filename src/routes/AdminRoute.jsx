@@ -14,7 +14,7 @@ function AdminRoute({ children }) {
   }
 
   if (user.role !== "admin") {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
   return <Outlet/>;

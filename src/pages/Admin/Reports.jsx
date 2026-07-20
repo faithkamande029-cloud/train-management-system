@@ -1,7 +1,7 @@
 import { useTrains, useBookings, useStations, useSchedules } from "../../hooks";
-import StatsCard from "../../components/dashboard/StatsCard";
-import RevenueChart from "../../components/dashboard/RevenueChart";
-import OccupancyChart from "../../components/dashboard/OccupancyChart";
+import StatsCard from "../../components/admin-dashboard/StatsCard";
+import RevenueChart from "../../components/admin-dashboard/RevenueChart";
+import OccupancyChart from "../../components/admin-dashboard/OccupancyChart";
 import { FaTrain, FaUsers, FaTicketAlt, FaMapMarkerAlt, FaCalendarAlt, FaMoneyBillWave } from "react-icons/fa";
 import Loader from "../../components/common/Loader/Loader";
 import { formatCurrency } from "../../utils/dateFormatter";
@@ -26,10 +26,10 @@ function Reports() {
 
   return (
     <section className="space-y-8">
-      <div>
+      <div className="p-1">
         <p className="text-red-400 uppercase tracking-widest font-semibold">Performance Reports</p>
-        <h2 className="text-3xl font-bold text-white mt-2">Daily Operations Summary</h2>
-        <p className="text-gray-400 mt-2">View today's operational performance across the railway network.</p>
+        <h2 className="text-3xl font-bold mt-2">Daily Operations Summary</h2>
+        <p className="text-gray-500 mt-2">View today's operational performance across the railway network.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -61,7 +61,7 @@ function Reports() {
           </div>
           <div className="bg-gray-800 p-4 rounded-xl text-center">
             <p className="text-gray-400 text-sm">Cancelled</p>
-            <p className="text-2xl font-bold text-red-400">{bookings?.filter(b => b.status === "cancelled").length || 0}</p>
+            <p className="text-2xl font-bold text-zinc-500">{bookings?.filter(b => b.status === "cancelled").length || 0}</p>
           </div>
         </div>
       </div>

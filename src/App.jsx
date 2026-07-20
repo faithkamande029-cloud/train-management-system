@@ -38,7 +38,7 @@ function App() {
               {/* <NavLink to="/stations" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
                 Stations
               </NavLink> */}
-              <NavLink to="/admin/users" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+              <NavLink to="/admin/dashboard" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
                 Admin
               </NavLink>
             </>

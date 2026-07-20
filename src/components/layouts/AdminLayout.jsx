@@ -10,13 +10,13 @@ import Navbar from "../components/common/Navbar/Navbar";
 import Footer from "../components/common/Footer/Footer";
 
 const navItems = [
-  { path: "/dashboard",    label: "Dashboard",  icon: <FaHome />         },
-  { path: "/trains",       label: "Trains",     icon: <FaTrain />        },
-  { path: "/stations",     label: "Stations",   icon: <FaMapMarkerAlt /> },
-  { path: "/schedules",    label: "Schedules",  icon: <FaCalendarAlt />  },
-  { path: "/bookings",     label: "Bookings",   icon: <MdEventSeat />    },
-  { path: "/admin/users",  label: "Users",      icon: <FaUsers />        },
-  { path: "/admin/reports",label: "Reports",    icon: <FaChartBar />     },
+  { path: "/admin/dashboard",    label: "Dashboard",  icon: <FaHome />         },
+  { path: "/trains",             label: "Trains",     icon: <FaTrain />        },
+  { path: "/stations",           label: "Stations",   icon: <FaMapMarkerAlt /> },
+  { path: "/schedules",          label: "Schedules",  icon: <FaCalendarAlt />  },
+  { path: "/bookings",           label: "Bookings",   icon: <MdEventSeat />    },
+  { path: "/admin/users",        label: "Users",      icon: <FaUsers />        },
+  { path: "/admin/reports",      label: "Reports",    icon: <FaChartBar />     },
 ];
 
 function AdminLayout({ children }) {

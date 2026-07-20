@@ -63,7 +63,7 @@ function Home() {
       </div>    
 
       {/* About section */}
-      <div className="info-grid grid grid-cols-4 items-center bg-black text-zinc-100 px-8 pt-3 h-45 mt-1 relative z-10 shadow-2xl border-b-7 border-red-700/35 ">
+      <div className="info-grid grid grid-cols-4 items-center bg-black text-zinc-100 px-8 pt-3 h-45 mt-2 relative z-10 shadow-2xl border-b-7 border-zinc-700/35 ">
         {highlights.map((item) => {
           const Icon = item.icon
 

@@ -1,11 +1,10 @@
 // src/layouts/AdminLayout.jsx
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Outlet } from "react-router-dom";
 import {
   FaTrain, FaHome, FaCalendarAlt,
   FaUsers, FaChartBar, FaMapMarkerAlt,
 } from "react-icons/fa";
-import { TrainFront } from 'lucide-react';
 import { MdEventSeat } from "react-icons/md";
 import Navbar from "../components/common/Navbar/Navbar";
 import Footer from "../components/common/Footer/Footer";
@@ -54,7 +53,7 @@ function AdminLayout({ children }) {
 
         {/* MAIN CONTENT */}
         <main className="flex-1 p-6 overflow-y-auto">
-          {children}
+          <Outlet />
         </main>
       </div>
 
