@@ -1,100 +1,39 @@
-import { Chart as ChartJS,ArcElement,Tooltip,Legend, } from "chart.js";
-import { Pie } from "react-chartjs-2";
-import { data } from "react-router-dom";
-
-ChartJS.register(ArcElement, Tooltip, Legend)
-
-const metrics = [
-  {
-    label: "Upcoming Trips",
-    value: "3",
-  },
-  {
-    label: "Completed Trips",
-    value: "15",
-  },
-  {
-    label: "Confirmed Tickets",
-    value: "6",
-  },
-  {
-    label: "Pending Bookings",
-    value: "2",
-  },
-];
-
-const pieData = {
-  labels: ["Upcoming","Completed","Confirmed", "Pending"],
-  datasets: [
-    {
-      data: [3, 15, 6, 2],
-      backgroundColor: [
-        "#ef4444",
-        "#333333",        
-        "#f08080",        
-        "#52525b"
-      ],
-      borderColor: [        
-        "#52525b",
-        "#dc2626",
-        "#52525b",
-        "#ffcccb"
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+import { useTrains, useBookings } from "../../hooks";
+import StatsCard from "../../components/admin-dashboard/StatsCard";
+import RevenueChart from "../../components/admin-dashboard/RevenueChart";
+import OccupancyChart from "../../components/admin-dashboard/OccupancyChart";
+import { FaTrain, FaUsers, FaTicketAlt, FaClock } from "react-icons/fa";
+import Loader from "../../components/common/Loader/Loader";
 
 function Dashboard() {
+  const { data: trains, isLoading: trainsLoading } = useTrains();
+  const { data: bookings, isLoading: bookingsLoading } = useBookings();
+
+  if (trainsLoading || bookingsLoading) return <Loader />;
+
+  const totalBookings = bookings?.length || 0;
+  const confirmed = bookings?.filter((b) => b.status === "confirmed").length || 0;
+  const activeTrains = trains?.filter((t) => t.status === "active").length || 0;
+  const delayed = 0; // placeholder
+
   return (
-    <section className="bg-zinc-300 h-screen p-8">      
-
-      <div className="mb-8">
-        <p className="text-red-500 uppercase font-bold text-2xl">
-          Operations Overview
-        </p>
-
-        <h2 className="text-3xl font-bold text-gray-800 mt-2">
-          Today at a Glance
-        </h2>
-
-        <p className="text-gray-500 mt-2">
-          Monitor today's railway activities and performance.
-        </p>
-      </div>     
-        
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-zinc-100 p-6 rounded-xl">
-        {/* pie Chart */}
-        <div className="flex items-center justify-center ">
-          <div className="w-64 h-64">
-            <Pie data={pieData} />
-          </div>          
-        </div>
-
-        {/* metrics */}
-        <div className="grid grid-cols-2 gap-6 mt-5">
-          {metrics.map((item) => (
-          <article
-            key={item.label}
-            className="bg-zinc-700 border rounded-xl p-6"
-          >
-            <h3 className=" text-white text-4xl font-bold">
-              {item.value}
-            </h3>
-
-            <p className="text-red-400 font-semibold mt-2">
-              {item.label}
-            </p>
-          </article>
-        ))}
-
-
-        </div>
-        
+    <section className="space-y-8 p-2">
+      <div>
+        <p className="text-red-400 uppercase font-bold tracking-widest text-lg">Operations Overview</p>
+        <h2 className="text-3xl font-bold mt-2">Today at a Glance</h2>
+        <p className="text-zinc-400 mt-2">Monitor today's railway activities and performance.</p>
       </div>
-
-</section>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StatsCard title="Active Trains" value={activeTrains} icon={<FaTrain />} />
+        <StatsCard title="Total Bookings" value={totalBookings} icon={<FaTicketAlt />} />
+        <StatsCard title="Confirmed" value={confirmed} icon={<FaUsers />} />
+        <StatsCard title="Delayed Services" value={delayed} icon={<FaClock />} growth="-2%" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RevenueChart bookings={bookings} />
+        <OccupancyChart bookings={bookings} trains={trains} />
+      </div>
+    </section>
   );
 }
 

@@ -17,22 +17,19 @@ import NotFound from "../pages/NotFound/NotFound";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import SeatSelector from "../components/booking/SeatSelector";
-
-// stations
 import AdminStationManagement from "../pages/Stations/AdminStationManagement";
-import AdminLayout from "../layouts/AdminLayout";
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/trains" element={<TrainListPage />} />
         <Route path="/trains/:id/seats" element={<SeatSelector />} />
         <Route path="/trains/:id" element={<TrainDetailsPage />} />
-        {/* Route for schedule management */}
         <Route path="/schedules" element={<ScheduleManagement />} />
         <Route path="/bookings" element={<MyBookings />} />
         <Route path="/bookings/new" element={<BookTicket />} />
@@ -40,17 +37,17 @@ function AppRoutes() {
       </Route>
 
       <Route element={<AdminRoute />}>
-        <Route element={<AdminLayout />}>
-          <Route path="/admin/dashboard" element={<Navigate to="/admin/users" replace />} />
-          <Route path="/admin/users" element={<UserManagement />} />
-          <Route path="/admin/reports" element={<Reports />} />
-          <Route path="/admin" element={<Navigate to="/admin/users" replace />} />
-        </Route>
-        <Route path="/trains/add" element={<AddTrain />} />
-        {/* station route */}
-        <Route path="/stations" element={<AdminStationManagement />} />
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        <Route path="/admin/trains" element={<TrainListPage />} />
+        <Route path="/admin/trains/add" element={<AddTrain />} />
+        <Route path="/admin/stations" element={<AdminStationManagement />} />
+        <Route path="/admin/schedules" element={<ScheduleManagement />} />
+        <Route path="/admin/bookings" element={<MyBookings />} />
+        <Route path="/admin/users" element={<UserManagement />} />
+        <Route path="/admin/reports" element={<Reports />} />
       </Route>
- 
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

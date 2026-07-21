@@ -13,7 +13,7 @@ const SeatSelector = ({
     },
     bookedSeats = [],
     currency = "Ksh",
-    onBookingCompelete = () => {},
+    onBookingComplete = () => {},
     title = "Train Seat selector",
     subtitle = "Select your preferred seats"
 
@@ -157,29 +157,28 @@ const SeatSelector = ({
     };
 
     const handleBooking = () => {
-        if(selectedSeats.length === 0){
-            alert("Please select at least one seat")
+        if (selectedSeats.length === 0) {
+            alert("Please select at least one seat");
+            return;
         }
+
         setSeats((prevSeats) => {
-            return prevSeats.map((row) => 
-                row.map((seat)=> {
-                    if (selectedSeats.some((selected) => selected.id === seat.id)){
-                        return{ ...seat, status: "booked", selected: false}
+            return prevSeats.map((row) =>
+                row.map((seat) => {
+                    if (selectedSeats.some((selected) => selected.id === seat.id)) {
+                        return { ...seat, status: "booked", selected: false };
                     }
                     return seat;
                 })
             );
         });
-        onBookingCompelete({
+
+        onBookingComplete({
             seats: selectedSeats,
             totalPrice: getTotalPrice(),
             seatIds: selectedSeats.map((seat) => seat.id),
         });
-        alert(
-            `Successfully booked 
-            ${selectedSeats.length                
-            }seat(s) for ${currency}${getTotalPrice()}`
-        );
+
         setSelectedSeats([]);
     }
 

@@ -73,7 +73,7 @@ function AdminStationManagement() {
     <div className="space-y-6 p-2 mb-3">
       <div className="flex justify-between items-center px-3 py-3">
         <div className="flex flex-col">
-          <p className=" uppercase tracking-widest font-bold ">Station Management</p>
+          <p className=" uppercase tracking-widest font-bold text-xl">Station Management</p>
           <h2 className="text-xl text-gray-700 font-bold mt-2">All Stations</h2>
         </div>
         <Button onClick={() => { setEditingStation(null); setIsFormOpen(true); }}>

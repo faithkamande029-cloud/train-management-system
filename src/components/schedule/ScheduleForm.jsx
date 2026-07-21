@@ -42,8 +42,8 @@ function ScheduleForm({ onAdd, isSubmitting = false }) {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-800">
-      <h2 className="text-2xl font-bold mb-6 text-white">Add Schedule</h2>
+    <div className="max-w-xl mx-auto bg-zinc-900 p-6 rounded-2xl border border-gray-800">
+      <h2 className="text-2xl font-bold mb-6 text-white text-center">Add Schedule</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Train ID"
@@ -98,7 +98,7 @@ function ScheduleForm({ onAdd, isSubmitting = false }) {
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-white focus:ring-2 focus:ring-amber-500 outline-none"
+            className="w-full p-3 rounded-lg border border-gray-700 bg-gray-500/30 text-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
             required
           >
             <option value="">Select Status</option>

@@ -48,40 +48,40 @@ function ScheduleManagement() {
   };
 
   return (
-    <section className="flex flex-col p-5 bg-zinc-400 min-h-screen">
-      <div className="justify-between items-center">
-        <div className="mb-4">
-          {/* eyebrow */}
-          <p className="uppercase text-2xl font-bold ">{isAdmin ? "Schedule management" : "Train schedules"}</p>
-          <h2 className="">Upcoming train schedules</h2>
-
+    <section className="min-h-screen bg-zinc-100 px-6 py-8 text-white sm:px-8 lg:px-10">
+      <div className="mx-auto max-w-7xl space-y-6">
+        <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-2xl shadow-black/40 sm:p-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-red-500">
+            {isAdmin ? "Schedule management" : "Train schedules"}
+          </p>
+          <h2 className="mt-2 text-3xl font-bold text-white">Upcoming train schedules</h2>
+          <p className="mt-2 max-w-2xl text-base text-zinc-400">
+            Coordinate departures, arrivals and platform assignments.
+          </p>
         </div>
-      
+
         {isAdmin && (
-          <>           
-            <div className="grid grid-cols-2 gap-6"  >
-              <div className="mb-8">
-                <ScheduleForm
-                  onAdd={handleAddSchedule}
-                  isSubmitting={false}
-                />
+          <>
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+              <div>
+                <ScheduleForm onAdd={handleAddSchedule} isSubmitting={false} />
               </div>
 
-              <div className="mb-8">
+              <div>
                 <PlatformAssignment />
               </div>
             </div>
-            <ScheduleTable
-            schedules={schedules}
-            loading={false}
-            onDelete={handleDeleteSchedule}
-            />
+
+            <div className="rounded-3xl border border-zinc-800 bg-zinc-900/80 p-4 shadow-2xl shadow-black/40 sm:p-6">
+              <ScheduleTable
+                schedules={schedules}
+                loading={false}
+                onDelete={handleDeleteSchedule}
+              />
+            </div>
           </>
-          )}
+        )}
       </div>
-      
-      
-      
     </section>
   );
 }

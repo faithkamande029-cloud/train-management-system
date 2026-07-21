@@ -49,8 +49,8 @@ const Input = forwardRef(
             aria-describedby={error ? `${inputId}-error` : undefined}
             className={`
               w-full p-3 rounded-lg border outline-none transition text-sm
-              bg-gray-800 text-white placeholder-gray-500
-              focus:ring-2 focus:ring-red-500 focus:border-transparent
+              bg-zinc-400 text-white placeholder-gray-800
+              focus:ring-2 focus:ring-red-200/50 focus:border-transparent
               disabled:opacity-50 disabled:cursor-not-allowed
               ${error ? "border-red-500" : "border-gray-700"}
               ${icon ? "pl-10" : ""}

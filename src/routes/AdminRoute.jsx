@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Loader from "../components/common/Loader/Loader";
+import AdminLayout from "../layouts/AdminLayout";
 
-function AdminRoute({ children }) {
+function AdminRoute() {
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
@@ -17,7 +18,11 @@ function AdminRoute({ children }) {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
-  return <Outlet/>;
+  return (
+    <AdminLayout>
+      <Outlet />
+    </AdminLayout>
+  );
 }
 
 export default AdminRoute;

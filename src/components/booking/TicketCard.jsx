@@ -19,7 +19,7 @@ const TicketCard = memo(({ booking, onSelect, onToggleFavorite, isFavorite }) =>
   };
 
   return (
-    <div className="bg-gray-900 rounded-2xl shadow-md overflow-hidden hover:shadow-red-900/30 hover:shadow-lg transition group cursor-pointer border border-gray-800" onClick={() => onSelect(booking)}>
+    <div className="bg-zinc-900 rounded-2xl shadow-md overflow-hidden hover:shadow-red-900/30 hover:shadow-lg transition group cursor-pointer border border-gray-800" onClick={() => onSelect(booking)}>
       <div className="relative bg-red-950/30 h-36 flex items-center justify-center">
         <FaTrain className="text-red-400 text-6xl opacity-80 group-hover:scale-110 transition duration-500" />
         <button className="absolute top-3 right-3 p-2 rounded-full bg-black/40 hover:bg-black z-10" onClick={(e) => { e.stopPropagation(); onToggleFavorite(booking.id); }}>
@@ -39,7 +39,7 @@ const TicketCard = memo(({ booking, onSelect, onToggleFavorite, isFavorite }) =>
           <div className="flex items-center gap-1"><FaClock className="text-red-400" />{booking.departureTime || "?"}</div>
           <div className={`font-semibold ${getStatusText(booking.status)}`}>${Number(booking.fare || 0).toLocaleString()}</div>
         </div>
-        <button onClick={(e) => { e.stopPropagation(); onSelect(booking); }} className="w-full bg-gray-800 hover:bg-red-700 hover:text-white text-gray-300 font-medium py-2 rounded-lg flex items-center justify-center gap-2 transition">
+        <button onClick={(e) => { e.stopPropagation(); onSelect(booking); }} className="w-full bg-zinc-800 hover:bg-red-700 hover:text-white text-gray-300 font-medium py-2 rounded-lg flex items-center justify-center gap-2 transition">
           <FaEye /> View Ticket
         </button>
       </div>

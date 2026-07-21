@@ -42,7 +42,7 @@ export default function PlatformAssignment() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white rounded-lg overflow-hidden shadow">
+        <table className="min-w-212.5 w-full bg-white rounded-lg overflow-hidden shadow">
           <thead className="bg-zinc-800 text-white">
             <tr>
               <th className="text-left px-4 py-3">Train</th>
