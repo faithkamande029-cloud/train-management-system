@@ -54,7 +54,7 @@ function PaymentForm({ onPay, fare, isSubmitting = false }) {
           Total Amount Due: {formatCurrency(fare)}
         </p>
       )}
-      <div className="mb-6">
+      <div className="mb-6 bg-red-400">
         <Cards
           number={form.cardNumber || ""}
           expiry={form.expiryDate || ""}
