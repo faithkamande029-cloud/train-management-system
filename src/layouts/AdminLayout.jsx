@@ -6,42 +6,35 @@ import {
   FaUsers, FaChartBar, FaMapMarkerAlt,
 } from "react-icons/fa";
 import { MdEventSeat } from "react-icons/md";
-import Navbar from "../components/common/Navbar/Navbar";
+import AdminNavbar from "../components/common/Navbar/AdminNavbar";
 import Footer from "../components/common/Footer/Footer";
 
 const navItems = [
-  { path: "/dashboard",    label: "Dashboard",  icon: <FaHome />         },
-  { path: "/trains",       label: "Trains",     icon: <FaTrain />        },
-  { path: "/stations",     label: "Stations",   icon: <FaMapMarkerAlt /> },
-  { path: "/schedules",    label: "Schedules",  icon: <FaCalendarAlt />  },
-  { path: "/bookings",     label: "Bookings",   icon: <MdEventSeat />    },
-  { path: "/admin/users",  label: "Users",      icon: <FaUsers />        },
-  { path: "/admin/reports",label: "Reports",    icon: <FaChartBar />     },
+  { path: "/admin/dashboard", label: "Dashboard", icon: <FaHome /> },
+  { path: "/admin/trains", label: "Trains", icon: <FaTrain /> },
+  { path: "/admin/stations", label: "Stations", icon: <FaMapMarkerAlt /> },
+  { path: "/admin/schedules", label: "Schedules", icon: <FaCalendarAlt /> },
+  { path: "/admin/bookings", label: "Bookings", icon: <MdEventSeat /> },
+  { path: "/admin/users", label: "Users", icon: <FaUsers /> },
+  { path: "/admin/reports", label: "Reports", icon: <FaChartBar /> },
 ];
 
 function AdminLayout({ children }) {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col">
-      <Navbar />
+    <div className="flex min-h-screen flex-col bg-zinc-200">
+      <AdminNavbar />
 
       <div className="flex flex-1">
-        {/* SIDEBAR */}
-        <aside className="w-64 bg-gray-900 border-r border-gray-800 min-h-full p-4 hidden md:block">
-          <p className="text-gray-500 text-xs uppercase tracking-widest mb-4 px-2">
-            Admin Menu
-          </p>
-          <nav className="flex flex-col gap-1">
+        <aside className="hidden min-h-full w-64 border-r border-gray-800 bg-zinc-900 p-4 md:block">
+          <p className="mb-4 px-2 text-xs uppercase tracking-widest text-gray-500">Admin Panel</p>
+          <nav className="space-y-2">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition
-                  ${location.pathname === item.path
-                    ? "bg-cyan-700 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                  }`}
+                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition ${location.pathname === item.path ? "bg-red-800 text-white" : "text-zinc-400 hover:bg-zinc-800 hover:text-white"}`}
               >
                 {item.icon}
                 {item.label}
@@ -50,8 +43,7 @@ function AdminLayout({ children }) {
           </nav>
         </aside>
 
-        {/* MAIN CONTENT */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-y-auto p-6">
           {children}
         </main>
       </div>

@@ -1,16 +1,17 @@
 // src/components/common/Navbar/Navbar.jsx
 
 import { FaBell, FaSearch, FaTrain } from "react-icons/fa";
+import { TrainFront } from 'lucide-react';
 
 function Navbar() {
   return (
-    <div className="bg-black px-6 py-4 flex justify-between items-center shadow-sm border-b border-cyan-800">
+    <div className="w-full bg-black px-6 py-4 flex justify-between items-center shadow-sm border-b border-cyan-800">
 
       {/* Left — Logo */}
       <div className="flex items-center gap-3">
-        <FaTrain className="text-cyan-400 text-2xl" />
+        <FaTrain className="text-zinc-800 text-2xl" />
         <span className="text-white font-bold text-lg tracking-wide">
-          RailMS
+          GariLM
         </span>
       </div>
 
@@ -27,11 +28,11 @@ function Navbar() {
       {/* Right — Bell + User */}
       <div className="flex items-center gap-5">
         <div className="relative cursor-pointer">
-          <FaBell className="text-gray-400 text-xl hover:text-cyan-400 transition" />
+          <TrainFront className="text-red-500 text-xl hover:text-red-700 transition" />
           <span className="absolute -top-1 -right-1 bg-red-500 rounded-full w-2 h-2" />
         </div>
         <div className="flex items-center gap-3 cursor-pointer">
-          <div className="w-9 h-9 rounded-full bg-cyan-700 flex items-center justify-center text-white font-bold text-sm">
+          <div className="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-sm">
             A
           </div>
           <div className="text-sm">

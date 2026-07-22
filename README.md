@@ -1,16 +1,91 @@
-# React + Vite
+# Train Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based train management application for managing trains, stations, schedules, bookings, and administrative reporting. The project is designed as a demo-ready dashboard with a mock backend so it can be run locally without a separate API service.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- User authentication and role-based access
+- Dashboard overview for operational insights
+- Train management including add, view, and update workflows
+- Station administration
+- Schedule management and assignment views
+- Ticket booking experience with seat selection
+- Booking history and confirmation flow
+- Admin pages for users and reports
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- Vite
+- React Router DOM
+- Tailwind CSS
+- Chart.js / Recharts
+- Axios
+- Express mock server
+- ESLint
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js 18 or later
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+### Run the application
+
+Start the mock API server:
+
+```bash
+npm run mock
+```
+
+In a second terminal, start the frontend:
+
+```bash
+npm run dev
+```
+
+The app will be available at:
+
+- Frontend: http://localhost:5173
+- Mock API: http://localhost:5000
+
+### Demo Login
+
+The mock server includes sample users for testing. For example:
+
+- Admin: admin@railms.com
+- Manager: manager@railms.com
+- Agent: agent@railms.com
+
+## Available Scripts
+
+```bash
+npm run dev      # start the Vite development server
+npm run mock     # start the mock API server
+npm run build    # build the production bundle
+npm run preview  # preview the production build
+npm run lint     # run ESLint
+```
+
+## Project Structure
+
+- src/pages - application pages and screens
+- src/components - reusable UI and feature components
+- src/services - API and HTTP service layer
+- src/hooks - custom hooks
+- src/context - global state providers
+- mock-server.cjs - local mock backend for development
+
+## Notes
+
+This project uses an in-memory mock API for demonstration purposes. Data resets when the mock server restarts.

@@ -6,8 +6,11 @@ export const STATIONS_QUERY_KEY = ["stations"];
 export function useStations() {
   return useQuery({
     queryKey: STATIONS_QUERY_KEY,
-    queryFn: getStations,
-    select: (res) => res.data,
+    queryFn: async () => {
+      const res = await getStations();
+      console.log("API Response:", res);
+      return res.data;
+    },
   });
 }
 

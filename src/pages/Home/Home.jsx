@@ -27,7 +27,7 @@ const highlights = [
 
 function Home() {
   return (
-    <section className="relative min-h-[80vh] overflow-hidden bg-zinc-200">      
+    <section className="relative min-h-[80vh] overflow-hidden bg-black/90">      
       
       {/* Hero */}
       <div
@@ -63,17 +63,17 @@ function Home() {
       </div>    
 
       {/* About section */}
-      <div className="info-grid grid grid-cols-4 items-center bg-black text-xl text-zinc-100 px-8 pt-3 h-60">
+      <div className="info-grid grid grid-cols-4 items-center bg-black text-zinc-100 px-8 pt-3 h-45 mt-2 relative z-10 shadow-2xl border-b-7 border-zinc-700/35 ">
         {highlights.map((item) => {
           const Icon = item.icon
 
           // info card
           return (
             <div className='flex pt-2 pb-2 gap-2 border-r pr-4 pl-4 border-gray-500 '>            
-              <Icon className='w-10 h-10 text-red-600 shrink-0'/>
+              <Icon className='w-8 h-8 text-red-600 shrink-0'/>
               <article key={item.title} className="flex flex-col max-w-50">                            
                 <h3 className='font-bold'>{item.title}</h3>
-                <p className='line-clamp-4 text-gray-400'>{item.text}</p>
+                <p className='line-clamp-2 text-gray-400 mt-1'>{item.text}</p>
               </article>
 
             </div>

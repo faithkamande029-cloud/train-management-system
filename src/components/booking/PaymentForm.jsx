@@ -47,14 +47,14 @@ function PaymentForm({ onPay, fare, isSubmitting = false }) {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-800">
+    <div className="max-w-xl mx-auto bg-zinc-900 p-6 rounded-2xl border border-gray-800">
       <h2 className="text-2xl font-bold mb-2 text-white">Payment Details</h2>
       {fare && (
-        <p className="text-amber-400 font-semibold mb-6">
+        <p className="text-red-500 font-semibold mb-6">
           Total Amount Due: {formatCurrency(fare)}
         </p>
       )}
-      <div className="mb-6">
+      <div className="mb-6 bg-red-400">
         <Cards
           number={form.cardNumber || ""}
           expiry={form.expiryDate || ""}
@@ -73,7 +73,7 @@ function PaymentForm({ onPay, fare, isSubmitting = false }) {
             name="paymentMethod"
             value={form.paymentMethod}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-white focus:ring-2 focus:ring-amber-500 outline-none"
+            className="w-full p-3 rounded-lg border border-gray-700 bg-zinc-500 text-white focus:ring-2 focus:ring-red-500 outline-none"
             required
           >
             <option value="">Select Payment Method</option>

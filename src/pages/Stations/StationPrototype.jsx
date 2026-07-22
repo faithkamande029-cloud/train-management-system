@@ -4,7 +4,7 @@ const stations = [
   { name: 'Mombasa Terminus', code: 'MRT', active: true },
 ];
 
-function StationManagement() {
+function StationPrototype() {
   return (
     <section className="card bg-zinc-300 p-8 h-screen text-white">
       <div className="mb-4">
@@ -48,4 +48,4 @@ function StationManagement() {
   );
 }
 
-export default StationManagement;
+export default StationPrototype;
