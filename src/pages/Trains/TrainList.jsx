@@ -5,8 +5,8 @@ import nightRail from "../../assets/night-rail.jpg";
 import hillLine from "../../assets/hill-line.jpg";
 
 const trains = [
-  { id: 1, image: expressTrain, name: 'Express 101', route: 'Mombasa → Voi', status: 'On time' },
-  { id: 2, image: nightRail, name: 'Night Rail', route: 'Nairobi → Mombasa', status: 'Boarding' },
+  { id: 1, image: expressTrain, name: 'Express 101', route: 'Nairobi → Mombasa', status: 'On time' },
+  { id: 2, image: nightRail, name: 'Night Rail', route: 'Mombasa → Voi ', status: 'Boarding' },
   { id: 3, image:hillLine, name: 'Hill Line', route: 'Nairobi → Nanyuki', status: 'Delayed' },
 ];
 
@@ -32,7 +32,7 @@ function TrainList() {
         <table className='w-full table-auto border-collapse'>
           <thead>
             <tr className='bg-zinc-900'>
-              <th scope='col' className='p-4 text-left font-medium text-white'>Image</th>
+              <th scope='col' className='w-50 p-4 text-left font-medium text-white'>Image</th>
               <th scope='col' className='w-50 p-4 text-left font-medium text-white'>Train</th>
               <th scope='col' className='w-50 p-4 text-left font-medium text-white'>Route</th>
               <th scope='col' className='w-50 p-4 text-left font-medium text-white'>Status</th>
@@ -45,7 +45,7 @@ function TrainList() {
                 <td className='p-4'>
                   <img src={train.image} alt={train.name} className='h-16 w-24 rounded-lg object-cover' />
                 </td>
-                <td className='w-50 p-4'>{train.name}</td>
+                <td className='w-50 p-4 font-bold'>{train.name}</td>
                 <td className='w-50 p-4'>{train.route}</td>
 
                 <td className="row-actions flex gap-3 p-4">
@@ -61,7 +61,7 @@ function TrainList() {
                     </Link>
                   ) : (
                     <Link
-                      to={`/trains/${train.id}/seats`}
+                      to={`/trains/${train.id}/booking`}
                       className='rounded-lg bg-red-500 p-2 font-semibold text-white'
                     >
                       View Seats

@@ -17,7 +17,7 @@ function Dashboard() {
   const delayed = 0; // placeholder
 
   return (
-    <section className="space-y-8 p-2">
+    <section className="space-y-8 p-6">
       <div>
         <p className="text-red-400 uppercase font-bold tracking-widest text-lg">Operations Overview</p>
         <h2 className="text-3xl font-bold mt-2">Today at a Glance</h2>
