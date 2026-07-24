@@ -51,7 +51,7 @@ function Home() {
           </p>
           <div className="flex text-center mt-2 ">            
             <Link 
-              to="/trains" 
+              to="/bookings/new" 
               className="bg-black text-zinc-50 border border-zinc-700 p-2.5 rounded-2xl shadow-lg hover:bg-red-500 w-40 font-semibold"
             >
               Book Train

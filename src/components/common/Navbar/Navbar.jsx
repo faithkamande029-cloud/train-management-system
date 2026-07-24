@@ -5,7 +5,7 @@ import { TrainFront } from 'lucide-react';
 
 function Navbar() {
   return (
-    <div className="w-full bg-black px-6 py-4 flex justify-between items-center shadow-sm border-b border-cyan-800">
+    <div className="w-full bg-black px-6 py-4 flex justify-between items-center shadow-sm border-b border-zinc-400">
 
       {/* Left — Logo */}
       <div className="flex items-center gap-3">
