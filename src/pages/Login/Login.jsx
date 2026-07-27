@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { validateLogin } from "../../utils/authRole";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,14 +12,13 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const result = validateLogin(email, password, role);
+    const result = login(email, password, role);
 
     if (!result.ok) {
       setError(result.error);
       return;
     }
 
-    login({ email, role: result.role, name: result.role === "admin" ? "Admin User" : "Regular User" });
     setError("");
     navigate(result.role === "admin" ? "/admin/users" : "/dashboard");
   };
@@ -83,6 +81,9 @@ function Login() {
         {error ? <p className="error-text">{error}</p> : null}
         <button type="submit" className="pill-button primary">Sign in</button>
       </form>
+      <p className="helper-text">
+        <Link to="/forgot-password">Forgot your password?</Link> · <Link to="/sign-up">Create an account</Link>
+      </p>
       {user ? (
         <p className="helper-text">
           You are currently signed in as {user.role === "admin" ? "Admin" : "User"}. Select a role above and sign in to switch accounts.

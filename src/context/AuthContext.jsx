@@ -1,47 +1,73 @@
-// src/context/AuthContext.jsx
-
 import { createContext, useEffect, useState } from "react";
+import { getAccount, normalizeEmail, validateLogin, validatePasswordReset, validateSignup } from "../utils/authRole";
 
 const AuthContext = createContext();
-const STORAGE_KEY = "train-management-user";
+const USER_STORAGE_KEY = "train-management-user";
+const ACCOUNTS_STORAGE_KEY = "train-management-accounts";
+
+function readAccounts() {
+  try {
+    const savedAccounts = window.localStorage.getItem(ACCOUNTS_STORAGE_KEY);
+    return savedAccounts ? JSON.parse(savedAccounts) : [];
+  } catch {
+    return [];
+  }
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    if (typeof window === "undefined") {
-      return null;
-    }
-
     try {
-      const savedUser = window.localStorage.getItem(STORAGE_KEY);
+      const savedUser = window.localStorage.getItem(USER_STORAGE_KEY);
       return savedUser ? JSON.parse(savedUser) : null;
     } catch {
       return null;
     }
   });
+  const [accounts, setAccounts] = useState(readAccounts);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    if (user) {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-      return;
-    }
-
-    window.localStorage.removeItem(STORAGE_KEY);
+    if (user) window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+    else window.localStorage.removeItem(USER_STORAGE_KEY);
   }, [user]);
 
-  const login = (userData) => {
-    setUser(userData);
+  useEffect(() => {
+    window.localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+  }, [accounts]);
+
+  const login = (email, password, role) => {
+    const result = validateLogin(email, password, role, accounts);
+    if (result.ok) {
+      const { name, email: accountEmail, role: accountRole } = result.account;
+      setUser({ name, email: accountEmail, role: accountRole });
+    }
+    return result;
   };
 
-  const logout = () => {
-    setUser(null);
+  const signUp = (name, email, password, confirmPassword) => {
+    const result = validateSignup(name, email, password, confirmPassword, accounts);
+    if (!result.ok) return result;
+
+    const account = { name: name.trim(), email: normalizeEmail(email), password, role: "user" };
+    setAccounts((currentAccounts) => [...currentAccounts, account]);
+    setUser({ name: account.name, email: account.email, role: account.role });
+    return { ok: true, error: null };
+  };
+
+  const resetPassword = (email, password, confirmPassword) => {
+    const result = validatePasswordReset(email, password, confirmPassword, accounts);
+    if (!result.ok) return result;
+
+    const existingAccount = getAccount(email, accounts);
+    const updatedAccount = { ...existingAccount, email: normalizeEmail(email), password };
+    setAccounts((currentAccounts) => [
+      ...currentAccounts.filter((account) => account.email !== updatedAccount.email),
+      updatedAccount,
+    ]);
+    return { ok: true, error: null };
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout: () => setUser(null), signUp, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

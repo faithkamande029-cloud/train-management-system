@@ -3,6 +3,8 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
+import SignUp from "../pages/Login/SignUp";
+import ForgotPassword from "../pages/Login/ForgotPassword";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import TrainListPage from "../pages/Trains/TrainList";
 import TrainDetailsPage from "../pages/Trains/TrainDetails";
@@ -23,6 +25,8 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/trains" element={<TrainListPage />} />
