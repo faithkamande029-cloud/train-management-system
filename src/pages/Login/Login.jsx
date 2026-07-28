@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { validateLogin } from "../../utils/authRole";
 import redDoor from "../../assets/red-door.jpg";
 
 function Login() {
@@ -11,22 +10,17 @@ function Login() {
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const result = validateLogin(email, password, role);
+    const result = login(email, password, role);
 
     if (!result.ok) {
       setError(result.error);
       return;
     }
-
-    login({
-      email,
-      role: result.role,
-      name: result.role === "admin" ? "Admin User" : "Regular User",
-    });
 
     setError("");
     navigate(result.role === "admin" ? "/admin/dashboard" : "/dashboard");
@@ -89,12 +83,17 @@ function Login() {
             />
           </label>
           {error ? <p className="error-text">{error}</p> : null}
+          {location.state?.message ? <p className="text-green-300 text-center">{location.state.message}</p> : null}
           <button 
             type="submit" 
             className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
           >
             Sign in
           </button>
+          <div className="flex justify-between text-sm text-zinc-200">
+            <Link className="hover:text-red-400" to="/forgot-password">Forgot password?</Link>
+            <Link className="hover:text-red-400" to="/sign-up">Create account</Link>
+          </div>
             
           </div>
           
