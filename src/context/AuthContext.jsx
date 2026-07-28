@@ -1,7 +1,18 @@
-import { createContext, useEffect, useState } from "react";
-import { getAccount, normalizeEmail, validateLogin, validatePasswordReset, validateSignup } from "../utils/authRole";
+import { createContext, useEffect, useState, useContext } from "react";
+import { 
+  getAccount, 
+  normalizeEmail, 
+  validateLogin, 
+  validatePasswordReset, 
+  validateSignup 
+} from "../utils/authRole";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
+
+export function useAuth(){
+    return useContext(AuthContext)
+  };
+
 const USER_STORAGE_KEY = "train-management-user";
 const ACCOUNTS_STORAGE_KEY = "train-management-accounts";
 
@@ -66,6 +77,7 @@ export function AuthProvider({ children }) {
     ]);
     return { ok: true, error: null };
   };
+
 
   return (
     <AuthContext.Provider value={{ user, login, logout: () => setUser(null), signUp, resetPassword }}>
