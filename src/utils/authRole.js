@@ -17,12 +17,32 @@ export function getAccount(email, accounts = []) {
 export function validateLogin(email, password, role, accounts = []) {
   const account = getAccount(email, accounts);
 
-  if (account?.password === password && account.role === role) {
+  if (account && account.password === password && account.role === role) {
     return { ok: true, role, error: null, account };
+  }
+
+  if (account && account.password === password && account.role !== role) {
+    return {
+      ok: false,
+      role: null,
+      error: 'The selected role does not match the provided credentials.',
+    };
   }
   if (account?.password === password && account.role !== role) {
     return { ok: false, role: null, error: 'The selected role does not match the provided credentials.' };
   }
+  return { ok: false, role: null, error: 'Invalid email or password.' };
+}
+
+export function validateSignup(name, email, password, confirmPassword, accounts = []) {
+  if (!String(name).trim()) return { ok: false, error: 'Please enter your name.' };
+  if (!emailPattern.test(normalizeEmail(email))) return { ok: false, error: 'Please enter a valid email address.' };
+  if (password.length < 6) return { ok: false, error: 'Password must contain at least 6 characters.' };
+  if (password !== confirmPassword) return { ok: false, error: 'Passwords do not match.' };
+  if (getAccount(email, accounts)) return { ok: false, error: 'An account with this email already exists.' };
+  return { ok: true, error: null };
+}
+
   return { ok: false, role: null, error: 'Invalid email or password.' };
 }
 

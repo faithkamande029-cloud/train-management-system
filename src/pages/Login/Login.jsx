@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import redDoor from "../../assets/red-door.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +13,6 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const result = login(email, password, role);
 
     if (!result.ok) {
@@ -94,18 +92,27 @@ function Login() {
           >
             Sign in
           </button>
-          <div className="flex justify-between text-sm text-zinc-200">
-            <Link className="hover:text-red-400" to="/forgot-password">Forgot password?</Link>
-            <Link className="hover:text-red-400" to="/sign-up">Create account</Link>
-          </div>
-            
-          </div>
-          
-        </form>
-        
-
-      </div>
-      
+        </div>
+        <label>
+          Email
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="user@railway.com" />
+        </label>
+        <label>
+          Password
+          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="••••••••" />
+        </label>
+        {error ? <p className="error-text">{error}</p> : null}
+        <button type="submit" className="pill-button primary">Sign in</button>
+      </form>
+      <p className="helper-text">
+        <Link to="/forgot-password">Forgot your password?</Link> · <Link to="/sign-up">Create an account</Link>
+      </p>
+      {user ? (
+        <p className="helper-text">
+          You are currently signed in as {user.role === "admin" ? "Admin" : "User"}. Select a role above and sign in to switch accounts.
+        </p>
+      ) : null}
+      <p className="helper-text">Demo credentials: User - user@railway.com / user123, Admin - admin@railway.com / admin123</p>
     </section>
   );
 }
