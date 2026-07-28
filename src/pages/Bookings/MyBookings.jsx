@@ -1,25 +1,124 @@
-const bookings = [
-  { id: 'BK-1001', train: 'Express 101', seat: 'A12', status: 'Confirmed' },
-  { id: 'BK-1002', train: 'Night Rail', seat: 'B07', status: 'Pending' },
-];
+import { useState } from "react";
+import { useBookings, useUpdateBooking, useDeleteBooking } from "../../hooks";
+import TicketCard from "../../components/booking/TicketCard";
+import Modal from "../../components/common/Modal/Modal";
+import Button from "../../components/common/Button/Button";
+import Loader from "../../components/common/Loader/Loader";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function MyBookings() {
+  const { data: bookings, isLoading } = useBookings();
+  const updateBooking = useUpdateBooking();
+  const deleteBooking = useDeleteBooking();
+  const navigate = useNavigate();
+  const [favorites, setFavorites] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  const handleCancelBooking = (id) => {
+    if (window.confirm("Are you sure you want to cancel this booking?")) {
+      updateBooking.mutate(
+        { id, data: { status: "cancelled" } },
+        {
+          onSuccess: () => {
+            toast.success("Booking cancelled");
+            setSelectedBooking(null);
+          },
+          onError: (err) => toast.error(err.message || "Failed to cancel booking"),
+        }
+      );
+    }
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this booking?")) {
+      deleteBooking.mutate(id, {
+        onSuccess: () => {
+          toast.success("Booking deleted");
+          setSelectedBooking(null);
+        },
+        onError: (err) => toast.error(err.message || "Failed to delete booking"),
+      });
+    }
+  };
+
+  if (isLoading) return <Loader />;
+
+  if (!bookings || bookings.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <p className="text-gray-400">No bookings found.</p>
+        <Button className="mt-4" onClick={() => navigate("/bookings/new")}>
+          Book a Ticket
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <section className="card">
-      <p className="eyebrow">Passenger portal</p>
-      <h2>My bookings</h2>
-      <div className="list-card">
+    <div className="space-y-6 p-2 mb-3">
+      <div className="flex justify-between items-center p-3">
+        <div className="px-2">
+          <p className="uppercase tracking-widest font-bold text-xl">Passenger Portal</p>
+          <h2 className="text-xl font-bold text-zinc-600 mt-2">My Bookings</h2>
+        </div>
+        <Button onClick={() => navigate("/bookings/new")}>Book New Ticket</Button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {bookings.map((booking) => (
-          <div key={booking.id} className="list-row">
-            <div>
-              <h3>{booking.train}</h3>
-              <p>{booking.id} • Seat {booking.seat}</p>
-            </div>
-            <span className="badge">{booking.status}</span>
-          </div>
+          <TicketCard
+            key={booking.id}
+            booking={booking}
+            onSelect={setSelectedBooking}
+            onToggleFavorite={toggleFavorite}
+            isFavorite={favorites.includes(booking.id)}
+          />
         ))}
       </div>
-    </section>
+
+      <Modal
+        isOpen={!!selectedBooking}
+        onClose={() => setSelectedBooking(null)}
+        title="Booking Details"
+      >
+        {selectedBooking && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div><p className="text-gray-400 text-sm">Passenger</p><p className="text-white font-medium">{selectedBooking.passengerName}</p></div>
+              <div><p className="text-gray-400 text-sm">Email</p><p className="text-white font-medium">{selectedBooking.email}</p></div>
+              <div><p className="text-gray-400 text-sm">Train</p><p className="text-white font-medium">{selectedBooking.trainId}</p></div>
+              <div><p className="text-gray-400 text-sm">Seat</p><p className="text-white font-medium">{selectedBooking.seatNumber}</p></div>
+              <div><p className="text-gray-400 text-sm">Fare</p><p className="text-white font-medium">${Number(selectedBooking.fare).toLocaleString()}</p></div>
+              <div><p className="text-gray-400 text-sm">Status</p>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  selectedBooking.status === "confirmed" ? "bg-green-600" :
+                  selectedBooking.status === "pending" ? "bg-yellow-600" :
+                  "bg-red-600"
+                }`}>
+                  {selectedBooking.status}
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-3 pt-4 border-t border-zinc-600">
+              {selectedBooking.status !== "cancelled" && (
+                <Button variant="danger" onClick={() => handleCancelBooking(selectedBooking.id)}>
+                  Cancel Booking
+                </Button>
+              )}
+              <Button variant="secondary" onClick={() => setSelectedBooking(null)}>Close</Button>
+              <Button variant="danger" onClick={() => handleDelete(selectedBooking.id)}>Delete</Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </div>
   );
 }
 

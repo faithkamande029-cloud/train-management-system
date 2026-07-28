@@ -1,14 +1,30 @@
-function TrainDetails() {
+import { useParams } from "react-router-dom";
+import { useTrain } from "../../hooks";
+import TrainDetailsComponent from "../../components/trains/TrainDetails";
+import Loader from "../../components/common/Loader/Loader";
+import { useState } from "react";
+
+function TrainDetailsPage() {
+  const { id } = useParams();
+  const { data: train, isLoading } = useTrain(id);
+  const [favorites, setFavorites] = useState([]);
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
+
+  if (isLoading) return <Loader />;
+
   return (
-    <section className="card">
-      <p className="eyebrow">Train detail</p>
-      <h2>Express 101</h2>
-      <p>Route: Colombo → Kandy</p>
-      <p>Departure: 06:30</p>
-      <p>Arrival: 09:15</p>
-      <p>Status: On time</p>
-    </section>
+    <TrainDetailsComponent
+      train={train}
+      onClose={() => window.history.back()}
+      favorites={favorites}
+      onToggleFavorite={toggleFavorite}
+    />
   );
 }
 
-export default TrainDetails;
+export default TrainDetailsPage;

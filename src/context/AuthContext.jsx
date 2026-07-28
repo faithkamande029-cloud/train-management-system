@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
       const savedUser = window.localStorage.getItem(USER_STORAGE_KEY);
       return savedUser ? JSON.parse(savedUser) : null;
     } catch {
+      localStorage.removeItem(USER_STORAGE_KEY);
       return null;
     }
   });
@@ -72,5 +73,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-export { AuthContext };

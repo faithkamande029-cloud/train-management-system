@@ -7,8 +7,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [error, setError] = useState("");
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -20,54 +21,76 @@ function Login() {
     }
 
     setError("");
-    navigate(result.role === "admin" ? "/admin/users" : "/dashboard");
-  };
+    navigate(result.role === "admin" ? "/admin/dashboard" : "/dashboard");
+
+  }
 
   return (
-    <section className="card">
-      <p className="eyebrow">Access</p>
-      <h2>{role === "admin" ? "Admin login" : "User login"}</h2>
-      <form className="stacked-form" onSubmit={handleSubmit}>
-        <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem" }}>
-          <button
-            type="button"
-            onClick={() => {
-              setRole("user");
-              setError("");
-            }}
-            aria-pressed={role === "user"}
-            style={{
-              flex: 1,
-              border: role === "user" ? "1px solid #4f46e5" : "1px solid #cbd5e1",
-              background: role === "user" ? "#4f46e5" : "#fff",
-              color: role === "user" ? "#fff" : "#0f172a",
-              padding: "0.65rem 0.9rem",
-              borderRadius: "999px",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
+    <section
+      className="card relative h-screen w-full bg-cover bg-center flex items-center justify-center px-6"
+      style={{ backgroundImage: `url(${redDoor})` }}
+    >
+      <div className="absolute inset-0 bg-black/45"></div>
+      <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
+      shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
+
+        <div className="text-center p-4">
+          <p className="eyebrow text-3xl font-bold text-red-500">Access</p>
+          <h2 className="text-zinc-300">User login</h2>
+        </div>
+        
+
+        {/* sign in form */}
+        <form className="space-y-5" onSubmit={handleSubmit}>
+          <div className="flex flex-col justify-center items-center gap-3 mt-10">
+            <div className=" text-xl">
+            <label className="block text-gray-100 mb-3 text-center ">
+            Sign in as
+            <select 
+              value={role} 
+              onChange={(event) => setRole(event.target.value)}
+              className="block mx-auto mt-2 bg-red-500 text-zinc-300 rounded-lg p-1 "
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            
+          </label>
+          </div>
+          {/* email and password input */}
+          <div>
+            <label className="block text-gray-100 mb-3">
+              <span className="font-medium">Email</span>
+              
+              <input 
+                type="email" value={email} 
+                onChange={(event) => setEmail(event.target.value)} 
+                placeholder="user@railway.com" 
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+              />
+            </label>
+            <label className="block text-gray-100 mb-3">
+              <span className="font-medium"> Password</span>
+              <input 
+                type="password" 
+                value={password} 
+                onChange={(event) => setPassword(event.target.value)} 
+                placeholder="••••••••" 
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+              />
+            </label>
+            
+          </div>
+          
+          {error ? <p className="error-text">{error}</p> : null}
+          {location.state?.message ? <p className="text-green-300 text-center">{location.state.message}</p> : null}
+          <button 
+            type="submit" 
+            className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
           >
-            User
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRole("admin");
-              setError("");
-            }}
-            aria-pressed={role === "admin"}
-            style={{
-              flex: 1,
-              border: role === "admin" ? "1px solid #4f46e5" : "1px solid #cbd5e1",
-              background: role === "admin" ? "#4f46e5" : "#fff",
-              color: role === "admin" ? "#fff" : "#0f172a",
-              padding: "0.65rem 0.9rem",
-              borderRadius: "999px",
-              cursor: "pointer",
-              fontWeight: 600,
-            }}
-          >
-            Admin
+            Sign in
           </button>
         </div>
         <label>

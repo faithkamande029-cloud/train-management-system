@@ -1,25 +1,23 @@
+import { useAddTrain } from "../../hooks";
+import TrainForm from "../../components/trains/TrainForm.jsx";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 function AddTrain() {
-  return (
-    <section className="card">
-      <p className="eyebrow">New train</p>
-      <h2>Add a train</h2>
-      <form className="stacked-form">
-        <label>
-          Train name
-          <input placeholder="North Star Express" />
-        </label>
-        <label>
-          Route
-          <input placeholder="City A → City B" />
-        </label>
-        <label>
-          Departure time
-          <input placeholder="08:00" />
-        </label>
-        <button type="button" className="pill-button primary">Save train</button>
-      </form>
-    </section>
-  );
+  const navigate = useNavigate();
+  const { mutate, isPending } = useAddTrain();
+
+  const handleAdd = (data) => {
+    mutate(data, {
+      onSuccess: () => {
+        toast.success("Train added successfully");
+        navigate("/trains");
+      },
+      onError: (err) => toast.error(err.message || "Failed to add train"),
+    });
+  };
+
+  return <TrainForm onAdd={handleAdd} isSubmitting={isPending} />;
 }
 
 export default AddTrain;

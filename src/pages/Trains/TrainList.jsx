@@ -1,40 +1,25 @@
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useTrains } from "../../hooks";
+import TrainListComponent from "../../components/trains/TrainList";
+import { useState } from "react";
 
-const trains = [
-  { id: 1, name: 'Express 101', route: 'Colombo → Kandy', status: 'On time' },
-  { id: 2, name: 'Night Rail', route: 'Galle → Colombo', status: 'Boarding' },
-  { id: 3, name: 'Hill Line', route: 'Nuwara Eliya → Colombo', status: 'Delayed' },
-];
+function TrainListPage() {
+  const { data: trains, isLoading } = useTrains();
+  const [favorites, setFavorites] = useState([]);
 
-function TrainList() {
-  const { user } = useAuth();
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  };
 
   return (
-    <section className="card">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Train administration</p>
-          <h2>Train catalogue</h2>
-        </div>
-        {user?.role === 'admin' ? <Link to="/trains/add" className="pill-button primary">Add train</Link> : null}
-      </div>
-      <div className="list-card">
-        {trains.map((train) => (
-          <div key={train.id} className="list-row">
-            <div>
-              <h3>{train.name}</h3>
-              <p>{train.route}</p>
-            </div>
-            <div className="row-actions">
-              <span className="badge">{train.status}</span>
-              <Link to={`/trains/${train.id}`}>View</Link>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+    <TrainListComponent
+      trains={trains || []}
+      loading={isLoading}
+      favorites={favorites}
+      onToggleFavorite={toggleFavorite}
+    />
   );
 }
 
-export default TrainList;
+export default TrainListPage;
