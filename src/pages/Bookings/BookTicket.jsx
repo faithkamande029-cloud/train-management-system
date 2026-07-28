@@ -60,12 +60,12 @@ function BookTicket() {
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
               step === s ? "bg-red-600 text-white" :
               index < Object.values(STEPS).indexOf(step) ? "bg-green-600 text-white" :
-              "bg-gray-700 text-gray-400"
+              "bg-zinc-700 text-gray-400"
             }`}>
               {index + 1}
             </div>
             {index < Object.values(STEPS).length - 1 && (
-              <div className={`w-12 h-0.5 ${index < Object.values(STEPS).indexOf(step) ? "bg-green-600" : "bg-gray-700"}`} />
+              <div className={`w-12 h-0.5 ${index < Object.values(STEPS).indexOf(step) ? "bg-green-600" : "bg-zinc-700"}`} />
             )}
           </div>
         ))}

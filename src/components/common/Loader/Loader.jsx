@@ -11,7 +11,7 @@ function Loader({ size = "md", text = "Loading...", fullScreen = false }) {
         className={`
           ${sizes[size]}
           rounded-full
-          border-gray-700
+          border-zinc-600
           border-t-red-400
           animate-spin
         `}
@@ -22,7 +22,7 @@ function Loader({ size = "md", text = "Loading...", fullScreen = false }) {
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-gray-950/80 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-zinc-950/80 backdrop-blur-sm flex items-center justify-center z-50">
         {spinner}
       </div>
     );

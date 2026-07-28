@@ -12,10 +12,10 @@ import { Outdent } from "lucide-react";
 
 const navItems = [
   { path: "/admin/dashboard",    label: "Dashboard",  icon: <FaHome />         },
-  { path: "/admin/trains",             label: "Trains",     icon: <FaTrain />        },
-  { path: "admin/stations",           label: "Stations",   icon: <FaMapMarkerAlt /> },
-  { path: "/admin/schedules",          label: "Schedules",  icon: <FaCalendarAlt />  },
-  { path: "/admin/bookings",           label: "Bookings",   icon: <MdEventSeat />    },
+  { path: "/admin/trains",       label: "Trains",     icon: <FaTrain />        },
+  { path: "admin/stations",     label: "Stations",   icon: <FaMapMarkerAlt /> },
+  { path: "/admin/schedules",   label: "Schedules",  icon: <FaCalendarAlt />  },
+  { path: "/admin/bookings",    label: "Bookings",   icon: <MdEventSeat />    },
   { path: "/admin/users",        label: "Users",      icon: <FaUsers />        },
   { path: "/admin/reports",      label: "Reports",    icon: <FaChartBar />     },
 ];
