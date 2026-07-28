@@ -46,12 +46,12 @@ function Login() {
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="flex flex-col justify-center items-center gap-3 mt-10">
             <div className=" text-xl">
-            <label className="block text-gray-100 font-medium mb-3 text-center ">
+            <label className="block text-gray-100 mb-3 text-center ">
             Sign in as
             <select 
               value={role} 
               onChange={(event) => setRole(event.target.value)}
-              className="block mx-auto mt-2 bg-red-500 text-black rounded-lg p-1"
+              className="block mx-auto mt-2 bg-red-500 text-zinc-300 rounded-lg p-1 "
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
@@ -59,29 +59,33 @@ function Login() {
             
           </label>
           </div>
-          
-          <label className="block text-gray-100 mb-3">
-            <span className="font-medium">Email</span>
+          {/* email and password input */}
+          <div>
+            <label className="block text-gray-100 mb-3">
+              <span className="font-medium">Email</span>
+              
+              <input 
+                type="email" value={email} 
+                onChange={(event) => setEmail(event.target.value)} 
+                placeholder="user@railway.com" 
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+              />
+            </label>
+            <label className="block text-gray-100 mb-3">
+              <span className="font-medium"> Password</span>
+              <input 
+                type="password" 
+                value={password} 
+                onChange={(event) => setPassword(event.target.value)} 
+                placeholder="••••••••" 
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
+              />
+            </label>
             
-            <input 
-              type="email" value={email} 
-              onChange={(event) => setEmail(event.target.value)} 
-              placeholder="user@railway.com" 
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
-            />
-          </label>
-          <label className="block text-gray-100 mb-3">
-            <span className="font-medium"> Password</span>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(event) => setPassword(event.target.value)} 
-              placeholder="••••••••" 
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
-            />
-          </label>
+          </div>
+          
           {error ? <p className="error-text">{error}</p> : null}
           {location.state?.message ? <p className="text-green-300 text-center">{location.state.message}</p> : null}
           <button 

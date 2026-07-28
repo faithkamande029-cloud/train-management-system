@@ -45,7 +45,7 @@ const StationList = ({ stations, favorites, onToggleFavorite, loading }) => {
       </div>
       {totalPages > 1 && (
         <div className="flex justify-center gap-3 mt-10">
-          <button disabled={currentPage === 1} onClick={() => setCurrentPage((p) => p - 1)} className="px-4 py-2 border border-gray-700 rounded-lg disabled:opacity-50 hover:bg-zinc-800 text-gray-300">Previous</button>
+          <button disabled={currentPage === 1} onClick={() => setCurrentPage((p) => p - 1)} className="px-4 py-2 border border-zinc-600 rounded-lg disabled:opacity-50 hover:bg-zinc-800 text-gray-300">Previous</button>
           <span className="px-4 py-2 text-gray-400">Page {currentPage} of {totalPages}</span>
           <button disabled={currentPage === totalPages} onClick={() => setCurrentPage((p) => p + 1)} className="px-4 py-2 border border-gray-700 rounded-lg disabled:opacity-50 hover:bg-zinc-800 text-gray-300">Next</button>
         </div>

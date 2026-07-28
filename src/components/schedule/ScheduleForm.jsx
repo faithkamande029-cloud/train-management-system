@@ -98,7 +98,7 @@ function ScheduleForm({ onAdd, isSubmitting = false }) {
             name="status"
             value={form.status}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg border border-gray-700 bg-gray-500/30 text-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
+            className="w-full p-3 rounded-lg border border-zinc-600 bg-zinc-500/30 text-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
             required
           >
             <option value="">Select Status</option>

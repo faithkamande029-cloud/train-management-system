@@ -32,7 +32,7 @@ function StationForm({ onAdd, isSubmitting = false }) {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-800">
+    <div className="max-w-xl mx-auto bg-zinc-800 p-6 rounded-2xl border border-zinc-600">
       <h2 className="text-2xl font-bold mb-6 text-white">Add Station</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input

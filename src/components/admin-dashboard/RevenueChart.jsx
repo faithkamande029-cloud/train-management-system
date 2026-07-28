@@ -15,7 +15,7 @@ const RevenueChart = memo(({ bookings }) => {
   }, [bookings]);
 
   return (
-    <div className="bg-zinc-900 p-6 rounded-2xl border border-gray-800 h-100">
+    <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-600 h-100">
       <h2 className="text-xl font-semibold mb-6 text-white">Revenue Overview</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>

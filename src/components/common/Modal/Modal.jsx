@@ -42,13 +42,13 @@ function Modal({
   return createPortal(
     <div
       ref={overlayRef}
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
       onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
     >
       <div
         ref={modalRef}
         className={`
-          relative bg-gray-900 rounded-2xl border border-gray-800 shadow-2xl
+          relative bg-zinc-500/30 rounded-2xl border border-zinc-600 shadow-2xl
           w-full ${sizes[size]} max-h-[90vh] overflow-y-auto
           animate-slide-up focus:outline-none
         `}

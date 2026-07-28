@@ -5,7 +5,7 @@ import Button from "../../components/common/Button/Button";
 function BookingConfirmation() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-950 px-6">
-      <div className="bg-gray-900 shadow-xl rounded-2xl p-10 max-w-lg w-full text-center border-t-8 border-zinc-500">
+      <div className="bg-zinc-900 shadow-xl rounded-2xl p-10 max-w-lg w-full text-center border-t-8 border-zinc-500">
         <div className="flex justify-center mb-4">
           <FaCheckCircle className="text-red-400 text-6xl" />
         </div>
@@ -14,8 +14,8 @@ function BookingConfirmation() {
         <p className="text-gray-400 mt-4">
           Your ticket has been booked successfully. A confirmation has been generated and your booking is now available in the system.
         </p>
-        <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 mt-8">
-          <p className="text-gray-400 text-sm">Booking Reference</p>
+        <div className="bg-zinc-800 border border-gray-700 rounded-xl p-6 mt-8">
+          <p className="text-zinc-400 text-sm">Booking Reference</p>
           <h3 className="text-3xl font-bold text-red-400 mt-2">BK-{String(Math.floor(1000 + Math.random() * 9000))}</h3>
         </div>
         <div className="flex justify-center gap-4 mt-8">

@@ -21,11 +21,11 @@ const Button = forwardRef(
 
     const variants = {
       primary: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500",
-      secondary: "bg-gray-800 hover:bg-gray-700 text-gray-300 focus:ring-gray-600",
+      secondary: "bg-zinc-800 hover:bg-zinc-700 text-gray-300 focus:ring-gray-600",
       danger: "bg-red-700 hover:bg-red-600 text-white focus:ring-red-500",
       outline:
         "border-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white focus:ring-red-500",
-      ghost: "bg-transparent hover:bg-gray-800 text-gray-400 hover:text-white focus:ring-gray-600",
+      ghost: "bg-transparent hover:bg-zinc-800 text-zinc-400 hover:text-white focus:ring-gray-600",
     };
 
     const sizes = {
