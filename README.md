@@ -57,7 +57,7 @@ npm run dev
 The app will be available at:
 
 - Frontend: http://localhost:5173
-- Mock API: http://localhost:5000
+- Mock API: http://localhost:3001
 
 ## Deploy the frontend and API on Render
 

@@ -247,7 +247,7 @@ app.delete('/users/:id', (req, res) => {
 
 // ─── Start ──────────────────────────────────────────────────────
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Mock API running on http://localhost:${PORT}`);
   console.log('Login: POST /login');

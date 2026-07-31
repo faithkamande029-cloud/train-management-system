@@ -8,7 +8,9 @@
     "test": "node --test",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "mock": "node mock-server.cjs"
+    
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
