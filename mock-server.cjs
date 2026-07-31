@@ -2,7 +2,11 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim())
+  : true;
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // ─── Root route – prevents 404 on / ───────────────────────────
@@ -10,6 +14,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({ message: 'Mock API is running', endpoints: ['/login', '/trains', '/stations', '/schedules', '/bookings', '/users'] });
 });
+
+app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
 
 // ─── In-memory data ──────────────────────────────────────────
 
@@ -241,7 +247,7 @@ app.delete('/users/:id', (req, res) => {
 
 // ─── Start ──────────────────────────────────────────────────────
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Mock API running on http://localhost:${PORT}`);
   console.log('Login: POST /login');

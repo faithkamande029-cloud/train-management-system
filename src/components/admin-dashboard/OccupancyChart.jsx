@@ -1,35 +1,32 @@
 import { memo, useMemo } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from "recharts";
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const OccupancyChart = memo(({ bookings, trains }) => {
-  const data = useMemo(() => {
-    if (!trains) return [];
-    return trains.map((train) => {
-      const occupied = bookings?.filter((b) => b.trainId === train.id && b.status?.toLowerCase() === "confirmed").length || 0;
-      const available = (train.totalSeats || 0) - occupied;
-      return { name: train.name || `Train ${train.id}`, Occupied: occupied, Available: Math.max(0, available) };
-    });
-  }, [bookings, trains]);
-
-  if (!trains || trains.length === 0) {
-    return <div className="bg-zinc-900/40 p-6 rounded-2xl border border-gray-800 h-100 flex items-center justify-center"><p className="text-gray-400 text-sm">No train data available.</p></div>;
-  }
+  const data = useMemo(() => (trains || []).map((train) => {
+    const occupied = (bookings || []).filter((booking) => String(booking.trainId) === String(train.id) && booking.status?.toLowerCase() === "confirmed").length;
+    return { name: train.name || `Train ${train.id}`, Occupied: occupied, Available: Math.max(0, Number(train.totalSeats || 0) - occupied) };
+  }), [bookings, trains]);
 
   return (
-    <div className="bg-zinc-900 p-6 rounded-2xl border border-gray-800 h-100 mt-6 mb-6">
-      <h2 className="text-xl font-semibold mb-6 text-white">Train Occupancy</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data} barSize={24}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-          <XAxis dataKey="name" tick={{ fill: "#CCCC", fontSize: 12 }} />
-          <YAxis tick={{ fill: "#94A3B8", fontSize: 12 }} />
-          <Tooltip contentStyle={{ backgroundColor: "#FFAD00", border: "1px solid #333" }} labelStyle={{ color: "#242424" }} itemStyle={{ color: "#E2E8F0" }} />
-          <Legend wrapperStyle={{ color: "#94A3B8", fontSize: 12 }} />
-          <Bar dataKey="Occupied" fill="#EF4444" radius={[6, 6, 0, 0]} />
-          <Bar dataKey="Available" fill="#00c853" radius={[6, 6, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <section className="rounded-2xl border border-white/10 bg-zinc-900/80 p-5 shadow-lg shadow-black/10 sm:p-6">
+      <div className="mb-5">
+        <p className="text-sm font-semibold text-white">Seat availability</p>
+        <p className="mt-1 text-sm text-zinc-400">Confirmed seats against total capacity</p>
+      </div>
+      <div className="h-72">
+        {data.length ? <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={data} margin={{ top: 8, right: 0, left: -20, bottom: 0 }}>
+            <CartesianGrid vertical={false} stroke="#27272a" />
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#a1a1aa", fontSize: 11 }} />
+            <YAxis axisLine={false} tickLine={false} tick={{ fill: "#71717a", fontSize: 12 }} />
+            <Tooltip contentStyle={{ background: "#18181b", border: "1px solid #3f3f46", borderRadius: "12px" }} labelStyle={{ color: "#e4e4e7" }} />
+            <Legend wrapperStyle={{ color: "#a1a1aa", fontSize: 12 }} />
+            <Bar dataKey="Occupied" stackId="seats" fill="#f59e0b" radius={[0, 0, 0, 0]} />
+            <Bar dataKey="Available" stackId="seats" fill="#22c55e" radius={[6, 6, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer> : <div className="grid h-full place-items-center text-sm text-zinc-500">No train data available.</div>}
+      </div>
+    </section>
   );
 });
 

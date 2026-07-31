@@ -59,6 +59,28 @@ The app will be available at:
 - Frontend: http://localhost:5173
 - Mock API: http://localhost:5000
 
+## Deploy the frontend and API on Render
+
+The frontend reads its API base URL from `VITE_API_URL`. This workspace is configured to use the deployed backend at `https://train-management-backend.onrender.com/api` via the local `.env` file.
+
+1. Push this repository to GitHub and create a **Web Service** in Render for the API.
+   - Runtime: `Node`
+   - Build command: `npm install`
+   - Start command: `npm run mock`
+   - Health check path: `/health`
+2. Once it deploys, copy its URL, for example `https://train-api.onrender.com`. Confirm that opening `https://train-api.onrender.com/health` returns `{"status":"ok"}`. If the backend uses an `/api` prefix (as this project's deployed backend does), include `/api` in `VITE_API_URL`.
+3. In that API service's Environment settings, set `CORS_ORIGIN` to the exact URL of the frontend you will deploy, for example `https://train-management.onrender.com`. If you use a custom domain, include it too as a comma-separated value. Do not add a trailing slash.
+4. Create a **Static Site** in Render from the same repository for the React app.
+   - Build command: `npm install && npm run build`
+   - Publish directory: `dist`
+   - Add the environment variable `VITE_API_URL` with the API URL from step 2 (no trailing slash).
+   - Add a rewrite rule: source `/*`, destination `/index.html`, status `200`. This lets React Router routes work on refresh.
+5. Redeploy the static site after saving `VITE_API_URL`. Vite replaces this variable during the build, so changing it always requires a new frontend build.
+
+For local work, copy `.env.example` to `.env` and leave the value pointing at `http://localhost:5000`.
+
+> This repository's API is an in-memory mock server: all changes reset when it restarts. It is suitable for demos, but a production backend should use a persistent database and real authentication.
+
 ### Demo Login
 
 The mock server includes sample users for testing. For example:
