@@ -41,7 +41,7 @@ function Dashboard() {
   const occupancy = totalCapacity ? Math.round((confirmedBookings.length / totalCapacity) * 100) : 0;
 
   return (
-    <section className="min-h-full bg-zinc-950 px-4 py-6 text-white sm:px-6 lg:px-8">
+    <section className="min-h-full bg-zinc-950 px-6 py-6 text-white lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         <header className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-red-950 via-zinc-900 to-zinc-950 p-6 shadow-2xl shadow-black/20 sm:p-8">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">

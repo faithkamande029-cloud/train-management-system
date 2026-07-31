@@ -15,7 +15,7 @@ const TrainList = ({ trains, favorites, onToggleFavorite, loading }) => {
 
   if (loading) {
     return (
-      <section className="max-w-7xl mx-auto py-16 px-4">
+      <section className="mx-auto max-w-7xl px-6 py-16">
         <h2 className="text-3xl font-bold mb-8 text-slate-900">All Trains</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[...Array(6)].map((_, i) => (
@@ -28,7 +28,7 @@ const TrainList = ({ trains, favorites, onToggleFavorite, loading }) => {
 
   if (trains.length === 0) {
     return (
-      <section className="max-w-7xl mx-auto py-16 px-4">
+      <section className="mx-auto max-w-7xl px-6 py-16">
         <h2 className="text-3xl font-bold mb-8 text-white">All Trains</h2>
         <p className="text-center text-gray-400 py-16">No trains found. Add a train to get started.</p>
       </section>
@@ -36,7 +36,7 @@ const TrainList = ({ trains, favorites, onToggleFavorite, loading }) => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto py-2 px-4">
+    <section className="mx-auto max-w-7xl px-6 py-4">
       <h2 className="text-2xl font-bold mb-7 text-slate-900 bg-slate-100 p-2 rounded-lg text-center mt-2">All Trains</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {paginated.map((train) => (

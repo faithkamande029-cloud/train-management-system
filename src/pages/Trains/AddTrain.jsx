@@ -17,7 +17,7 @@ function AddTrain() {
     });
   };
 
-  return <TrainForm onAdd={handleAdd} isSubmitting={isPending} />;
+  return <section className="mx-auto max-w-3xl px-6 py-6"><TrainForm onAdd={handleAdd} isSubmitting={isPending} /></section>;
 }
 
 export default AddTrain;

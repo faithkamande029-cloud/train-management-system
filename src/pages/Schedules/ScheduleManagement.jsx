@@ -1,5 +1,6 @@
 import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ScheduleTable from "../../components/schedule/ScheduleTable";
 import PlatformAssignment from "../../components/schedule/PlatformAssignment";
 import ScheduleForm from "../../components/schedule/ScheduleForm";
@@ -12,32 +13,42 @@ import { toast } from "react-hot-toast";
 
 const passengerSchedules = [
   {
-    id: 1, 
+    id: 1,
+    trainId: 1,
     train: 'Express 101', 
-    departure: '06:30', 
-    arrival: '09:15',
+    fromStation: 'Central Station',
+    toStation: 'Mombasa Terminal',
+    departureTime: '06:30',
+    arrivalTime: '09:15',
     platform: '3', 
     image: expressTrain
   },
   {
-    id: 2, 
+    id: 2,
+    trainId: 2,
     train: 'Night Rail', 
-    departure: '21:45', 
-    arrival: '00:20', 
+    fromStation: 'Central Station',
+    toStation: 'Kisumu Port',
+    departureTime: '21:45',
+    arrivalTime: '00:20',
     platform: '1',
     image: nightRail 
   },
   {
     id: 3,
+    trainId: 3,
     train: 'Hill Line',
-    departure: '07:45',
-    arrival: '13:10',
+    fromStation: 'Nakuru Junction',
+    toStation: 'Central Station',
+    departureTime: '07:45',
+    arrivalTime: '13:10',
     platform: '2',
     image: hillLine
   }
 ];
 
 function ScheduleManagement() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
   const { data: schedules = [], isLoading, isError, error } = useSchedules();
@@ -64,6 +75,10 @@ function ScheduleManagement() {
       onSuccess: () => toast.success("Schedule deleted"),
       onError: (requestError) => toast.error(requestError.response?.data?.message || "Unable to delete schedule"),
     });
+  };
+
+  const handleViewTrain = (schedule) => {
+    navigate(`/trains/${schedule.trainId}`, { state: { schedule } });
   };
 
   return (
@@ -125,16 +140,16 @@ function ScheduleManagement() {
                     {schedule.train}
                   </h3>
                   <p className="text-zinc-500 mt-2">
-                    Depature: {schedule.departure}
+                    Departure: {schedule.departureTime}
                   </p>
                   <p className="text-red-800 font-bold">
-                    Arrival: {schedule.arrival}
+                    Arrival: {schedule.arrivalTime}
                   </p>
                   <p className=" text-zinc-500">
                     Platform: {schedule.platform}
                   </p>
-                  <Button className="mt-5 w-full rounded-lg py-2 font-bold hover:bg-red-800 transition text-lg">
-                    Book Ticket
+                  <Button onClick={() => handleViewTrain(schedule)} className="mt-5 w-full rounded-lg py-2 font-bold hover:bg-red-800 transition text-lg">
+                    View Train
                   </Button>
                 </div>
 

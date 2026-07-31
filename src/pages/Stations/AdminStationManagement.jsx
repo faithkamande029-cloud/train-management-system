@@ -70,7 +70,7 @@ function AdminStationManagement() {
 
   return (
     
-    <div className="space-y-3 p-2 ">
+    <div className="space-y-3 px-6 py-5">
       <div className="flex justify-between items-center px-3 py-3">
         <div className="flex flex-col">
           <p className=" uppercase tracking-widest font-bold text-xl">Station Management</p>

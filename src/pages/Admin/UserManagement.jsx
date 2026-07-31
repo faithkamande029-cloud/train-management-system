@@ -21,7 +21,7 @@ const users = [
 
 function UserManagement() {
   return (
-    <section className="card p-5 bg-zinc-300 h-screen">
+    <section className="card min-h-screen bg-zinc-300 px-6 py-5">
       {/* title */}
       <p className="font-bold text-center text-2xl uppercase bg-red-500 p-2 text-white">Admin Panel</p>
       <h2 className="font-semibold mb-4 mt-4 text-2xl">User management</h2>
