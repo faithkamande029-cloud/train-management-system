@@ -6,14 +6,20 @@ import Button from "../../components/common/Button/Button";
 import Loader from "../../components/common/Loader/Loader";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 function MyBookings() {
   const { data: bookings, isLoading } = useBookings();
+  const { user } = useAuth();
   const updateBooking = useUpdateBooking();
   const deleteBooking = useDeleteBooking();
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const isAdmin = user?.role === "admin";
+  const visibleBookings = isAdmin
+    ? (bookings || [])
+    : (bookings || []).filter((booking) => booking.email?.toLowerCase() === user?.email?.toLowerCase());
 
   const toggleFavorite = (id) => {
     setFavorites((prev) =>
@@ -50,7 +56,7 @@ function MyBookings() {
 
   if (isLoading) return <Loader />;
 
-  if (!bookings || bookings.length === 0) {
+  if (visibleBookings.length === 0) {
     return (
       <div className="text-center py-16">
         <p className="text-gray-400">No bookings found.</p>
@@ -65,14 +71,14 @@ function MyBookings() {
     <div className="space-y-6 p-2 mb-3">
       <div className="flex justify-between items-center p-3">
         <div className="px-2">
-          <p className="uppercase tracking-widest font-bold text-xl">Passenger Portal</p>
-          <h2 className="text-xl font-bold text-zinc-600 mt-2">My Bookings</h2>
+          <p className="uppercase tracking-widest font-bold text-xl">{isAdmin ? "Booking management" : "Passenger portal"}</p>
+          <h2 className="text-xl font-bold text-zinc-600 mt-2">{isAdmin ? "All bookings" : "My bookings"}</h2>
         </div>
         <Button onClick={() => navigate("/bookings/new")}>Book New Ticket</Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {bookings.map((booking) => (
+        {visibleBookings.map((booking) => (
           <TicketCard
             key={booking.id}
             booking={booking}
@@ -107,13 +113,13 @@ function MyBookings() {
               </div>
             </div>
             <div className="flex gap-3 pt-4 border-t border-zinc-600">
-              {selectedBooking.status !== "cancelled" && (
+              {selectedBooking.status !== "cancelled" && (isAdmin || selectedBooking.email?.toLowerCase() === user?.email?.toLowerCase()) && (
                 <Button variant="danger" onClick={() => handleCancelBooking(selectedBooking.id)}>
                   Cancel Booking
                 </Button>
               )}
               <Button variant="secondary" onClick={() => setSelectedBooking(null)}>Close</Button>
-              <Button variant="danger" onClick={() => handleDelete(selectedBooking.id)}>Delete</Button>
+              {isAdmin && <Button variant="danger" onClick={() => handleDelete(selectedBooking.id)}>Delete</Button>}
             </div>
           </div>
         )}
