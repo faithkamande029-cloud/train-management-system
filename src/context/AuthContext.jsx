@@ -13,11 +13,17 @@ const USER_STORAGE_KEY = "train-management-user";
 const ACCOUNTS_STORAGE_KEY = "train-management-accounts";
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
-const apiUrl = import.meta.env.VITE_API_URL;
-const isDemoAuth = import.meta.env.VITE_AUTH_MODE === "demo"
-  || !apiUrl
-  || apiUrl === "/api"
-  || apiUrl.includes("localhost:3001");
+const isDemoAuth = import.meta.env.VITE_AUTH_MODE === "demo";
+
+function normalizeApiUser(user) {
+  if (!user) return null;
+
+  return {
+    ...user,
+    name: user.name || [user.first_name, user.last_name].filter(Boolean).join(" "),
+    role: user.role === "passenger" ? "user" : user.role,
+  };
+}
 
 function readAccounts() {
   try {
@@ -39,7 +45,7 @@ export function AuthProvider({ children }) {
     }
   });
   const [accounts, setAccounts] = useState(readAccounts);
-  const [isLoading, setIsLoading] = useState(!isDemoAuth && Boolean(localStorage.getItem(ACCESS_TOKEN_KEY)));
+  const [isLoading, setIsLoading] = useState(!isDemoAuth);
 
   useEffect(() => {
     if (user) window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
@@ -51,10 +57,10 @@ export function AuthProvider({ children }) {
   }, [accounts]);
 
   useEffect(() => {
-    if (isDemoAuth || !localStorage.getItem(ACCESS_TOKEN_KEY)) return;
+    if (isDemoAuth) return;
 
     getCurrentUser()
-      .then((response) => setUser(response.data))
+      .then((response) => setUser(normalizeApiUser(response.data?.data || response.data)))
       .catch(() => {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
         localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -76,15 +82,13 @@ export function AuthProvider({ children }) {
     setIsLoading(true);
     try {
       const response = await apiLogin({ email, password });
-      const { user: authenticatedUser, accessToken, refreshToken } = response.data;
-      if (!authenticatedUser || !accessToken) {
-        return { ok: false, role: null, error: "The API login response is missing the user or access token." };
+      const authenticatedUser = normalizeApiUser(response.data?.data || response.data?.user);
+      if (!authenticatedUser) {
+        return { ok: false, role: null, error: "The API login response is missing the user." };
       }
       if (role && authenticatedUser.role !== role) {
         return { ok: false, role: null, error: "The selected role does not match this account." };
       }
-      localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-      if (refreshToken) localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
       setUser(authenticatedUser);
       return { ok: true, role: authenticatedUser.role, error: null, account: authenticatedUser };
     } catch (error) {
@@ -126,7 +130,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try {
-      if (!isDemoAuth && localStorage.getItem(ACCESS_TOKEN_KEY)) await apiLogout();
+      if (!isDemoAuth) await apiLogout();
     } finally {
       localStorage.removeItem(ACCESS_TOKEN_KEY);
       localStorage.removeItem(REFRESH_TOKEN_KEY);

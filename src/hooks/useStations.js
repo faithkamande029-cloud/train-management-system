@@ -1,16 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getStations, getStationById, addStation, updateStation, deleteStation } from "../services/stationService";
+import { unwrapApiData } from "../services/httpClient";
 
 export const STATIONS_QUERY_KEY = ["stations"];
 
 export function useStations() {
   return useQuery({
     queryKey: STATIONS_QUERY_KEY,
-    queryFn: async () => {
-      const res = await getStations();
-      console.log("API Response:", res);
-      return res.data;
-    },
+    queryFn: getStations,
+    select: unwrapApiData,
   });
 }
 
@@ -18,7 +16,7 @@ export function useStation(id) {
   return useQuery({
     queryKey: [...STATIONS_QUERY_KEY, id],
     queryFn: () => getStationById(id),
-    select: (res) => res.data,
+    select: unwrapApiData,
     enabled: !!id,
   });
 }
