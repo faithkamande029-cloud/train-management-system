@@ -17,8 +17,16 @@ export function getAccount(email, accounts = []) {
 export function validateLogin(email, password, role, accounts = []) {
   const account = getAccount(email, accounts);
 
-  if (account?.password === password && account.role === role) {
+  if (account && account.password === password && account.role === role) {
     return { ok: true, role, error: null, account };
+  }
+
+  if (account && account.password === password && account.role !== role) {
+    return {
+      ok: false,
+      role: null,
+      error: 'The selected role does not match the provided credentials.',
+    };
   }
   if (account?.password === password && account.role !== role) {
     return { ok: false, role: null, error: 'The selected role does not match the provided credentials.' };
@@ -34,6 +42,7 @@ export function validateSignup(name, email, password, confirmPassword, accounts 
   if (getAccount(email, accounts)) return { ok: false, error: 'An account with this email already exists.' };
   return { ok: true, error: null };
 }
+
 
 export function validatePasswordReset(email, password, confirmPassword, accounts = []) {
   if (!getAccount(email, accounts)) return { ok: false, error: 'No account was found for that email address.' };

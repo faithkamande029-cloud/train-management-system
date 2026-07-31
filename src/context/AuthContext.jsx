@@ -1,16 +1,25 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { getAccount, normalizeEmail, validateLogin, validatePasswordReset, validateSignup } from "../utils/authRole";
+import { createContext, useEffect, useState, useContext } from "react";
+import { 
+  getAccount, 
+  normalizeEmail, 
+  validateLogin, 
+  validatePasswordReset, 
+  validateSignup 
+} from "../utils/authRole";
 
-export const AuthContext = createContext(null);
-export const useAuth = () => useContext(AuthContext);
+export const AuthContext = createContext();
+
+export function useAuth(){
+    return useContext(AuthContext)
+  };
 
 const USER_STORAGE_KEY = "train-management-user";
 const ACCOUNTS_STORAGE_KEY = "train-management-accounts";
 
-function loadAccounts() {
+function readAccounts() {
   try {
-    const storedAccounts = localStorage.getItem(ACCOUNTS_STORAGE_KEY);
-    return storedAccounts ? JSON.parse(storedAccounts) : [];
+    const savedAccounts = window.localStorage.getItem(ACCOUNTS_STORAGE_KEY);
+    return savedAccounts ? JSON.parse(savedAccounts) : [];
   } catch {
     return [];
   }
@@ -19,22 +28,22 @@ function loadAccounts() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
-      const storedUser = localStorage.getItem(USER_STORAGE_KEY);
-      return storedUser ? JSON.parse(storedUser) : null;
+      const savedUser = window.localStorage.getItem(USER_STORAGE_KEY);
+      return savedUser ? JSON.parse(savedUser) : null;
     } catch {
       localStorage.removeItem(USER_STORAGE_KEY);
       return null;
     }
   });
-  const [accounts, setAccounts] = useState(loadAccounts);
+  const [accounts, setAccounts] = useState(readAccounts);
 
   useEffect(() => {
-    if (user) localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-    else localStorage.removeItem(USER_STORAGE_KEY);
+    if (user) window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+    else window.localStorage.removeItem(USER_STORAGE_KEY);
   }, [user]);
 
   useEffect(() => {
-    localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+    window.localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
   }, [accounts]);
 
   const login = (email, password, role) => {
@@ -49,8 +58,9 @@ export function AuthProvider({ children }) {
   const signUp = (name, email, password, confirmPassword) => {
     const result = validateSignup(name, email, password, confirmPassword, accounts);
     if (!result.ok) return result;
+
     const account = { name: name.trim(), email: normalizeEmail(email), password, role: "user" };
-    setAccounts((current) => [...current, account]);
+    setAccounts((currentAccounts) => [...currentAccounts, account]);
     setUser({ name: account.name, email: account.email, role: account.role });
     return { ok: true, error: null };
   };
@@ -58,10 +68,20 @@ export function AuthProvider({ children }) {
   const resetPassword = (email, password, confirmPassword) => {
     const result = validatePasswordReset(email, password, confirmPassword, accounts);
     if (!result.ok) return result;
-    const account = { ...getAccount(email, accounts), email: normalizeEmail(email), password };
-    setAccounts((current) => [...current.filter((item) => item.email !== account.email), account]);
+
+    const existingAccount = getAccount(email, accounts);
+    const updatedAccount = { ...existingAccount, email: normalizeEmail(email), password };
+    setAccounts((currentAccounts) => [
+      ...currentAccounts.filter((account) => account.email !== updatedAccount.email),
+      updatedAccount,
+    ]);
     return { ok: true, error: null };
   };
 
-  return <AuthContext.Provider value={{ user, login, logout: () => setUser(null), signUp, resetPassword }}>{children}</AuthContext.Provider>;
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout: () => setUser(null), signUp, resetPassword }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

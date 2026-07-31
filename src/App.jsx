@@ -50,7 +50,7 @@ function App() {
               Log out
             </button>
           ) : (
-            <Link to="/login" className="pill-button">User Login</Link>
+            <Link to="/login" className="pill-button">Login</Link>
           )}
         </div>
         

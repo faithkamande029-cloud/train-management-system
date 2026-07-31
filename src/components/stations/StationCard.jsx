@@ -10,16 +10,16 @@ const StationCard = memo(({ station, onSelect, onToggleFavorite, isFavorite }) =
       case "mombasa": return "bg-orange-600";
       case "kisumu": return "bg-green-600";
       case "nakuru": return "bg-purple-600";
-      default: return "bg-gray-600";
+      default: return "bg-zinc-600";
     }
   };
 
   return (
     <div
-      className="bg-gray-900 rounded-2xl shadow-md overflow-hidden hover:shadow-red-900/30 hover:shadow-lg transition group cursor-pointer border border-gray-800"
+      className="bg-zinc-900 rounded-2xl shadow-md overflow-hidden hover:shadow-red-900/30 hover:shadow-lg transition group cursor-pointer border border-zinc-700"
       onClick={() => onSelect?.(station)}
     >
-      <div className="relative bg-red-950/30 h-36 flex items-center justify-center">
+      <div className="relative bg-red-800/30 h-36 flex items-center justify-center">
         <FaMapMarkerAlt className="text-red-400 text-6xl opacity-80 group-hover:scale-110 transition duration-500" />
         <button
           className="absolute top-3 right-3 p-2 rounded-full bg-black/40 hover:bg-black z-10"
@@ -45,7 +45,7 @@ const StationCard = memo(({ station, onSelect, onToggleFavorite, isFavorite }) =
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onSelect?.(station); }}
-          className="w-full bg-gray-800 hover:bg-red-700 hover:text-white text-gray-300 font-medium py-2 rounded-lg flex items-center justify-center gap-2 transition"
+          className="w-full bg-zinc-800 hover:bg-red-700 hover:text-white text-zinc-300 font-medium py-2 rounded-lg flex items-center justify-center gap-2 transition"
         >
           <FaEye /> View Details
         </button>

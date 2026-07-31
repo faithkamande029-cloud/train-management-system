@@ -6,7 +6,7 @@ import { BOOKING_STATUS_COLORS } from "../../utils/constants";
 
 const TicketCard = memo(({ booking, onSelect, onToggleFavorite, isFavorite }) => {
   const getStatusColor = (status) => {
-    return BOOKING_STATUS_COLORS[status?.toLowerCase()] || "bg-gray-500";
+    return BOOKING_STATUS_COLORS[status?.toLowerCase()] || "bg-zinc-500";
   };
 
   const getStatusText = (status) => {
@@ -19,7 +19,7 @@ const TicketCard = memo(({ booking, onSelect, onToggleFavorite, isFavorite }) =>
   };
 
   return (
-    <div className="bg-zinc-900 rounded-2xl shadow-md overflow-hidden hover:shadow-red-900/30 hover:shadow-lg transition group cursor-pointer border border-gray-800" onClick={() => onSelect(booking)}>
+    <div className="bg-zinc-900 rounded-2xl shadow-md overflow-hidden hover:shadow-red-900/30 hover:shadow-lg transition group cursor-pointer border border-zinc-600" onClick={() => onSelect(booking)}>
       <div className="relative bg-red-950/30 h-36 flex items-center justify-center">
         <FaTrain className="text-red-400 text-6xl opacity-80 group-hover:scale-110 transition duration-500" />
         <button className="absolute top-3 right-3 p-2 rounded-full bg-black/40 hover:bg-black z-10" onClick={(e) => { e.stopPropagation(); onToggleFavorite(booking.id); }}>

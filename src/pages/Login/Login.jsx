@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import redDoor from "../../assets/red-door.jpg";
 
@@ -8,13 +8,12 @@ function Login() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const result = login(email, password, role);
 
     if (!result.ok) {
@@ -33,7 +32,7 @@ function Login() {
       style={{ backgroundImage: `url(${redDoor})` }}
     >
       <div className="absolute inset-0 bg-black/45"></div>
-      <div className="relative z-10 bg-linear-to-b from-black/90 via-zinc-800 to-black/40 
+      <div className="relative z-10 bg-linear-to-b  from-black/90 via-zinc-800 to-black/40 
       shadow-2xl rounded-2xl w-full max-w-xl h-[80vh] p-8 border-t-8  border-zinc-800 text-white">
 
         <div className="text-center p-4">
@@ -44,64 +43,83 @@ function Login() {
 
         {/* sign in form */}
         <form className="space-y-5" onSubmit={handleSubmit}>
-          <div className="flex flex-col justify-center items-center gap-3 mt-10">
-            <div className=" text-xl">
-            <label className="block text-gray-100 font-medium mb-3 text-center ">
-            Sign in as
-            <select 
-              value={role} 
-              onChange={(event) => setRole(event.target.value)}
-              className="block mx-auto mt-2 bg-red-500 text-black rounded-lg p-1"
-            >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-            
-          </label>
-          </div>
-          
-          <label className="block text-gray-100 mb-3">
-            <span className="font-medium">Email</span>
-            
-            <input 
-              type="email" value={email} 
-              onChange={(event) => setEmail(event.target.value)} 
-              placeholder="user@railway.com" 
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
-            />
-          </label>
-          <label className="block text-gray-100 mb-3">
-            <span className="font-medium"> Password</span>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(event) => setPassword(event.target.value)} 
-              placeholder="••••••••" 
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-50"
-            />
-          </label>
-          {error ? <p className="error-text">{error}</p> : null}
-          {location.state?.message ? <p className="text-green-300 text-center">{location.state.message}</p> : null}
-          <button 
-            type="submit" 
-            className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition"
-          >
-            Sign in
-          </button>
-          <div className="flex justify-between text-sm text-zinc-200">
-            <Link className="hover:text-red-400" to="/forgot-password">Forgot password?</Link>
-            <Link className="hover:text-red-400" to="/sign-up">Create account</Link>
-          </div>
+            <div className="flex flex-col justify-center items-center gap-3 mt-10">
+              <div className=" text-xl">
+              <label className="block text-gray-100 mb-3 text-center ">
+              Sign in as
+              <select 
+                value={role} 
+                onChange={(event) => setRole(event.target.value)}
+                className="block mx-auto mt-2 bg-red-500 text-zinc-300 rounded-lg p-1 "
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+              
+            </label>
+            </div>
             
           </div>
-          
-        </form>
-        
 
+          {/* email rebramd */}
+          <div>
+            <label className="block text-gray-100 mb-3">
+               Email
+              <input 
+                type="email" 
+                value={email} 
+                onChange={(event) => setEmail(event.target.value)} 
+                placeholder="user@railway.com" 
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-200"
+              />
+            </label>
+            <label className="block text-gray-100 mb-3">
+              Password
+              <input 
+                type="password" 
+                value={password} 
+                onChange={(event) => setPassword(event.target.value)} 
+                placeholder="••••••••" 
+                required
+                className="w-full border border-gray-300 rounded-lg px-4 py-3  placeholder:text-gray-200"
+              />
+            </label>
+
+          </div>
+          
+          {error ? <p className="error-text">{error}</p> : null}
+
+          <button type="submit" className="w-full bg-zinc-500 text-white font-semibold py-3 mt-4 rounded-lg hover:bg-red-600 transition">Sign in</button>
+        </form>
+
+        <div className="mt-4 border-t border-zinc-700 pt-5 text-center">
+          <p className="text-sm text-zinc-400">
+            <Link 
+              to="/forgot-password"
+              className="font-medium text-red-400 hover:text-red-300 hover:underline transition"
+            >
+              Forgot password?</Link> 
+              
+              <span className="mx-3 text-zinc-600">.</span> 
+            <Link 
+              to="/sign-up"
+              className="font-medium text-red-400 hover:text-red-300 hover:underline transition"
+            >
+              Create an account
+            </Link>
+          </p>
+
+        </div>
+        
+        {user ? (
+          <p className="helper-text">
+            You are currently signed in as {user.role === "admin" ? "Admin" : "User"}. Select a role above and sign in to switch accounts.
+          </p>
+        ) : null}
+
+        
       </div>
-      
     </section>
   );
 }

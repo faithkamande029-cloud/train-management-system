@@ -106,7 +106,7 @@ function MyBookings() {
                 </span>
               </div>
             </div>
-            <div className="flex gap-3 pt-4 border-t border-gray-800">
+            <div className="flex gap-3 pt-4 border-t border-zinc-600">
               {selectedBooking.status !== "cancelled" && (
                 <Button variant="danger" onClick={() => handleCancelBooking(selectedBooking.id)}>
                   Cancel Booking
