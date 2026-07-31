@@ -1,122 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
+import AppRoutes from './routes/AppRoutes';
+import { TrainFront } from 'lucide-react';
+import Footer from './components/common/Footer/Footer';
+
+const navItems = [
+  { to: '/', label: 'Home' },
+  { to: '/dashboard', label: 'Dashboard' },
+  { to: '/trains', label: 'Trains' },
+  { to: '/schedules', label: 'Schedules' },
+  { to: '/bookings', label: 'Bookings' },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { user, logout } = useAuth();
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="min-h-screen flex flex-col ">
+      {!isAdminRoute ? (
+        <header className="w-full grid grid-cols-3 items-center border-b border-zinc-800 bg-zinc-950 px-4 py-3 sm:px-6 lg:px-8">
+        {/* logo */}
+        <div className="justify-self-start">
+          <Link to="/" className="flex items-center gap-2">
+            <TrainFront className='w-10 h-10 text-red-500'/> 
+            <span className=' font-bold uppercase text-white'>GARILM</span>
+          </Link>
+        </div>       
+  
+        {/* nav-links */}
+        <nav className="flex justify-self-center items-center gap-2 md:gap-5 lg:gap-6 text-white text-sm md:text-base lg:text-lg font-semibold">
+          {navItems.map((item) => (
+            <NavLink key={item.to} to={item.to} className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+              {item.label}
+            </NavLink>
+          ))}
+          {user?.role === 'admin' ? (
+            <>
+              <NavLink to="/admin/dashboard" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+                Admin
+              </NavLink>
+            </>
+          ) : null}
+        </nav>
+        <div className='justify-self-end bg-red-500 p-1.5 rounded-xl hover:bg-zinc-400 cursor-pointer text-white'>
+          {user ? (
+            <button type="button" onClick={logout} className="pill-button bg-red-500 text-white cursor-pointer">
+              Log out
+            </button>
+          ) : (
+            <Link to="/login" className="pill-button">Login</Link>
+          )}
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+        
+        </header>
+      ) : null}
+      
+      <main className="page-content flex flex-col min-h-screen">
+        <div className="flex-1">
+          <AppRoutes />
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {!isAdminRoute ? <Footer /> : null}
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
