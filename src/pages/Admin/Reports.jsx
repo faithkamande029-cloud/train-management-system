@@ -25,11 +25,11 @@ function Reports() {
   const totalSchedules = schedules?.length || 0;
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-6 rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-sm">
       <div className="p-1">
         <p className="text-red-400 uppercase tracking-widest font-semibold">Performance Reports</p>
-        <h2 className="text-3xl font-bold mt-2">Daily Operations Summary</h2>
-        <p className="text-gray-500 mt-2">View today's operational performance across the railway network.</p>
+        <h2 className="mt-2 text-3xl font-bold text-zinc-100">Daily Operations Summary</h2>
+        <p className="mt-2 text-zinc-400">View today's operational performance across the railway network.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

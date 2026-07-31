@@ -13,7 +13,11 @@ const USER_STORAGE_KEY = "train-management-user";
 const ACCOUNTS_STORAGE_KEY = "train-management-accounts";
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
-const isDemoAuth = import.meta.env.VITE_AUTH_MODE === "demo";
+const apiUrl = import.meta.env.VITE_API_URL;
+const isDemoAuth = import.meta.env.VITE_AUTH_MODE === "demo"
+  || !apiUrl
+  || apiUrl === "/api"
+  || apiUrl.includes("localhost:3001");
 
 function normalizeApiUser(user) {
   if (!user) return null;

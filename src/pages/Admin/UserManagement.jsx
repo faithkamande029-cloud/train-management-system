@@ -21,12 +21,12 @@ const users = [
 
 function UserManagement() {
   return (
-    <section className="card min-h-screen bg-zinc-300 px-6 py-5">
-      {/* title */}
-      <p className="font-bold text-center text-2xl uppercase bg-red-500 p-2 text-white">Admin Panel</p>
-      <h2 className="font-semibold mb-4 mt-4 text-2xl">User management</h2>
-      {/* employee information table */}
-      <div className="list-card">
+    <section className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-sm">
+      <div className="mb-5 rounded-2xl bg-red-500 px-4 py-3 text-center text-xl font-bold uppercase tracking-[0.2em] text-white">
+        Admin Panel
+      </div>
+      <h2 className="mb-4 text-2xl font-semibold text-zinc-100">User management</h2>
+      <div className="overflow-hidden rounded-2xl border border-zinc-800">
         <table className="w-full table-auto">
           <thead>
             <tr className=" bg-zinc-700">

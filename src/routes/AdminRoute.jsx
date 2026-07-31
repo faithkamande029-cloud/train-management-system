@@ -5,17 +5,14 @@ import AdminLayout from "../layouts/AdminLayout";
 
 function AdminRoute() {
   const { user, isLoading } = useAuth();
+  const isAuthenticatedAdmin = Boolean(user?.email && user?.role === "admin");
 
   if (isLoading) {
     return <Loader fullScreen text="Authenticating..." />;
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (user.role !== "admin") {
-    return <Navigate to="/dashboard" replace />;
+  if (!isAuthenticatedAdmin) {
+    return <Navigate to="/admin/login" replace />;
   }
 
   return (
