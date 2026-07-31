@@ -6,6 +6,7 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/Login/SignUp";
 import ForgotPassword from "../pages/Login/ForgotPassword";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import UserDashboard from "../pages/Dashboard/UserDashboard";
 import TrainListPage from "../pages/Trains/TrainList";
 import TrainDetailsPage from "../pages/Trains/TrainDetails";
 import AddTrain from "../pages/Trains/AddTrain";
@@ -30,7 +31,7 @@ function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
 
       <Route element={<PrivateRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/trains" element={<TrainListPage />} />
         <Route path="/trains/:id/seats" element={<SeatSelector />} />
         <Route path="/trains/:id" element={<TrainDetailsPage />} />

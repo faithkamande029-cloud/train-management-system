@@ -5,6 +5,7 @@ import SeatSelector from "../../components/booking/SeatSelector";
 import PaymentForm from "../../components/booking/PaymentForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useAuth } from "../../hooks";
 
 const STEPS = {
   DETAILS: "details",
@@ -16,6 +17,7 @@ const STEPS = {
 function BookTicket() {
   const navigate = useNavigate();
   const createBooking = useCreateBooking();
+  const { user } = useAuth();
 
   const [step, setStep] = useState(STEPS.DETAILS);
   const [bookingData, setBookingData] = useState(null);
@@ -36,6 +38,8 @@ function BookTicket() {
   const handlePayment = (paymentData) => {
     const payload = {
       ...bookingData,
+      // Ownership must be assigned from the authenticated account, never a form value.
+      email: user?.email || bookingData.email,
       seatNumbers: selectedSeats.map((s) => s.id),
       fare: totalFare,
       paymentMethod: paymentData.paymentMethod,
