@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { validateLogin, validatePasswordReset, validateSignup } from './authRole.js';
 
 test('accepts admin credentials for admin login', () => {
-  assert.equal(validateLogin('admin@railway.com', 'admin123', 'admin').ok, true);
+  assert.equal(validateLogin('admin@railms.com', 'admin123', 'admin').ok, true);
 });
 
 test('accepts user credentials for user login', () => {

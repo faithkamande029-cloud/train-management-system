@@ -2,7 +2,7 @@ import { useTrains, useBookings, useStations, useSchedules } from "../../hooks";
 import StatsCard from "../../components/admin-dashboard/StatsCard";
 import RevenueChart from "../../components/admin-dashboard/RevenueChart";
 import OccupancyChart from "../../components/admin-dashboard/OccupancyChart";
-import { FaTrain, FaUsers, FaTicketAlt, FaMapMarkerAlt, FaCalendarAlt, FaMoneyBillWave } from "react-icons/fa";
+import { FaTrain, FaTicketAlt, FaMapMarkerAlt, FaMoneyBillWave } from "react-icons/fa";
 import Loader from "../../components/common/Loader/Loader";
 import { formatCurrency } from "../../utils/dateFormatter";
 

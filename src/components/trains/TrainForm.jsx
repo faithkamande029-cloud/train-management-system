@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { validateTrainForm } from "../utils/validators";
+import { validateTrainForm } from "../../utils/validators";
 
 function TrainForm({ onAdd, isSubmitting = false }) {
   const [form, setForm] = useState({

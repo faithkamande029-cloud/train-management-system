@@ -34,7 +34,9 @@ function PaymentForm({ onPay, fare, isSubmitting = false }) {
       return;
     }
     // Remove CVV before sending to parent
-    const { cvv, ...safeData } = form;
+    const safeData = Object.fromEntries(
+      Object.entries(form).filter(([field]) => field !== "cvv")
+    );
     onPay(safeData);
     // Reset form after successful submission
     setForm({

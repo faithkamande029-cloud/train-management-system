@@ -5,14 +5,15 @@ import { FaToggleOn, FaClock, FaMapMarkerAlt, FaTrain } from "react-icons/fa";
 import { TRAIN_TYPE_COLORS, TRAIN_STATUS_COLORS } from "../../utils/constants";
 
 const TrainDetails = ({ train, onClose, favorites, onToggleFavorite }) => {
-  if (!train) return null;
-  const isFavorite = favorites?.includes(train.id);
-
   useEffect(() => {
+    if (!train) return undefined;
     const handleKey = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+  }, [train, onClose]);
+
+  if (!train) return null;
+  const isFavorite = favorites?.includes(train.id);
 
   return (
     <div className="fixed inset-0 bg-zinc-500/70 backdrop-blur-md flex items-center justify-center z-50 p-4" onClick={onClose}>

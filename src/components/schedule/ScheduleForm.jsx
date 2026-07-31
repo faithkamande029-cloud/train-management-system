@@ -4,15 +4,19 @@ import Input from "../common/Input/Input";
 import Button from "../common/Button/Button";
 import { SCHEDULE_STATUSES } from "../../utils/constants";
 
-function ScheduleForm({ onAdd, isSubmitting = false }) {
-  const [form, setForm] = useState({
-    trainId: "",
-    fromStation: "",
-    toStation: "",
-    departureTime: "",
-    arrivalTime: "",
-    status: "",
-  });
+const EMPTY_FORM = {
+  trainId: "",
+  fromStation: "",
+  toStation: "",
+  departureTime: "",
+  arrivalTime: "",
+  status: "",
+};
+
+function ScheduleForm({ onAdd, initialData = null, onCancel, isSubmitting = false }) {
+  const [form, setForm] = useState(() => initialData
+    ? { ...EMPTY_FORM, ...initialData, trainId: String(initialData.trainId ?? "") }
+    : EMPTY_FORM);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -31,19 +35,12 @@ function ScheduleForm({ onAdd, isSubmitting = false }) {
       return;
     }
     onAdd(form);
-    setForm({
-      trainId: "",
-      fromStation: "",
-      toStation: "",
-      departureTime: "",
-      arrivalTime: "",
-      status: "",
-    });
+    if (!initialData) setForm(EMPTY_FORM);
   };
 
   return (
     <div className="max-w-xl mx-auto bg-zinc-900 p-6 rounded-2xl border border-gray-800">
-      <h2 className="text-2xl font-bold mb-6 text-white text-center">Add Schedule</h2>
+      <h2 className="text-2xl font-bold mb-6 text-white text-center">{initialData ? "Edit Schedule" : "Add Schedule"}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Train ID"
@@ -108,9 +105,12 @@ function ScheduleForm({ onAdd, isSubmitting = false }) {
           </select>
           {errors.status && <p className="text-red-400 text-xs mt-1">{errors.status}</p>}
         </div>
-        <Button type="submit" isLoading={isSubmitting} fullWidth>
-          Add Schedule
-        </Button>
+        <div className="flex gap-3">
+          <Button type="submit" isLoading={isSubmitting} fullWidth>
+            {initialData ? "Save Schedule" : "Add Schedule"}
+          </Button>
+          {initialData && <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>}
+        </div>
       </form>
     </div>
   );

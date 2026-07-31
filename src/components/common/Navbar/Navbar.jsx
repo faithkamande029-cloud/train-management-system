@@ -1,6 +1,6 @@
 // src/components/common/Navbar/Navbar.jsx
 
-import { FaBell, FaSearch, FaTrain } from "react-icons/fa";
+import { FaSearch, FaTrain } from "react-icons/fa";
 import { TrainFront } from 'lucide-react';
 
 function Navbar() {

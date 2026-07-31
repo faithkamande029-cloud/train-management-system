@@ -16,7 +16,7 @@ const TrainList = ({ trains, favorites, onToggleFavorite, loading }) => {
   if (loading) {
     return (
       <section className="max-w-7xl mx-auto py-16 px-4">
-        <h2 className="text-3xl font-bold mb-8 text-zinc-800">All Trains</h2>
+        <h2 className="text-3xl font-bold mb-8 text-slate-900">All Trains</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="bg-zinc-600 rounded-2xl h-64 animate-pulse" />
@@ -37,7 +37,7 @@ const TrainList = ({ trains, favorites, onToggleFavorite, loading }) => {
 
   return (
     <section className="max-w-7xl mx-auto py-2 px-4">
-      <h2 className="text-2xl font-bold mb-7 text-zinc-300 bg-zinc-900/90 p-2 rounded-lg text-center mt-2">All Trains</h2>
+      <h2 className="text-2xl font-bold mb-7 text-slate-900 bg-slate-100 p-2 rounded-lg text-center mt-2">All Trains</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {paginated.map((train) => (
           <TrainCard

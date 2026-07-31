@@ -1,5 +1,6 @@
 export const defaultAccounts = [
-  { name: 'Admin User', email: 'admin@railway.com', password: 'admin123', role: 'admin' },
+  // Keep this aligned with the mock API and the documented demo account.
+  { name: 'Admin User', email: 'admin@railms.com', password: 'admin123', role: 'admin' },
   { name: 'Regular User', email: 'user@railway.com', password: 'user123', role: 'user' },
 ];
 

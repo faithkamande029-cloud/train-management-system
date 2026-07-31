@@ -2,7 +2,9 @@
 import axios from "axios";
 
 const httpClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  // In development, Vite proxies this path to Flask on port 5000. This avoids
+  // a browser cross-origin request while preserving VITE_API_URL for deployment.
+  baseURL: import.meta.env.VITE_API_URL || "/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -33,9 +35,12 @@ httpClient.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = localStorage.getItem("refreshToken");
-        if (!refreshToken) throw new Error("No refresh token");
+        // A locally authenticated demo user has no API refresh token. Returning
+        // the request error lets the relevant screen show a useful message;
+        // it must not wipe the local session or redirect the whole app.
+        if (!refreshToken) return Promise.reject(error);
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/refresh`,
+          `${import.meta.env.VITE_API_URL || "/api"}/refresh`,
           { refreshToken }
         );
         const { accessToken, refreshToken: newRefreshToken } = response.data;

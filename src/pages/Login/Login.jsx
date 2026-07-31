@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import redDoor from "../../assets/red-door.jpg";
 
@@ -10,11 +10,10 @@ function Login() {
   const [error, setError] = useState("");
   const { user, login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = login(email, password, role);
+    const result = await login(email, password, role);
 
     if (!result.ok) {
       setError(result.error);

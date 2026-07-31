@@ -1,4 +1,5 @@
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
+import { useState } from "react";
 import ScheduleTable from "../../components/schedule/ScheduleTable";
 import PlatformAssignment from "../../components/schedule/PlatformAssignment";
 import ScheduleForm from "../../components/schedule/ScheduleForm";
@@ -6,8 +7,10 @@ import expressTrain from "../../assets/express-101.jpg";
 import nightRail from "../../assets/night-rail.jpg";
 import hillLine from "../../assets/hill-line.jpg"
 import Button from "../../components/common/Button/Button";
+import { useAddSchedule, useDeleteSchedule, useSchedules, useUpdateSchedule } from "../../hooks";
+import { toast } from "react-hot-toast";
 
-const schedules = [
+const passengerSchedules = [
   {
     id: 1, 
     train: 'Express 101', 
@@ -37,15 +40,30 @@ const schedules = [
 function ScheduleManagement() {
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
+  const { data: schedules = [], isLoading, isError, error } = useSchedules();
+  const addSchedule = useAddSchedule();
+  const updateSchedule = useUpdateSchedule();
+  const deleteSchedule = useDeleteSchedule();
+  const [editingSchedule, setEditingSchedule] = useState(null);
 
 
-  const handleAddSchedule = () => {
-    // Logic to add a new schedule
-    console.log("Add Schedule button clicked", newSchedule);
-  }
+  const handleSaveSchedule = (data) => {
+    const payload = { ...data, trainId: Number(data.trainId) };
+    const mutation = editingSchedule ? updateSchedule : addSchedule;
+    const mutationInput = editingSchedule ? { id: editingSchedule.id, data: payload } : payload;
+    mutation.mutate(mutationInput, {
+      onSuccess: () => {
+        toast.success(editingSchedule ? "Schedule updated" : "Schedule added");
+        setEditingSchedule(null);
+      },
+      onError: (requestError) => toast.error(requestError.response?.data?.message || "Unable to save schedule"),
+    });
+  };
   const handleDeleteSchedule = (id) => {
-    // Logic to delete a schedule
-    console.log("Delete Schedule button clicked", id);
+    deleteSchedule.mutate(id, {
+      onSuccess: () => toast.success("Schedule deleted"),
+      onError: (requestError) => toast.error(requestError.response?.data?.message || "Unable to delete schedule"),
+    });
   };
 
   return (
@@ -65,7 +83,13 @@ function ScheduleManagement() {
           <>
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
               <div>
-                <ScheduleForm onAdd={handleAddSchedule} isSubmitting={false} />
+                <ScheduleForm
+                  key={editingSchedule?.id ?? "new"}
+                  onAdd={handleSaveSchedule}
+                  initialData={editingSchedule}
+                  onCancel={() => setEditingSchedule(null)}
+                  isSubmitting={addSchedule.isPending || updateSchedule.isPending}
+                />
               </div>
 
               <div>
@@ -76,15 +100,17 @@ function ScheduleManagement() {
             <div className="rounded-3xl border border-zinc-800 bg-zinc-900/80 p-4 shadow-2xl shadow-black/40 sm:p-6">
               <ScheduleTable
                 schedules={schedules}
-                loading={false}
+                loading={isLoading}
+                onEdit={setEditingSchedule}
                 onDelete={handleDeleteSchedule}
               />
             </div>
+            {isError && <p className="rounded-lg bg-red-950/60 p-4 text-red-200">Unable to load schedules: {error.message}</p>}
           </>
         ):(
           <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {schedules.map((schedule) => (
+            {passengerSchedules.map((schedule) => (
               <div 
               key={schedule.id}
               className="border border-zinc-400 rounded-lg overflow-hidden bg-zinc-300"

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getTrains, addTrain, updateTrain, deleteTrain } from "../services/trainService";
+import { getTrains, getTrainById, addTrain, updateTrain, deleteTrain } from "../services/trainService";
 
 export const TRAINS_QUERY_KEY = ["trains"];
 
