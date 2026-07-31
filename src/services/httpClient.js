@@ -6,6 +6,8 @@ const httpClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  // The deployed backend authenticates with a session cookie.
+  withCredentials: true,
   timeout: 30000,
 });
 
@@ -33,7 +35,7 @@ httpClient.interceptors.response.use(
         const refreshToken = localStorage.getItem("refreshToken");
         if (!refreshToken) throw new Error("No refresh token");
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/auth/refresh`,
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/refresh`,
           { refreshToken }
         );
         const { accessToken, refreshToken: newRefreshToken } = response.data;
