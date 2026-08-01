@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import frontView from "../../assets/front-view.jpg"
 import { ShieldCheck, Clock3, CalendarCheck, Headset } from 'lucide-react';
+import Footer from '../../components/common/Footer/Footer';
 
 
 const highlights = [
@@ -81,6 +82,8 @@ function Home() {
           );
         })}
       </div>
+
+      <Footer />
     
     </section>
   );
