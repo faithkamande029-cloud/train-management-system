@@ -1,10 +1,10 @@
 // src/services/httpClient.js
 import axios from "axios";
 
+const apiBase = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+
 const httpClient = axios.create({
-  // In development, Vite proxies this path to Flask on port 5000. This avoids
-  // a browser cross-origin request while preserving VITE_API_URL for deployment.
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL: `${apiBase}/api`,
   headers: {
     "Content-Type": "application/json",
   },

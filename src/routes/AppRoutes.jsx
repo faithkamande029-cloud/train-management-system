@@ -27,7 +27,6 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/admin/login" element={<Login adminOnly />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
 

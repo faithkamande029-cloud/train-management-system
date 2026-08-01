@@ -18,21 +18,23 @@ export function getAccount(email, accounts = []) {
 export function validateLogin(email, password, role, accounts = []) {
   const account = getAccount(email, accounts);
 
-  if (account && account.password === password && account.role === role) {
-    return { ok: true, role, error: null, account };
+  if (!account) {
+    return { ok: false, role: null, error: 'Invalid email or password.' };
   }
 
-  if (account && account.password === password && account.role !== role) {
+  if (account.password !== password) {
+    return { ok: false, role: null, error: 'Invalid email or password.' };
+  }
+
+  if (role && account.role !== role) {
     return {
       ok: false,
       role: null,
       error: 'The selected role does not match the provided credentials.',
     };
   }
-  if (account?.password === password && account.role !== role) {
-    return { ok: false, role: null, error: 'The selected role does not match the provided credentials.' };
-  }
-  return { ok: false, role: null, error: 'Invalid email or password.' };
+
+  return { ok: true, role: role ?? account.role, error: null, account };
 }
 
 export function validateSignup(name, email, password, confirmPassword, accounts = []) {

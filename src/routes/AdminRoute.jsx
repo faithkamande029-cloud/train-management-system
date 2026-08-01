@@ -12,7 +12,7 @@ function AdminRoute() {
   }
 
   if (!isAuthenticatedAdmin) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return (

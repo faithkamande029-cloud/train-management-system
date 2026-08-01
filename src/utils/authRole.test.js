@@ -10,6 +10,12 @@ test('accepts user credentials for user login', () => {
   assert.equal(validateLogin('user@railway.com', 'user123', 'user').ok, true);
 });
 
+test('infers the account role when no role is specified', () => {
+  const result = validateLogin('admin@railms.com', 'admin123', undefined);
+  assert.equal(result.ok, true);
+  assert.equal(result.role, 'admin');
+});
+
 test('accepts a newly registered account', () => {
   const accounts = [{ name: 'Ada', email: 'ada@example.com', password: 'secret1', role: 'user' }];
   assert.equal(validateLogin('ADA@example.com', 'secret1', 'user', accounts).ok, true);
