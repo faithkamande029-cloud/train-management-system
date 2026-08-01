@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getUsers, getUserById, createUser, updateUser, deleteUser } from "../services/userService";
+import { unwrapApiData } from "../services/httpClient";
 
 export const USERS_QUERY_KEY = ["users"];
 
@@ -7,7 +8,7 @@ export function useUsers() {
   return useQuery({
     queryKey: USERS_QUERY_KEY,
     queryFn: getUsers,
-    select: (res) => res.data,
+    select: unwrapApiData,
   });
 }
 
@@ -15,7 +16,7 @@ export function useUser(id) {
   return useQuery({
     queryKey: [...USERS_QUERY_KEY, id],
     queryFn: () => getUserById(id),
-    select: (res) => res.data,
+    select: unwrapApiData,
     enabled: !!id,
   });
 }

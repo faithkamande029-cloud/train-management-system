@@ -1,4 +1,6 @@
-import { createContext, useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
+import { AuthContext } from "./authContext";
+import { getCurrentUser, login as apiLogin, logout as apiLogout } from "../services/authService";
 import { 
   getAccount, 
   normalizeEmail, 
@@ -7,14 +9,25 @@ import {
   validateSignup 
 } from "../utils/authRole";
 
-export const AuthContext = createContext();
-
-export function useAuth(){
-    return useContext(AuthContext)
-  };
-
 const USER_STORAGE_KEY = "train-management-user";
 const ACCOUNTS_STORAGE_KEY = "train-management-accounts";
+const ACCESS_TOKEN_KEY = "accessToken";
+const REFRESH_TOKEN_KEY = "refreshToken";
+const apiUrl = import.meta.env.VITE_API_URL;
+const isDemoAuth = import.meta.env.VITE_AUTH_MODE === "demo"
+  || !apiUrl
+  || apiUrl === "/api"
+  || apiUrl.includes("localhost:3001");
+
+function normalizeApiUser(user) {
+  if (!user) return null;
+
+  return {
+    ...user,
+    name: user.name || [user.first_name, user.last_name].filter(Boolean).join(" "),
+    role: user.role === "passenger" ? "user" : user.role,
+  };
+}
 
 function readAccounts() {
   try {
@@ -36,6 +49,7 @@ export function AuthProvider({ children }) {
     }
   });
   const [accounts, setAccounts] = useState(readAccounts);
+  const [isLoading, setIsLoading] = useState(!isDemoAuth);
 
   useEffect(() => {
     if (user) window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
@@ -46,16 +60,52 @@ export function AuthProvider({ children }) {
     window.localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
   }, [accounts]);
 
-  const login = (email, password, role) => {
-    const result = validateLogin(email, password, role, accounts);
-    if (result.ok) {
-      const { name, email: accountEmail, role: accountRole } = result.account;
-      setUser({ name, email: accountEmail, role: accountRole });
+  useEffect(() => {
+    if (isDemoAuth) return;
+
+    getCurrentUser()
+      .then((response) => setUser(normalizeApiUser(response.data?.data || response.data)))
+      .catch(() => {
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(REFRESH_TOKEN_KEY);
+        setUser(null);
+      })
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  const login = async (email, password, role) => {
+    if (isDemoAuth) {
+      const result = validateLogin(email, password, role, accounts);
+      if (result.ok) {
+        const { name, email: accountEmail, role: accountRole } = result.account;
+        setUser({ name, email: accountEmail, role: accountRole });
+      }
+      return result;
     }
-    return result;
+
+    setIsLoading(true);
+    try {
+      const response = await apiLogin({ email, password });
+      const authenticatedUser = normalizeApiUser(response.data?.data || response.data?.user);
+      if (!authenticatedUser) {
+        return { ok: false, role: null, error: "The API login response is missing the user." };
+      }
+      if (role && authenticatedUser.role !== role) {
+        return { ok: false, role: null, error: "The selected role does not match this account." };
+      }
+      setUser(authenticatedUser);
+      return { ok: true, role: authenticatedUser.role, error: null, account: authenticatedUser };
+    } catch (error) {
+      return { ok: false, role: null, error: error.response?.data?.message || error.message || "Login failed." };
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const signUp = (name, email, password, confirmPassword) => {
+    if (!isDemoAuth) {
+      return { ok: false, error: "Account registration must be provided by the production API." };
+    }
     const result = validateSignup(name, email, password, confirmPassword, accounts);
     if (!result.ok) return result;
 
@@ -66,6 +116,9 @@ export function AuthProvider({ children }) {
   };
 
   const resetPassword = (email, password, confirmPassword) => {
+    if (!isDemoAuth) {
+      return { ok: false, error: "Password resets must be provided by the production API." };
+    }
     const result = validatePasswordReset(email, password, confirmPassword, accounts);
     if (!result.ok) return result;
 
@@ -79,8 +132,18 @@ export function AuthProvider({ children }) {
   };
 
 
+  const logout = async () => {
+    try {
+      if (!isDemoAuth) await apiLogout();
+    } finally {
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_KEY);
+      setUser(null);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout: () => setUser(null), signUp, resetPassword }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, signUp, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );

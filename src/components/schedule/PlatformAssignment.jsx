@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import expressTrain from "../../assets/express-101.jpg";
 import nightRail from "../../assets/night-rail.jpg";
 import hillLine from "../../assets/hill-line.jpg";

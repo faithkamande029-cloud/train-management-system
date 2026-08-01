@@ -1,4 +1,18 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+
+const SEAT_COLORS = ["yellow", "blue", "violet", "green", "red", "gray", "pink", "indigo"];
+
+function getSeatType(seatTypes, row) {
+    const seatTypeEntries = Object.entries(seatTypes);
+    for(let i = 0; i < seatTypeEntries.length; i++){
+        const [type, config] = seatTypeEntries[i];
+        if(config.rows.includes(row)){
+            return {type, color: SEAT_COLORS[i % SEAT_COLORS.length], ...config};
+        }
+    }
+    const [firstType, firstconfig] = seatTypeEntries[0];
+    return {type: firstType, color: SEAT_COLORS[0], ...firstconfig};
+}
 
 const SeatSelector = ({
     layout = {
@@ -19,38 +33,11 @@ const SeatSelector = ({
 
 }) => {
 
-    const colors = [        
-        "yellow",
-        "blue",
-        "violet",
-        "green",
-        "red",
-        "gray",
-        "pink",
-        "indigo",
-        
-    ]
-    
-    const getSeatType = (row) => {
-        const seatTypeEntries = Object.entries(seatTypes);
-        
-        for(let i = 0; i < seatTypeEntries.length; i++){
-            const [type, config] = seatTypeEntries[i];
-            
-            if(config.rows.includes(row)){
-                const color = colors[i % colors.length];
-                return {type, color, ...config};
-            }
-        }
-        const [firstType, firstconfig] = seatTypeEntries[0];
-        return {type: firstType, color: colors[0], ...firstconfig}
-    }
-
     const initializeSeats = useMemo (() => {
         const seats = [];
         for(let row = 0; row < layout.rows; row++){
             const seatRow = [];
-            const seatTypeInfo = getSeatType(row);
+            const seatTypeInfo = getSeatType(seatTypes, row);
             for(let seat = 0; seat < layout.seatsPerRow; seat++){
                 const seatId = `${String.fromCharCode(65 + row)}${seat + 1}`; 
 
@@ -134,7 +121,7 @@ const SeatSelector = ({
                     className={getSeatClassName(seat)} 
                     key={seat.id}
                     title={`${seat.id} -${
-                        getSeatType(seat.row)?.name || "Regular"
+                        getSeatType(seatTypes, seat.row)?.name || "Regular"
                     } - ${currency}${seat.price}`}
                     onClick={() => handelSeatClick(seat.row, startIndex + index)}
                 >
@@ -147,7 +134,7 @@ const SeatSelector = ({
     const uniqueSeatTypes = Object.entries(seatTypes).map(([type, config],index) => {
         return {
             type, 
-            color: colors[index % colors.length],
+            color: SEAT_COLORS[index % SEAT_COLORS.length],
             ...config,
         }
     })

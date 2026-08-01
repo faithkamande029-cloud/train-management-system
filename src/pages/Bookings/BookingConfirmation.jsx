@@ -1,8 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 import Button from "../../components/common/Button/Button";
 
 function BookingConfirmation() {
+  const { state } = useLocation();
+  const booking = state?.booking;
+  const reference = booking?.id
+    ? String(booking.id).startsWith("BK-") ? booking.id : `BK-${booking.id}`
+    : "Booking confirmed";
+
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-950 px-6">
       <div className="bg-zinc-900 shadow-xl rounded-2xl p-10 max-w-lg w-full text-center border-t-8 border-zinc-500">
@@ -16,7 +22,7 @@ function BookingConfirmation() {
         </p>
         <div className="bg-zinc-800 border border-gray-700 rounded-xl p-6 mt-8">
           <p className="text-zinc-400 text-sm">Booking Reference</p>
-          <h3 className="text-3xl font-bold text-red-400 mt-2">BK-{String(Math.floor(1000 + Math.random() * 9000))}</h3>
+          <h3 className="text-3xl font-bold text-red-400 mt-2">{reference}</h3>
         </div>
         <div className="flex justify-center gap-4 mt-8">
           <Link to="/bookings">

@@ -1,4 +1,4 @@
-export { useAuth } from "../context/AuthContext";
+export { useAuth } from "./useAuth";
 export { useDebounce } from "./useDebounce";
 export {
   useTrains,

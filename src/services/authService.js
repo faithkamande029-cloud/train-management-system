@@ -5,15 +5,11 @@ export const login = (data) => {
 };
 
 export const logout = () => {
-  return httpClient.post("/logout");
+  return httpClient.delete("/logout");
 };
 
 export const getCurrentUser = () => {
-  return httpClient.get("/me");
-};
-
-export const refreshToken = (refreshToken) => {
-  return httpClient.post("/refresh", { refreshToken });
+  return httpClient.get("/check-session");
 };
 
 export const register = (data) => {

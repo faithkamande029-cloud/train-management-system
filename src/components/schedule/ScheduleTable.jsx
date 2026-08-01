@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
 import { FaTrain, FaClock, FaMapMarkerAlt } from "react-icons/fa";
-import { FaX } from "react-icons/fa6";
+import { FaPen, FaX } from "react-icons/fa6";
 import { SCHEDULE_STATUS_COLORS } from "../../utils/constants";
 import { ITEMS_PER_PAGE } from "../../utils/constants";
 
-const ScheduleTable = ({ schedules, onDelete, loading }) => {
+const ScheduleTable = ({ schedules, onDelete, onEdit, loading }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(schedules.length / ITEMS_PER_PAGE);
   const paginated = useMemo(() => {
@@ -62,7 +62,10 @@ const ScheduleTable = ({ schedules, onDelete, loading }) => {
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  <button onClick={() => onDelete(schedule.id)} className="text-red-400 hover:text-red-300 transition"><FaX size={14} /></button>
+                  <div className="flex gap-3">
+                    <button onClick={() => onEdit?.(schedule)} className="text-amber-300 hover:text-amber-200 transition" aria-label={`Edit schedule ${schedule.id}`}><FaPen size={14} /></button>
+                    <button onClick={() => onDelete(schedule.id)} className="text-red-400 hover:text-red-300 transition" aria-label={`Delete schedule ${schedule.id}`}><FaX size={14} /></button>
+                  </div>
                 </td>
               </tr>
             ))}

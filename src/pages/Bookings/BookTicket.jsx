@@ -47,11 +47,15 @@ function BookTicket() {
     };
 
     createBooking.mutate(payload, {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        setStep(STEPS.CONFIRM);
         toast.success("Booking confirmed!");
-        navigate("/bookings/confirm");
+        navigate("/bookings/confirm", { state: { booking: response.data } });
       },
-      onError: (err) => toast.error(err.message || "Booking failed"),
+      onError: (err) => {
+        const message = err.response?.data?.message || err.message || "Booking failed";
+        toast.error(message);
+      },
     });
   };
 
@@ -93,6 +97,8 @@ function BookTicket() {
           isSubmitting={createBooking.isPending}
         />
       )}
+
+      {step === STEPS.CONFIRM && <p className="text-center text-gray-600">Opening confirmation…</p>}
     </div>
   );
 }

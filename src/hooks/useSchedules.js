@@ -7,6 +7,7 @@ import {
   deleteSchedule,
   assignPlatform,
 } from "../services/scheduleService";
+import { unwrapApiData } from "../services/httpClient";
 
 export const SCHEDULES_QUERY_KEY = ["schedules"];
 
@@ -14,7 +15,7 @@ export function useSchedules() {
   return useQuery({
     queryKey: SCHEDULES_QUERY_KEY,
     queryFn: getSchedules,
-    select: (res) => res.data,
+    select: unwrapApiData,
   });
 }
 
@@ -22,7 +23,7 @@ export function useSchedule(id) {
   return useQuery({
     queryKey: [...SCHEDULES_QUERY_KEY, id],
     queryFn: () => getScheduleById(id),
-    select: (res) => res.data,
+    select: unwrapApiData,
     enabled: !!id,
   });
 }

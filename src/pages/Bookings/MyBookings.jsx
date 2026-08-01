@@ -58,7 +58,7 @@ function MyBookings() {
 
   if (visibleBookings.length === 0) {
     return (
-      <div className="text-center py-16">
+      <div className="px-6 py-16 text-center">
         <p className="text-gray-400">No bookings found.</p>
         <Button className="mt-4" onClick={() => navigate("/bookings/new")}>
           Book a Ticket
@@ -68,9 +68,9 @@ function MyBookings() {
   }
 
   return (
-    <div className="space-y-6 p-2 mb-3">
-      <div className="flex justify-between items-center p-3">
-        <div className="px-2">
+    <div className="mb-3 space-y-6 px-6 py-5">
+      <div className="flex items-center justify-between py-3">
+        <div>
           <p className="uppercase tracking-widest font-bold text-xl">{isAdmin ? "Booking management" : "Passenger portal"}</p>
           <h2 className="text-xl font-bold text-zinc-600 mt-2">{isAdmin ? "All bookings" : "My bookings"}</h2>
         </div>
@@ -93,9 +93,10 @@ function MyBookings() {
         isOpen={!!selectedBooking}
         onClose={() => setSelectedBooking(null)}
         title="Booking Details"
+        size="sm"
       >
         {selectedBooking && (
-          <div className="space-y-4">
+          <div className="mx-auto max-w-md space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div><p className="text-gray-400 text-sm">Passenger</p><p className="text-white font-medium">{selectedBooking.passengerName}</p></div>
               <div><p className="text-gray-400 text-sm">Email</p><p className="text-white font-medium">{selectedBooking.email}</p></div>

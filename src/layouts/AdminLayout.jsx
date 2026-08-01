@@ -7,7 +7,6 @@ import {
 } from "react-icons/fa";
 import { MdEventSeat } from "react-icons/md";
 import AdminNavbar from "../components/common/Navbar/AdminNavbar";
-import Footer from "../components/common/Footer/Footer";
 
 const navItems = [
   { path: "/admin/dashboard", label: "Dashboard", icon: <FaHome /> },
@@ -23,12 +22,12 @@ function AdminLayout({ children }) {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-200">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <AdminNavbar />
 
-      <div className="flex flex-1">
-        <aside className="hidden min-h-full w-64 border-r border-gray-800 bg-zinc-900 p-4 md:block">
-          <p className="mb-4 px-2 text-xs uppercase tracking-widest text-gray-500">Admin Panel</p>
+      <div className="flex min-h-[calc(100vh-4rem)] bg-zinc-950">
+        <aside className="fixed left-0 top-16 bottom-0 z-30 hidden w-64 shrink-0 border-r border-zinc-800 bg-zinc-900 p-4 md:flex md:flex-col">
+          <p className="mb-4 px-2 text-xs uppercase tracking-[0.3em] text-zinc-500">Admin Panel</p>
           <nav className="space-y-2">
             {navItems.map((item) => (
               <Link
@@ -43,12 +42,10 @@ function AdminLayout({ children }) {
           </nav>
         </aside>
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 p-6 md:ml-64 md:pl-8">
           {children}
         </main>
       </div>
-
-      <Footer />
     </div>
   );
 }

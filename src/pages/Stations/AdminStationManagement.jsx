@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 function AdminStationManagement() {
   console.log("AdminStationManagement rendered");
 
-  const { data: stations, isLoading, error } = useStations();
+  const { data: stations, isLoading, isError, error } = useStations();
 
   console.log("stations:", stations);
   console.log("loading:", isLoading);
@@ -70,7 +70,7 @@ function AdminStationManagement() {
 
   return (
     
-    <div className="space-y-3 p-2 ">
+    <div className="space-y-3 px-6 py-5">
       <div className="flex justify-between items-center px-3 py-3">
         <div className="flex flex-col">
           <p className=" uppercase tracking-widest font-bold text-xl">Station Management</p>
@@ -82,13 +82,20 @@ function AdminStationManagement() {
       </div>
 
       <StationList
-        stations={stations || []}
+        stations={isError ? [] : stations || []}
         loading={isLoading}
         favorites={favorites}
         onToggleFavorite={toggleFavorite}
         onEdit={openEditForm}
         onDelete={handleDelete}
       />
+
+      {isError && (
+        <p className="mx-3 rounded-lg border border-red-500/40 bg-red-950/40 p-4 text-red-200" role="alert">
+          Unable to load stations. Check that the API is running and allows this frontend origin.
+          {error?.message ? ` (${error.message})` : ""}
+        </p>
+      )}
 
       <Modal
         isOpen={isFormOpen}

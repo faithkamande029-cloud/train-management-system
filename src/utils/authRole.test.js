@@ -3,11 +3,17 @@ import assert from 'node:assert/strict';
 import { validateLogin, validatePasswordReset, validateSignup } from './authRole.js';
 
 test('accepts admin credentials for admin login', () => {
-  assert.equal(validateLogin('admin@railway.com', 'admin123', 'admin').ok, true);
+  assert.equal(validateLogin('admin@railms.com', 'admin123', 'admin').ok, true);
 });
 
 test('accepts user credentials for user login', () => {
   assert.equal(validateLogin('user@railway.com', 'user123', 'user').ok, true);
+});
+
+test('infers the account role when no role is specified', () => {
+  const result = validateLogin('admin@railms.com', 'admin123', undefined);
+  assert.equal(result.ok, true);
+  assert.equal(result.role, 'admin');
 });
 
 test('accepts a newly registered account', () => {

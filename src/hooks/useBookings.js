@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getBookings, getBookingById, createBooking, updateBooking, deleteBooking } from "../services/bookingService";
+import { unwrapApiData } from "../services/httpClient";
 
 export const BOOKINGS_QUERY_KEY = ["bookings"];
 
@@ -7,7 +8,7 @@ export function useBookings() {
   return useQuery({
     queryKey: BOOKINGS_QUERY_KEY,
     queryFn: getBookings,
-    select: (res) => res.data,
+    select: unwrapApiData,
   });
 }
 
@@ -15,7 +16,7 @@ export function useBooking(id) {
   return useQuery({
     queryKey: [...BOOKINGS_QUERY_KEY, id],
     queryFn: () => getBookingById(id),
-    select: (res) => res.data,
+    select: unwrapApiData,
     enabled: !!id,
   });
 }

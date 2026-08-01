@@ -16,7 +16,7 @@ function UserDashboard() {
   const activeTrains = trains.filter((train) => train.status?.toLowerCase() === "active").length;
 
   return (
-    <section className="min-h-full bg-zinc-950 px-4 py-6 text-white sm:px-6 lg:px-8">
+    <section className="min-h-full bg-zinc-950 px-6 py-6 text-white lg:px-8">
       <div className="mx-auto max-w-6xl space-y-6">
         <header className="rounded-3xl border border-white/10 bg-gradient-to-br from-red-950 via-zinc-900 to-zinc-950 p-6 shadow-2xl shadow-black/20 sm:p-8">
           <p className="text-sm font-bold uppercase tracking-[0.22em] text-red-300">Passenger portal</p>
