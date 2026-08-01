@@ -9,7 +9,7 @@ export const logout = () => {
 };
 
 export const getCurrentUser = () => {
-  return httpClient.get("/check-session");
+  return httpClient.get("/me");
 };
 
 export const register = (data) => {

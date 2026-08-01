@@ -76,7 +76,7 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-2">
               <FaEnvelope className="text-zinc-400" />
-              info@railms.co.ke
+              info@garilm.co.ke
             </li>
           </ul>
         </div>
@@ -116,7 +116,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-zinc-400 mt-8 pt-6 text-center text-gray-500 text-sm">
-        &copy; {new Date().getFullYear()} RailMS. All rights reserved.
+        &copy; {new Date().getFullYear()}. All rights reserved.
       </div>
 
     </footer>
