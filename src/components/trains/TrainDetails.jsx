@@ -59,7 +59,15 @@ const TrainDetails = ({ train, schedule, onBook, page = false, onClose, favorite
     </article>
   );
 
-  return page ? <section className="min-h-screen bg-zinc-100 px-6 py-10">{content}</section> : <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-500/70 p-4 backdrop-blur-md" onClick={onClose}>{content}</div>;
+  return page ? (
+    <section className="min-h-screen bg-zinc-100 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-center">
+        {content}
+      </div>
+    </section>
+  ) : (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-500/70 p-4 backdrop-blur-md" onClick={onClose}>{content}</div>
+  );
 };
 
 export default TrainDetails;

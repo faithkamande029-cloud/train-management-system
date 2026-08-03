@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
-import { getCurrentUser, login as apiLogin, logout as apiLogout } from "../services/authService";
+import { getCurrentUser, login as apiLogin, logout as apiLogout, register as apiRegister } from "../services/authService";
 import { 
   getAccount, 
   normalizeEmail, 
@@ -102,17 +102,55 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const signUp = (name, email, password, confirmPassword) => {
-    if (!isDemoAuth) {
-      return { ok: false, error: "Account registration must be provided by the production API." };
-    }
-    const result = validateSignup(name, email, password, confirmPassword, accounts);
+  const signUp = async (name, email, password, confirmPassword, profile = {}) => {
+    const fullName = String(name ?? "").trim() || [profile.firstName, profile.lastName].filter(Boolean).join(" ");
+    const firstName = String(profile.firstName ?? "").trim();
+    const lastName = String(profile.lastName ?? "").trim();
+    const phone = String(profile.phone ?? "").trim();
+
+    const result = validateSignup(fullName, email, password, confirmPassword, accounts, {
+      firstName,
+      lastName,
+      phone,
+    });
     if (!result.ok) return result;
 
-    const account = { name: name.trim(), email: normalizeEmail(email), password, role: "user" };
-    setAccounts((currentAccounts) => [...currentAccounts, account]);
-    setUser({ name: account.name, email: account.email, role: account.role });
-    return { ok: true, error: null };
+    if (isDemoAuth) {
+      const account = {
+        name: fullName,
+        firstName,
+        lastName,
+        phone,
+        email: normalizeEmail(email),
+        password,
+        role: "user",
+      };
+      setAccounts((currentAccounts) => [...currentAccounts, account]);
+      setUser({ name: account.name, email: account.email, role: account.role });
+      return { ok: true, error: null, account };
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await apiRegister({
+        name: fullName,
+        first_name: firstName,
+        last_name: lastName,
+        email: normalizeEmail(email),
+        password,
+        phone,
+      });
+      const authenticatedUser = normalizeApiUser(response.data?.data || response.data?.user || response.data);
+      if (!authenticatedUser) {
+        return { ok: false, error: "The API registration response is missing the user." };
+      }
+      setUser(authenticatedUser);
+      return { ok: true, error: null, account: authenticatedUser };
+    } catch (error) {
+      return { ok: false, error: error.response?.data?.message || error.message || "Registration failed." };
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const resetPassword = (email, password, confirmPassword) => {
