@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks";  // ✅ FIXED: import from hooks
 import { useTrains, useSchedules } from "../../hooks";
 import { validateBookingForm } from "../../utils/validators";
 import Input from "../common/Input/Input";
@@ -24,7 +24,6 @@ function BookingForm({
   });
   const [errors, setErrors] = useState({});
 
-  // Auto-fill from user profile when it loads
   useEffect(() => {
     if (user) {
       setForm((prev) => ({
@@ -93,7 +92,6 @@ function BookingForm({
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Auto-filled passenger fields */}
         <Input
           label="Passenger Name"
           name="passengerName"
