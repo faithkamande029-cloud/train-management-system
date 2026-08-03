@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useCreateBooking } from "../../hooks";
+import { useCreateBooking, useTrains, useSchedules } from "../../hooks";
 import BookingForm from "../../components/booking/BookingForm";
 import SeatSelector from "../../components/booking/SeatSelector";
 import PaymentForm from "../../components/booking/PaymentForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../../hooks";
+import { normalizeBookingResponse } from "../../services/bookingService.js";
 
 const STEPS = {
   SEATS: "seats",
@@ -17,6 +18,8 @@ function BookTicket() {
   const navigate = useNavigate();
   const createBooking = useCreateBooking();
   const { user } = useAuth();
+  const { data: trains = [] } = useTrains();
+  const { data: schedules = [] } = useSchedules();
 
   const [step, setStep] = useState(STEPS.SEATS);
   const [bookingData, setBookingData] = useState(null);
@@ -38,9 +41,24 @@ function BookTicket() {
 
   // ─── Payment complete ──────────────────────────────────────
   const handlePayment = (paymentData) => {
+    const selectedTrain = trains.find(
+      (train) => String(train.id) === String(bookingData?.trainId),
+    );
+    const selectedSchedule = schedules.find(
+      (schedule) => String(schedule.id) === String(bookingData?.scheduleId),
+    );
+
     const payload = {
       ...bookingData,
       email: user?.email || bookingData.email,
+      passengerName: bookingData?.passengerName || user?.name || "",
+      trainId: bookingData?.trainId,
+      scheduleId: bookingData?.scheduleId,
+      trainName: selectedTrain?.name || selectedTrain?.trainName || "",
+      fromStation: selectedSchedule?.fromStation || selectedSchedule?.from_station || "",
+      toStation: selectedSchedule?.toStation || selectedSchedule?.to_station || "",
+      departureTime: selectedSchedule?.departureTime || selectedSchedule?.departure_time || "",
+      arrivalTime: selectedSchedule?.arrivalTime || selectedSchedule?.arrival_time || "",
       seatNumbers: selectedSeats.map((s) => s.id),
       fare: totalFare,
       paymentMethod: paymentData.paymentMethod,
@@ -49,8 +67,9 @@ function BookTicket() {
 
     createBooking.mutate(payload, {
       onSuccess: (response) => {
+        const booking = normalizeBookingResponse(response, payload);
         toast.success("Booking confirmed!");
-        navigate("/bookings/confirm", { state: { booking: response.data } });
+        navigate("/bookings/confirm", { state: { booking } });
       },
       onError: (err) => {
         const message = err.response?.data?.message || err.message || "Booking failed";
