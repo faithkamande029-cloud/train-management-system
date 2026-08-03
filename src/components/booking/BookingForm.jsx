@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import { useTrains, useSchedules } from "../../hooks";
 import { validateBookingForm } from "../../utils/validators";
 import Input from "../common/Input/Input";
