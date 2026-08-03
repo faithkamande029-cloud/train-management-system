@@ -133,15 +133,17 @@ export function validateBookingForm(form) {
   }
 
   if (isEmpty(form.trainId)) {
-    errors.trainId = "Train ID is required";
+    errors.trainId = "Please select a train";
   }
 
   if (isEmpty(form.scheduleId)) {
-    errors.scheduleId = "Schedule ID is required";
+    errors.scheduleId = "Please select a schedule";
   }
 
+  // seatNumber and fare are now passed from SeatSelector component.
+  // They are validated here as a safety net.
   if (isEmpty(form.seatNumber)) {
-    errors.seatNumber = "Seat number is required";
+    errors.seatNumber = "No seats selected";
   }
 
   if (isEmpty(form.fare)) {
