@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks";
 import { useTrains, useSchedules } from "../../hooks";
 import { validateBookingForm } from "../../utils/validators";
 import Input from "../common/Input/Input";
@@ -24,7 +24,6 @@ function BookingForm({
   });
   const [errors, setErrors] = useState({});
 
-  // Auto-fill from user profile when it loads
   useEffect(() => {
     if (user) {
       setForm((prev) => ({
@@ -47,7 +46,6 @@ function BookingForm({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Build full data for validation (seat info from props)
     const validationData = {
       passengerName: form.passengerName,
       email: form.email,
@@ -65,7 +63,6 @@ function BookingForm({
       return;
     }
 
-    // Send all data to parent
     onAdd({
       ...form,
       seatNumbers: preselectedSeats,
@@ -73,16 +70,15 @@ function BookingForm({
     });
   };
 
-  // Filter schedules based on selected train
+  // Fixed: string comparison for trainId
   const filteredSchedules = schedules?.filter(
-    (s) => !form.trainId || s.trainId === parseInt(form.trainId)
+    (s) => !form.trainId || String(s.trainId) === form.trainId
   );
 
   return (
-    <div className="max-w-xl mx-auto bg-zinc-900 p-6 rounded-2xl border border-gray-800">
+    <div className="max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-800">
       <h2 className="text-2xl font-bold mb-6 text-white">Confirm Booking Details</h2>
 
-      {/* Seat summary (read-only) */}
       {preselectedSeats.length > 0 && (
         <div className="bg-gray-800 rounded-lg p-4 mb-6 border border-gray-700">
           <p className="text-gray-400 text-sm">Selected Seats</p>
@@ -96,7 +92,6 @@ function BookingForm({
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* ─── Auto-filled passenger fields ──────────────────── */}
         <Input
           label="Passenger Name"
           name="passengerName"
@@ -129,7 +124,7 @@ function BookingForm({
           required
         />
 
-        {/* ─── Train dropdown ────────────────────────────────── */}
+        {/* Train dropdown */}
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1">
             Train <span className="text-red-400">*</span>
@@ -143,7 +138,7 @@ function BookingForm({
           >
             <option value="">Select a train</option>
             {trains?.map((train) => (
-              <option key={train.id} value={train.id}>
+              <option key={train.id} value={String(train.id)}>
                 {train.name} ({train.type}) — {train.totalSeats} seats
               </option>
             ))}
@@ -153,7 +148,7 @@ function BookingForm({
           )}
         </div>
 
-        {/* ─── Schedule dropdown (filtered by train) ─────────── */}
+        {/* Schedule dropdown */}
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1">
             Schedule <span className="text-red-400">*</span>
@@ -167,7 +162,7 @@ function BookingForm({
           >
             <option value="">Select a schedule</option>
             {filteredSchedules?.map((schedule) => (
-              <option key={schedule.id} value={schedule.id}>
+              <option key={schedule.id} value={String(schedule.id)}>
                 {schedule.fromStation} → {schedule.toStation} ({schedule.departureTime})
               </option>
             ))}
@@ -175,9 +170,12 @@ function BookingForm({
           {errors.scheduleId && (
             <p className="text-red-400 text-xs mt-1">{errors.scheduleId}</p>
           )}
+          {filteredSchedules?.length === 0 && form.trainId && (
+            <p className="text-yellow-400 text-xs mt-1">No schedules available for this train</p>
+          )}
         </div>
 
-        {/* ─── Hidden fields ──────────────────────────────────── */}
+        {/* Hidden fields */}
         <div className="hidden">
           <input type="hidden" name="seatNumbers" value={preselectedSeats.join(", ")} />
           <input type="hidden" name="fare" value={preselectedFare} />
