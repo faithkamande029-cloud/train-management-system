@@ -1,7 +1,9 @@
 // src/services/httpClient.js
 import axios from "axios";
 
-const apiBase = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+const viteEnv =
+  typeof import.meta !== "undefined" && import.meta.env ? import.meta.env : {};
+const apiBase = viteEnv.VITE_API_URL || "http://127.0.0.1:5000";
 
 const httpClient = axios.create({
   baseURL: `${apiBase}/api`,

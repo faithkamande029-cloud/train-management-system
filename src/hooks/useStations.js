@@ -1,6 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getStations, getStationById, addStation, updateStation, deleteStation } from "../services/stationService";
-import { unwrapApiData } from "../services/httpClient";
+import {
+  getStations,
+  getStationById,
+  addStation,
+  updateStation,
+  deleteStation,
+} from "../services/stationService.js";
+import { unwrapApiData } from "../services/httpClient.js";
 
 export const STATIONS_QUERY_KEY = ["stations"];
 

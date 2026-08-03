@@ -1,4 +1,4 @@
-import httpClient from "./httpClient";
+import httpClient from "./httpClient.js";
 
 export const getTrains = () => httpClient.get("/trains");
 export const getTrainById = (id) => httpClient.get(`/trains/${id}`);

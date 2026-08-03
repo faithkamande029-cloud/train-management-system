@@ -51,11 +51,11 @@ const ScheduleTable = ({ schedules, onDelete, onEdit, loading }) => {
             {paginated.map((schedule, index) => (
               <tr key={schedule.id} className="bg-zinc-900 border-b border-gray-800 hover:bg-gray-800 transition">
                 <td className="px-6 py-4 text-gray-500">{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
-                <td className="px-6 py-4"><div className="flex items-center gap-2 text-white font-medium"><FaTrain className="text-red-500" />{schedule.trainId || "N/A"}</div></td>
-                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaMapMarkerAlt className="text-red-400" />{schedule.fromStation || "?"}</div></td>
-                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaMapMarkerAlt className="text-green-400" />{schedule.toStation || "?"}</div></td>
-                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaClock className="text-amber-400" />{schedule.departureTime || "?"}</div></td>
-                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaClock className="text-gray-400" />{schedule.arrivalTime || "?"}</div></td>
+                <td className="px-6 py-4"><div className="flex items-center gap-2 text-white font-medium"><FaTrain className="text-red-500" />{schedule.trainName || schedule.train || schedule.trainId || "N/A"}</div></td>
+                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaMapMarkerAlt className="text-red-400" />{schedule.fromStation || "—"}</div></td>
+                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaMapMarkerAlt className="text-green-400" />{schedule.toStation || "—"}</div></td>
+                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaClock className="text-amber-400" />{schedule.departureTime || "—"}</div></td>
+                <td className="px-6 py-4"><div className="flex items-center gap-1"><FaClock className="text-gray-400" />{schedule.arrivalTime || "—"}</div></td>
                 <td className="px-6 py-4">
                   <span className={`text-white text-xs px-3 py-1 rounded-full ${SCHEDULE_STATUS_COLORS[schedule.status] || "bg-gray-500"}`}>
                     {schedule.status || "Unknown"}

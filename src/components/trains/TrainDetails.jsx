@@ -23,6 +23,8 @@ const TrainDetails = ({ train, schedule, onBook, page = false, onClose, favorite
     platform: schedule.platform,
   };
 
+  const platformValue = journey?.platform ?? train.platform ?? train.platform_number ?? "—";
+
   const content = (
     <article className={`relative w-full overflow-y-auto rounded-3xl border border-zinc-600 bg-zinc-900 shadow-2xl ${page ? "max-w-4xl" : "max-h-[90vh] max-w-2xl"}`} onClick={(event) => event.stopPropagation()}>
       <div className="relative flex h-56 items-center justify-center bg-red-950/60">
@@ -45,13 +47,13 @@ const TrainDetails = ({ train, schedule, onBook, page = false, onClose, favorite
         <div className="w-px bg-zinc-700" />
         <div className="flex flex-1 flex-col items-center gap-1"><MdEventSeat className="text-xl text-green-400" /><span className="text-lg font-bold text-white">{train.availableSeats ?? "?"}</span><span className="text-xs text-gray-400">Available seats</span></div>
         <div className="w-px bg-zinc-700" />
-        <div className="flex flex-1 flex-col items-center gap-1"><FaClock className="text-xl text-red-400" /><span className="text-lg font-bold text-white">{journey?.platform || "?"}</span><span className="text-xs text-gray-400">Platform</span></div>
+        <div className="flex flex-1 flex-col items-center gap-1"><FaClock className="text-xl text-red-400" /><span className="text-lg font-bold text-white">{platformValue}</span><span className="text-xs text-gray-400">Platform</span></div>
       </div>
 
       {(journey || train.currentRoute) && <div className="mx-6 mb-6 rounded-xl bg-zinc-800 p-4">
         <h2 className="mb-3 font-semibold text-white">Journey details</h2>
         <div className="flex items-center justify-between gap-3 text-sm text-gray-300"><div className="flex items-center gap-2"><FaMapMarkerAlt className="text-red-400" />{journey?.from || train.currentRoute?.from || "N/A"}</div><div className="flex-1 border-t border-dashed border-gray-600" /><div className="flex items-center gap-2"><FaMapMarkerAlt className="text-red-400" />{journey?.to || train.currentRoute?.to || "N/A"}</div></div>
-        {journey && <div className="mt-4 grid grid-cols-1 gap-3 border-t border-zinc-700 pt-4 text-sm text-zinc-300 sm:grid-cols-3"><p><span className="text-zinc-500">Departure:</span> {journey.departureTime || "N/A"}</p><p><span className="text-zinc-500">Arrival:</span> {journey.arrivalTime || "N/A"}</p><p><span className="text-zinc-500">Platform:</span> {journey.platform || "N/A"}</p></div>}
+        {journey && <div className="mt-4 grid grid-cols-1 gap-3 border-t border-zinc-700 pt-4 text-sm text-zinc-300 sm:grid-cols-3"><p><span className="text-zinc-500">Departure:</span> {journey.departureTime || "—"}</p><p><span className="text-zinc-500">Arrival:</span> {journey.arrivalTime || "—"}</p><p><span className="text-zinc-500">Platform:</span> {platformValue}</p></div>}
       </div>}
 
       <div className="mx-6 mb-6"><h2 className="mb-2 font-semibold text-white">Description</h2><p className="text-sm leading-relaxed text-gray-400">{train.description || "No description provided."}</p></div>
