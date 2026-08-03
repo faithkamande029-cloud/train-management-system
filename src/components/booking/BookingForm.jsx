@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../hooks";  // ✅ FIXED: import from hooks
+import { useAuth } from "../../hooks";
 import { useTrains, useSchedules } from "../../hooks";
 import { validateBookingForm } from "../../utils/validators";
 import Input from "../common/Input/Input";
@@ -70,13 +70,13 @@ function BookingForm({
     });
   };
 
-  // ─── FIXED: Compare as strings ─────────────────────────────
+  // Fixed: string comparison for trainId
   const filteredSchedules = schedules?.filter(
     (s) => !form.trainId || String(s.trainId) === form.trainId
   );
 
   return (
-    <div className="max-w-xl mx-auto bg-zinc-900 p-6 rounded-2xl border border-gray-800">
+    <div className="max-w-xl mx-auto bg-gray-900 p-6 rounded-2xl border border-gray-800">
       <h2 className="text-2xl font-bold mb-6 text-white">Confirm Booking Details</h2>
 
       {preselectedSeats.length > 0 && (
@@ -148,7 +148,7 @@ function BookingForm({
           )}
         </div>
 
-        {/* Schedule dropdown (filtered by selected train) */}
+        {/* Schedule dropdown */}
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1">
             Schedule <span className="text-red-400">*</span>
