@@ -1,14 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getTrains, getTrainById, addTrain, updateTrain, deleteTrain } from "../services/trainService";
-import { unwrapApiData } from "../services/httpClient";
+import {
+  getTrains,
+  getTrainById,
+  addTrain,
+  updateTrain,
+  deleteTrain,
+} from "../services/trainService.js";
+import { unwrapApiData } from "../services/httpClient.js";
 
 export const TRAINS_QUERY_KEY = ["trains"];
 
 function normalizeTrain(train) {
   return {
     ...train,
-    totalSeats: train.totalSeats ?? train.total_seat,
-    availableSeats: train.availableSeats ?? train.available_seat,
+    id: train.id ?? train.train_id,
+    name: train.name ?? train.train_name,
+    totalSeats: train.totalSeats ?? train.total_seat ?? train.total_seats,
+    availableSeats:
+      train.availableSeats ?? train.available_seat ?? train.available_seats,
   };
 }
 

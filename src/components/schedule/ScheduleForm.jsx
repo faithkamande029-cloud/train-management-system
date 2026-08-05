@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { validateScheduleForm } from "../../utils/validators";
 import Input from "../common/Input/Input";
 import Button from "../common/Button/Button";
@@ -15,9 +15,36 @@ const EMPTY_FORM = {
 
 function ScheduleForm({ onAdd, initialData = null, onCancel, isSubmitting = false }) {
   const [form, setForm] = useState(() => initialData
-    ? { ...EMPTY_FORM, ...initialData, trainId: String(initialData.trainId ?? "") }
+    ? {
+        ...EMPTY_FORM,
+        ...initialData,
+        trainId: String(initialData.trainId ?? initialData.train_id ?? ""),
+        fromStation: initialData.fromStation ?? initialData.from_station ?? "",
+        toStation: initialData.toStation ?? initialData.to_station ?? "",
+        departureTime: initialData.departureTime ?? initialData.departure_time?.slice(0, 5) ?? "",
+        arrivalTime: initialData.arrivalTime ?? initialData.arrival_time?.slice(0, 5) ?? "",
+        status: initialData.status || "",
+      }
     : EMPTY_FORM);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!initialData) {
+      setForm(EMPTY_FORM);
+      return;
+    }
+
+    setForm({
+      ...EMPTY_FORM,
+      ...initialData,
+      trainId: String(initialData.trainId ?? initialData.train_id ?? ""),
+      fromStation: initialData.fromStation ?? initialData.from_station ?? "",
+      toStation: initialData.toStation ?? initialData.to_station ?? "",
+      departureTime: initialData.departureTime ?? initialData.departure_time?.slice(0, 5) ?? "",
+      arrivalTime: initialData.arrivalTime ?? initialData.arrival_time?.slice(0, 5) ?? "",
+      status: initialData.status || "",
+    });
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
